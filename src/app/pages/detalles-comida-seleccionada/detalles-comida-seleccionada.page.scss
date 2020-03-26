@@ -1,0 +1,39 @@
+.item-adicional {
+    font-size: 0.7em;
+    color: rgb(167, 167, 167);
+}
+
+.descripcion {
+    margin-bottom: 10px;;
+}
+
+.chiquito { 
+    font-size: 0.5em;
+    color: rgb(167, 167, 167);
+}
+
+.bottom-input {
+    position: fixed;
+    bottom: 10px;
+}
+
+.numeric-input {
+    border: 1px solid rgb(235, 118, 22);
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px darkorange;
+    padding: 3px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.btn-filled {
+    background: #000;
+}
+
+.input-comentario {
+    box-shadow: 3px 3px 5px 1px darkgray;
+    border-radius: 10px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
