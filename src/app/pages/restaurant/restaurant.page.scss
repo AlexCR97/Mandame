@@ -1,0 +1,209 @@
+@font-face{
+    font-family: Montserrat-Medium;
+    src: url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swa');
+}
+
+$color-principal: #FF6800;
+$color-secundario: #B3B1B1; 
+
+ion-content{
+    --ion-background-color: #fff;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-family: Montserrat;
+}
+
+.padding{
+    padding: 5px;
+}
+
+.top-btn{
+    background: #eaeaea;
+    height: 120px;
+    z-index: -1;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+
+    p{
+        color: black;
+    }
+}
+
+@mixin badges($color, $background) {
+    font-family: sans-serif;
+    color: $color;
+    background-color: $background;
+    font-size: 10px;
+    font-weight: 100;
+    padding: 2px 10px;
+}
+
+.principal{
+    z-index: 1;
+    position: relative;
+    top: -20px;
+    padding: 0 15px;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    background-color: #fff;
+
+    .name{
+        margin: 0 10px;
+    }
+
+    #title{
+        font-weight: bold;
+    }
+
+    .top-shop{
+        
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+
+        .img-avatar{
+            min-width: 69px;
+            min-height: 69px;
+            position: relative;
+            top: -33px;
+            border: 2px solid $color-principal;
+        }
+
+        .description{
+            padding-top: 10px;
+
+            .title{
+                .status{
+                    @include badges(green, #eaeaea); 
+                }
+            }
+
+            .subtitle{
+                font-size: 14px;
+                .name{
+                    color: $color-secundario;
+                }
+
+                ion-icon[name="star"]{
+                    font-size: 12px;
+                    color: $color-principal;
+                }
+                .star{
+                    vertical-align: 1px;
+                    font-size: 10px;
+                    color: $color-principal;
+                }   
+            }
+        }
+    }
+    .description-shop{
+        border-radius: 1em;
+        font-size: 12px;
+        padding: 10px 20px;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, .2);
+        margin-bottom: 10px;
+
+        ion-icon[name="information-circle-outline"]{
+            font-size: 14px;
+        }
+        p{
+            span{
+                color: green;
+            }
+            ion-icon{
+                float: right;
+            }
+        }
+    }
+    .articles{
+
+        .nav{
+            margin-bottom: 10px;
+        }
+        .btn{
+            color: #B3B1B1;
+            font-weight: bold;
+            padding: 10px 10px;
+            border: none;
+            background: #fff;
+
+            &:active{
+                border: none;
+            }
+
+            &:focus{
+                outline: none;
+            }
+        }
+
+        .active{
+            color: black;
+            position: relative;
+
+            &:before{
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 2px;
+                background: black;
+                width: 50%;
+                border-radius: 1em;
+                
+            }
+        }
+        ion-card{
+            background: #fff;
+            margin: 5px;
+
+            img{
+                width: 100%;
+            } 
+            ion-card-title{
+                margin: 2px 0;
+                p{
+                    font-size: 14px;
+                    font-weight: normal;
+                }
+            }
+            ion-card-subtitle{
+                margin-bottom: 2px;
+                p{
+                    font-size: 8px;
+                    color: gray;
+                    text-transform: none;
+                    font-weight: normal;
+                }
+            }
+            ion-card-content{
+               
+                .status{
+                    margin-top: 5px;
+                    @include badges(green, #eaeaea);
+                    font-size: 8px;
+                    color: black;
+
+                    &:nth-child(2){
+                        margin-left: 5px;
+                    }
+                }
+                
+            }
+        }
+    }
+    ion-icon[name="card"]{
+        color: green;
+    }
+
+    ion-icon[name="time"]{
+        color:#ffd534
+    }
+}
+
+
