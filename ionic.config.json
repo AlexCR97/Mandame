@@ -1,5 +1,7 @@
 {
   "name": "mandame",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
