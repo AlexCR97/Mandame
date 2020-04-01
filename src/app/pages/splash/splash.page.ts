@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SplashPage implements OnInit {
 
-  imagen:string = "assets/icon/logo.png"
+  imagen:string = "assets/icon/logo.png";
 
   constructor() { }
 

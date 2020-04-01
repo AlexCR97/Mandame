@@ -24,3 +24,12 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.ion-color-naranja {
+    --ion-color-base: var(--ion-color-naranja);
+    --ion-color-base-rgb: var(--ion-color-naranja-rgb);
+    --ion-color-contrast: var(--ion-color-naranja-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-naranja-contrast-rgb);
+    --ion-color-shade: var(--ion-color-naranja-shade);
+    --ion-color-tint: var(--ion-color-naranja-tint);
+}

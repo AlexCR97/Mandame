@@ -18,7 +18,11 @@ const routes: Routes = [
   {
     path: 'splash',
     loadChildren: () => import('./pages/splash/splash.module').then( m => m.SplashPageModule)
+  },  {
+    path: 'modal-alert',
+    loadChildren: () => import('./modals/modal-alert/modal-alert.module').then( m => m.ModalAlertPageModule)
   },
+
 ];
 
 @NgModule({
