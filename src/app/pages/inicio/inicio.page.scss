@@ -1,0 +1,38 @@
+ion-header, ion-toolbar {
+    //--background: var(--ion-color-naranja);
+    --background: transparent;
+    //--opacity: 0;
+}
+
+ion-item {
+    --background: rgba(255, 255, 255, 0);
+}
+
+ion-avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.banner {
+    background-image: url("../../../assets/img/banner-inicio-2.png");
+}
+
+.contenedor-segments {
+    margin-top: -20px;
+}
+
+.restaurant-card {
+    width: 80px;
+
+    img {
+        width: 70px;
+    }
+
+    p {
+        font-size: 12px;
+        margin: 0;
+    }
+}
+
+
+

@@ -9,10 +9,20 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { ModalTestPage } from 'src/app/modals/modal-test/modal-test.page';
+import { ModalTestPageModule } from 'src/app/modals/modal-test/modal-test.module';
+
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  entryComponents: [
+    ModalTestPage,
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    ModalTestPageModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -21,3 +31,4 @@ import { AppRoutingModule } from './app-routing.module';
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+

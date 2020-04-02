@@ -18,7 +18,27 @@ const routes: Routes = [
   {
     path: 'splash',
     loadChildren: () => import('./splash/splash.module').then( m => m.SplashPageModule)
+  },  {
+    path: 'alert-test',
+    loadChildren: () => import('./pages/alert-test/alert-test.module').then( m => m.AlertTestPageModule)
   },
+  {
+    path: 'modal-test',
+    loadChildren: () => import('./pages/modal-test/modal-test.module').then( m => m.ModalTestPageModule)
+  },
+  {
+    path: 'modal-test',
+    loadChildren: () => import('./modals/modal-test/modal-test.module').then( m => m.ModalTestPageModule)
+  },
+  {
+    path: 'mostrar-modal',
+    loadChildren: () => import('./pages/mostrar-modal/mostrar-modal.module').then( m => m.MostrarModalPageModule)
+  },
+  {
+    path: 'inicio',
+    loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+  },
+
 ];
 
 @NgModule({

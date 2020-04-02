@@ -3,6 +3,15 @@
 
 /** Ionic CSS Variables **/
 :root {
+
+  /** naranja **/
+  --ion-color-naranja: #FD6300;
+  --ion-color-naranja-rgb: 253,99,0;
+  --ion-color-naranja-contrast: #ffffff;
+  --ion-color-naranja-contrast-rgb: 225, 225, 225;
+  --ion-color-naranja-shade: #df5700;
+  --ion-color-naranja-tint: #fd731a;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -76,7 +85,7 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   /*
    * Dark Colors
    * -------------------------------------------

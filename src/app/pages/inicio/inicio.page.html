@@ -1,0 +1,226 @@
+<!-- contenedor de barra lateral -->
+<ion-router-outlet main></ion-router-outlet>
+
+<!-- barra lateral -->
+<ion-menu side="start">
+
+  <!-- logo -->
+  <ion-header>
+    <ion-toolbar>
+      <div class="mdm-center-x">
+        <img src="../../../assets/img/logo.png" style="width: 50px;"/>
+      </div>
+    </ion-toolbar>
+  </ion-header><!-- logo -->
+
+  <ion-content>
+
+    <!-- principal -->
+    <ion-list>
+
+      <ion-list-header lines="full">
+          <h4>Principal</h4>
+      </ion-list-header>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Inicio</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Restaurants</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Tiendas</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Envíos</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Ofertas</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Pedidos</ion-label>
+      </ion-item>
+
+    </ion-list><!-- principal -->
+
+    <!-- opciones -->
+    <ion-list>
+
+      <ion-list-header lines="full">
+          <h4>Opciones</h4>
+      </ion-list-header>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Direcciones</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Cupones</ion-label>
+      </ion-item>
+
+    </ion-list><!-- opciones -->
+
+    <!-- cuenta -->
+    <ion-list>
+
+      <ion-list-header lines="full">
+          <h4>Cuenta</h4>
+      </ion-list-header>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Configuración</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-margin-start">Cerrar sesión</ion-label>
+      </ion-item>
+
+    </ion-list><!-- cuenta -->
+
+  </ion-content>
+</ion-menu><!-- barra lateral -->
+
+<!-- contenido principal -->
+<ion-content>
+
+  <!-- banner -->
+  <div class="banner">
+
+    <!-- toolbar (barra superior) -->
+    <ion-toolbar>
+      
+      <!-- menu button -->
+      <ion-buttons slot="start">
+        <ion-menu-button color="light"></ion-menu-button>
+      </ion-buttons>
+      
+      <!-- avatar -->
+      <ion-buttons slot="end">
+        <ion-avatar>
+          <img src="../../../assets/img/perfil01.jpg">
+        </ion-avatar>
+      </ion-buttons>
+      
+    </ion-toolbar><!-- toolbar (barra superior) -->
+
+    <div class="ion-padding">
+      <h4 class="mdm-text-light">Bienvenido, Usuario</h4>
+      <h1 class="mdm-text-light"><b>¿En que te podemos ayudar?</b></h1>
+    </div>
+
+    <br><br>
+
+  </div><!-- banner -->
+
+  <!-- contenedor de segments -->
+  <div class="contenedor-segments mdm-card">
+
+    <!-- segments 1 -->
+    <div>
+
+      <!-- segments 1 tabs -->
+      <ion-segment [(ngModel)]="segmentId">
+        <ion-segment-button value="segmentOfertas" class="ion-text-capitalize">
+          <ion-label>Ofertas</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="segmentMasVendidos" class="ion-text-capitalize">
+          <ion-label>Mas vendidos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="segmentProximamente" class="ion-text-capitalize">
+          <ion-label>Proximamente</ion-label>
+        </ion-segment-button>
+      </ion-segment><!-- segments 1 tabs -->
+
+      <!-- segments 1 contenedores -->
+      <div [ngSwitch]="segmentId">
+
+        <!-- segmentOfertas -->
+        <div *ngSwitchCase="'segmentOfertas'" class="mdm-scroll-x">
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-burger-king.png">
+            </ion-card>
+            <p class="ion-text-center">Burger King</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-dominos.png">
+            </ion-card>
+            <p class="ion-text-center">Domino's Pizza</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-little-caesars.png">
+            </ion-card>
+            <p class="ion-text-center">Little Caesar's</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-carls-jr.png">
+            </ion-card>
+            <p class="ion-text-center">Carl's Jr</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-burger-king.png">
+            </ion-card>
+            <p class="ion-text-center">Burger King</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-dominos.png">
+            </ion-card>
+            <p class="ion-text-center">Domino's Pizza</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-little-caesars.png">
+            </ion-card>
+            <p class="ion-text-center">Little Caesar's</p>
+          </div>
+
+          <div class="mdm-scroll-x-item restaurant-card">
+            <ion-card>
+              <img src="../../../assets/img/restaurant-carls-jr.png">
+            </ion-card>
+            <p class="ion-text-center">Carl's Jr</p>
+          </div>
+          
+        </div><!-- segmentOfertas -->
+
+        <!-- segmentMasVendidos -->
+        <div *ngSwitchCase="'segmentMasVendidos'">
+          <h1>Case 2</h1>
+        </div><!-- segmentMasVendidos -->
+
+        <!-- segmentProximamente -->
+        <div *ngSwitchCase="'segmentProximamente'">
+          <h1>Case 3</h1>
+        </div><!-- segmentProximamente -->
+
+      </div><!-- segments 1 contenedores -->
+
+    </div><!-- segments 1 -->
+
+  </div><!-- contenedor de segments -->
+
+</ion-content><!-- contenido principal -->
+
+<!-- FAB -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="naranja">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

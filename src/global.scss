@@ -24,3 +24,42 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.ion-color-naranja {
+    --ion-color-base: var(--ion-color-naranja);
+    --ion-color-base-rgb: var(--ion-color-naranja-rgb);
+    --ion-color-contrast: var(--ion-color-naranja-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-naranja-contrast-rgb);
+    --ion-color-shade: var(--ion-color-naranja-shade);
+    --ion-color-tint: var(--ion-color-naranja-tint);
+}
+
+.mdm-card {
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.40);
+    background-color: white;
+    padding: 15px;
+}
+
+.mdm-center-x {
+    display: flex;
+    justify-content: center;
+}
+
+.mdm-text-light {
+    color: white;
+}
+
+.mdm-scroll-x {
+    display: flex;
+    overflow: auto;
+    width: 100%;
+
+    .mdm-scroll-x-item {
+        flex: none;
+    }
+
+    .mdm-scroll-x-item:not(:first-child) {
+        margin-left: 10px;
+    }
+}
