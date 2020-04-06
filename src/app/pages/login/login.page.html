@@ -1,0 +1,49 @@
+<ion-header translucent no-border>
+  <img class="icon-arrow" src="../../../assets/icon/Arrow.png">  
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <img class="logo" src="assets/icon/logo.png" alt="">
+
+  <div class="text-welcome">
+      <p>Para usar nuestro servicio</p>
+      <h3>Inicia Sesion</h3>
+  </div>
+
+  
+  <div class="space-between">
+    <div class="followings">
+      <h3>Iniciar sesión</h3>
+    </div>
+
+    <div class="followings">
+      <h3><strong>Registro</strong></h3>
+    </div>
+  </div>
+
+
+
+  <div class="components">
+    <p class="label-component">Usuario</p>
+    <ion-item class="user-input">
+      <ion-label position="floating">mandame@gmail.com</ion-label>
+      <ion-icon   slot="start" name="person" size="small"></ion-icon>
+      
+      <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+    </ion-item>
+    <br>
+    <p class="label-component">Contraseña</p>
+    <ion-item class="user-input">
+      <ion-label position="floating">*****</ion-label>
+      <ion-icon slot="start" name="lock-closed-outline" size="small"></ion-icon>
+      <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+    </ion-item>
+  
+    <br>
+    <ion-button class="login-button" (click)="onSubmitLogin()" expand="block">Iniciar Sesión</ion-button>
+    <br>
+    <p align="center" routerLink="/register">Olvidé mi contraseña</p>
+  </div>
+  
+</ion-content>

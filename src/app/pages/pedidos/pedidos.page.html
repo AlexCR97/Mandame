@@ -1,0 +1,48 @@
+<ion-content>
+  <div class="top-btn">
+    <p><ion-icon size="large" name="chevron-back-outline"></ion-icon></p>
+    <ion-img class="logo" src="../../../assets/icon/logo-white-arrow.png"></ion-img>
+  </div>
+
+  <section class="principal">
+    <ion-label class="title">
+      Mis pedidos
+    </ion-label>
+    <div *ngFor="let pedido of pedidos">
+      <ion-card>
+        <ion-img src="../../../assets/img/pizzah.jpg"></ion-img>
+        <div class="card-header">
+          <div class="pedido-item-title">
+            <p>{{pedido.titulo}}</p>
+            <ion-badge
+              class="status-proceso"
+              *ngIf="pedido.estado === 1"
+            >
+              En proceso
+            </ion-badge>
+            <ion-badge
+              class="status-finalizado"
+              *ngIf="pedido.estado === 3"            
+            >
+              Terminado
+            </ion-badge>
+          </div>
+        </div>
+
+        <ion-card-content>
+          <div class="card-content">
+            <div class="item-content">
+              <ion-icon class="icon" name="business-outline"></ion-icon>
+              <ion-label class="text">{{pedido.negocio}}</ion-label>
+            </div>
+            <div class="item-content">
+              <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+              <ion-label class="text">{{pedido.repartidor}}</ion-label>
+            </div>
+          </div>
+        </ion-card-content>
+
+      </ion-card>
+    </div>
+  </section>
+</ion-content>
