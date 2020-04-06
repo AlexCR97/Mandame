@@ -1,0 +1,140 @@
+ion-toolbar{
+    --background: transparent;
+}
+
+.banner{
+    background-image: url('src/assets/img/banner-inicio.png');
+    background-size: cover;
+}
+
+.banner-text{
+    color: whitesmoke;
+    text-shadow: 2px 2px 4px black;
+}
+
+.contenedor-principal{
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.40);
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+.my-custom-menu {
+    --width: 500px;
+  }
+
+.segmentSuperior-cards{
+
+    display: flex;
+    overflow: auto;
+
+    ion-card{
+        display: inline-block;
+        width: 125px;
+    }
+
+    ion-card img { 
+        width: 50%; 
+        height: 50%; 
+    }
+}
+
+.segmentCentral-cards{
+
+    display: flex;
+    overflow: auto;
+
+    ion-card{
+        width: 65px;
+        height: 65px;
+        padding: 8px;
+    }
+
+    p{
+        font-size: 9px;
+        font-weight: normal;
+        display: block;
+        margin: auto;
+    }
+}
+
+.segmentInferior-cards{
+
+    display: flex;
+    overflow: auto;
+
+    ion-card{
+        display: inline-block;
+        width: 180px;
+        background: #fff;
+        margin: 5px;
+
+        img{
+            width: 100%;
+        }
+
+        ion-card-title{
+            margin: 2px 0;
+            p{
+                font-size: 12px;
+                font-weight: normal;
+            }
+        }
+
+        ion-card-subtitle{
+            margin-bottom: 2px;
+            p{
+                font-size: 10px;
+                color: gray;
+                text-transform: none;
+                font-weight: normal;
+            }
+        }
+
+        ion-card-content{
+
+            @mixin badges($color, $background){
+                font-family: sans-serif;
+                color: $color;
+                background-color: $background;
+                font-size: 10px;
+                font-weight: 100;
+                padding: 2px 10px;
+            }
+
+            .status{
+                margin-top: 5px;
+                @include badges(green, #eaeaea);
+                font-size: 8px;
+                color: black;
+
+                &:nth-child(2){
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}
+
+.scroll-horizontal {
+    display: flex;
+    overflow: auto;
+    width: 100%;
+}
+
+.fab {
+    overflow: visible;
+    position: relative;
+    contain: layout;
+    color: orangered;
+}
+
+.logo-menu{
+    width: 70px;
+    height: 35px;
+    display: block;
+    margin: auto;
+    padding: 5px;
+}
+
