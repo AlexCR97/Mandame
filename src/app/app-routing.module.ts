@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'pre-pedido',
     loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
   },
+  {
+    path: 'chat-cliente-repartidor',
+    loadChildren: () => import('./pages/chat-cliente-repartidor/chat-cliente-repartidor.module').then( m => m.ChatClienteRepartidorPageModule)
+  },
 ];
 
 @NgModule({

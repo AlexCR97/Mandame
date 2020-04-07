@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.contenido {
+	background-color: #f74605;
+	margin: 0;
+    padding: 0;
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	.top {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		margin: 10px auto;
+
+		.logo {
+			height: 50px;
+			width: 60px;
+		}
+	}
+
+	.chat {
+		height: 100%;
+		width: 100%;
+		background-color: white;
+
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+
+		padding: 20px;
+
+		.informacion {
+			display: flex;
+			justify-content: space-between;
+
+			max-height: 10%;
+		}
+
+		.separador {
+			height: 1px;
+			width: 100%;
+			background-color: darkgray;
+		}
+
+	}
+}
