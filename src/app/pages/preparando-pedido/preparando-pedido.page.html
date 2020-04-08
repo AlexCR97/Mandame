@@ -1,0 +1,79 @@
+
+  <!--
+  <ion-toolbar color="tertiary">
+    <ion-button slot="start" fill="clear">
+      <ion-icon style="color:#fff; font-size:25px;" name="arrow-back-outline"></ion-icon>
+      <ion-icon style="color:#fff; font-size:25px;" name="chevron-back-outline"></ion-icon>
+    </ion-button>  
+  </ion-toolbar>-->
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>restaurant</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+<ion-content fullscreen>
+  <div class="top-btn">
+    <p><ion-icon  name="chevron-back-outline" style="color:white;"></ion-icon></p>
+    <img class="logo" src="../../../assets/icon/logo-white-arrow.png">
+  </div>
+
+  <section class="principal">
+    <div class="top-shop">
+
+      
+      <div class="description">
+        <p class="title"><span class="name" id="title">Pedido #{{numPedido}}</span></p>
+        <p class="subtitle"><span class="name">{{lugar}}   </span><ion-icon name="alert-circle-outline"></ion-icon> </p>
+        
+      </div>
+    </div>
+    <div class="lugar">
+      <img src="../../../assets/pizza.jpg">
+    </div>
+
+    <ion-list>
+      <ion-item lines="none">
+        <ion-icon class="icons" name="hourglass-outline"></ion-icon>
+        <ion-label color="medium">Pedido Confirmado</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon class="icons" name="time-outline"></ion-icon>
+        <ion-label color="medium">Preparando Pedido</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon class="icons" name="time-outline"></ion-icon>
+        <ion-label color="medium">Pedido Recolectado</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon class="icons" name="time-outline"></ion-icon>
+        <ion-label color="medium">Pedido en transito</ion-label>
+      </ion-item>
+    
+      
+      <ion-item lines="none">
+        <ion-icon class="icons" name="time-outline"></ion-icon>
+        <ion-label color="medium">Entegado</ion-label>
+      </ion-item>
+    </ion-list>
+    
+
+    
+  </section>
+  
+  <ion-button color="medium"  expand="block">Calificar Repartidor </ion-button>
+
+  
+  
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="mail-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+
