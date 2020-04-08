@@ -1,0 +1,77 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.contenido {
+	background-color: var(--ion-color-naranja);
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	.top {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 10px auto;
+
+		.logo {
+			height: 50px;
+			width: 60px;
+		}
+	}
+
+	.direccion {
+		height: 100%;
+		width: 100%;
+		background-color: white;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		padding: 20px;
+		bottom: 10px;
+
+		.map {
+			background-color: darkred;
+			height: 300px;
+			max-height: 500px;
+			width: 100%;
+
+			display: flex;
+			align-items: center;
+  			justify-content: center;
+
+			p {
+				color: white;
+			}
+		}
+
+		.datos-direccion {
+			margin-bottom: 20px;
+
+			ion-card {
+				padding: 15px;
+			}
+		}
+	}
+}
+
+ion-footer {
+	display: flex;
+	flex-wrap: wrap;
+
+	.boton-agregar {
+		color: white;
+		background-color: var(--ion-color-naranja);
+		width: 100%;
+		height: 45px;
+
+		display: flex;
+
+		justify-content: center;
+		align-items: center;
+	}
+}

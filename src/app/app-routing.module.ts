@@ -47,6 +47,10 @@ const routes: Routes = [
     path: 'chat-cliente-repartidor',
     loadChildren: () => import('./pages/chat-cliente-repartidor/chat-cliente-repartidor.module').then( m => m.ChatClienteRepartidorPageModule)
   },
+  {
+    path: 'agregar-direccion',
+    loadChildren: () => import('./pages/agregar-direccion/agregar-direccion.module').then( m => m.AgregarDireccionPageModule)
+  },
 ];
 
 @NgModule({
