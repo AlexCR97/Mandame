@@ -1,0 +1,13 @@
+.repartidor-item {
+    .estado {
+        font-size: 13px;
+    }
+
+    .estado-disponible {
+        color: green;
+    }
+
+    .estado-entregando {
+        color: var(--ion-color-naranja);
+    }
+}

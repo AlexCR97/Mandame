@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'splash', pathMatch: 'full' },
+  { path: '', redirectTo: 'inicio-admin', pathMatch: 'full' },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
@@ -43,6 +43,19 @@ const routes: Routes = [
     path: 'pre-pedido',
     loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
   },
+  {
+    path: 'inicio-admin',
+    loadChildren: () => import('./pages/admin/inicio-admin/inicio-admin.module').then( m => m.InicioAdminPageModule)
+  },
+  {
+    path: 'detalles-pedido',
+    loadChildren: () => import('./pages/admin/detalles-pedido/detalles-pedido.module').then( m => m.DetallesPedidoPageModule)
+  },
+  {
+    path: 'mensajes',
+    loadChildren: () => import('./pages/admin/mensajes/mensajes.module').then( m => m.MensajesPageModule)
+  },
+
 ];
 
 @NgModule({
