@@ -7,47 +7,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatClienteRepartidorPage implements OnInit {
 
-  msgCliente: any[] = [
+  mensajes: any[] = [
     {
       'msg': 'Hola buenas, soy yo, el cliente!',
     },
     {
       'msg': 'Hola buenas, soy yo, el cliente!',
     },
-    {
+	{
+	'msg': 'Hola buenas, soy yo, el repartidor!',
+	},
+	{
       'msg': 'Hola buenas, soy yo, el cliente!',
+    },
+	{
+	'msg': 'Hola buenas, soy yo, el repartidor!',
+	},
+	{
+      'msg': 'Hola buenas, soy yo, el cliente!',
+    },
+	{
+	'msg': 'Hola buenas, soy yo, el repartidor!',
+	},
+	{
+      'msg': 'Hola buenas, soy yo, el cliente!',
+    },
+	{
+  	'msg': 'Hola buenas, soy yo, el repartidor!',
     },
     {
       'msg': 'Hola buenas, soy yo, el cliente!',
     },
     {
-      'msg': 'Hola buenas, soy yo, el cliente!',
+  	'msg': 'Hola buenas, soy yo, el repartidor!',
     },
     {
-      'msg': 'Hola buenas, soy yo, el cliente!',
+  	'msg': 'Hola buenas, soy yo, el repartidor!',
     },
+    {
+  	'msg': 'Hola buenas, soy yo, el repartidor!',
+    }
   ]
 
-  msgCliente: any[] = [
-    {
-      'msg': 'Hola buenas, soy yo, el cliente!',
-    },
-    {
-      'msg': 'Hola buenas, soy yo, el cliente!',
-    },
-    {
-      'msg': 'Hola buenas, soy yo, el cliente!',
-    },
-    {
-      'msg': 'Hola buenas, soy yo, el cliente!',
-    },
-    {
-      'msg': 'Hola buenas, soy yo, el cliente!',
-    },
-    {
-      'msg': 'Hola buenas, soy yo, el cliente!',
-    },
-  ]
+	mtest: number[] = [ 1, 1, 1, 2, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 1, 2 ]
 
   constructor() { }
 

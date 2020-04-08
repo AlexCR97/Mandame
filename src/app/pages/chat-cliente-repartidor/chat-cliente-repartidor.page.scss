@@ -4,51 +4,109 @@
 }
 
 .contenido {
-	background-color: #f74605;
-	margin: 0;
-    padding: 0;
-	width: 100%;
-	height: 100%;
+  background-color: var(--ion-color-naranja);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-	.top {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+  .top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-		margin: 10px auto;
+    margin: 10px auto;
 
-		.logo {
-			height: 50px;
-			width: 60px;
-		}
-	}
+    .logo {
+      height: 50px;
+      width: 60px;
+    }
+  }
 
-	.chat {
-		height: 100%;
-		width: 100%;
-		background-color: white;
+  .chat {
+    height: 100%;
+    width: 100%;
+    background-color: white;
 
-		border-top-left-radius: 15px;
-		border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 
-		padding: 20px;
+    padding: 20px;
 
-		.informacion {
-			display: flex;
-			justify-content: space-between;
+    .mensajes {
+      display: flex;
+      flex-direction: column;
 
-			max-height: 10%;
-		}
+      padding-top: 10px;
 
-		.separador {
-			height: 1px;
-			width: 100%;
-			background-color: darkgray;
-		}
+      .item-mensaje {
+        display: flex;
+        flex-direction: column;
 
-	}
+        .mensaje {
+          display: flex;
+          padding: 10px;
+          height: fit-content;
+          width: fit-content;
+
+		  flex-direction: column;
+
+          margin: 10px;
+        }
+
+        .enviado {
+          background-color: var(--ion-color-naranja);
+          align-self: flex-end;
+        }
+
+        .recibido {
+          background-color: black;
+          color: white;
+          align-self: flex-start;
+
+        }
+
+		.fecha-enviado {
+          color: lightgray;
+          font-size: 0.7em;
+		  align-self: flex-end;
+        }
+
+		.fecha-recibido {
+          color: lightgray;
+          font-size: 0.7em;
+		  align-self: flex-start;
+        }
+      }
+    }
+  }
+}
+
+ion-footer {
+  padding: 10px;
+
+  .input-mensaje {
+    background-color: #e0e0e0;
+    padding: 5px;
+
+    border: 0.5px solid #ababab;
+    border-radius: 50px;
+
+    margin-right: 20px;
+  }
+
+  .boton-enviar {
+    background-color: var(--ion-color-naranja);
+    padding: 10px;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
