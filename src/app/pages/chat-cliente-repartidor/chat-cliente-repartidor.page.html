@@ -1,53 +1,49 @@
 <ion-header> </ion-header>
 
 <ion-content>
-  <div class="contenido" color="naranja">
-    <div class="top">
-      <ion-img class="logo" src="../../../assets/icon/logo-white-arrow.png">
-      </ion-img>
-    </div>
+	<div class="contenido" color="naranja">
+		<div class="top">
+			<ion-img class="logo" src="../../../assets/icon/logo-white-arrow.png">
+			</ion-img>
+		</div>
 
-    <div class="chat">
-      <ion-item lines="full">
-        <ion-icon slot="end" name="information-circle-outline" size="large">
-        </ion-icon>
-        <p slot="start">{{"Edgar Vazquez"}}</p>
-      </ion-item>
-      <div class="mensajes" *ngFor="let mensaje of mtest">
-        <div class="item-mensaje" *ngIf="mensaje">
-          <div class="mensaje enviado" color="naranja">
-            <p>
-              {{mensaje}} {{"Este es un mensaje enviado"}}
-            </p>
-          </div>
-          <p class="fecha-enviado">
-            {{"12/Oct/2020 01:56 PM"}}
-          </p>
-        </div>
-        <div class="item-mensaje" *ngIf="mensaje">
-          <div class="mensaje recibido">
-            <p>
-              {{mensaje}} {{"Este es un mensaje recibido"}}
-            </p>
-          </div>
-          <p class="fecha-recibido">
-            {{"12/Oct/2020 01:56 PM"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+		<div class="chat">
+			<ion-item lines="full">
+				<ion-icon slot="end" name="information-circle-outline" size="large">
+				</ion-icon>
+				<p slot="start">{{"Edgar Vazquez"}}</p>
+			</ion-item>
+			<div class="mensajes" *ngFor="let mensaje of mtest">
+				<div class="item-mensaje" *ngIf="mensaje">
+					<div class="mensaje enviado" color="naranja">
+						<p>
+							{{mensaje}} {{"Este es un mensaje enviado"}}
+						</p>
+					</div>
+					<p class="fecha-enviado">
+						{{"12/Oct/2020 01:56 PM"}}
+					</p>
+				</div>
+				<div class="item-mensaje" *ngIf="mensaje">
+					<div class="mensaje recibido">
+						<p>
+							{{mensaje}} {{"Este es un mensaje recibido"}}
+						</p>
+					</div>
+					<p class="fecha-recibido">
+						{{"12/Oct/2020 01:56 PM"}}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </ion-content>
 
 <ion-footer class="ion-no-border">
-  <ion-item lines="none">
-    <div slot="start">
-      <input class="input-mensaje" type="textarea" />
-    </div>
-    <div slot="end">
-      <div class="boton-enviar" color="naranja">
-        <ion-icon size="large" name="send"></ion-icon>
-      </div>
-    </div>
-  </ion-item>
+	<div class="footer">
+		<input class="input-mensaje" type="textarea" />
+		<div class="boton-enviar" color="naranja">
+			<ion-icon color="light" size="large" name="send"></ion-icon>
+		</div>
+	</div>
 </ion-footer>
