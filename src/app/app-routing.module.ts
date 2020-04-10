@@ -54,7 +54,11 @@ const routes: Routes = [
   {
     path: 'mensajes',
     loadChildren: () => import('./pages/admin/mensajes/mensajes.module').then( m => m.MensajesPageModule)
+  },  {
+    path: 'mandame',
+    loadChildren: () => import('./pages/cliente/mandame/mandame.module').then( m => m.MandamePageModule)
   },
+
 
 ];
 
