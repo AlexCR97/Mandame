@@ -42,7 +42,11 @@ const routes: Routes = [
   {
     path: 'pre-pedido',
     loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
+  },  {
+    path: 'configuraciones',
+    loadChildren: () => import('./pages/configuraciones/configuraciones.module').then( m => m.ConfiguracionesPageModule)
   },
+
 ];
 
 @NgModule({
