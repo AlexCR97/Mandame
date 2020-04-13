@@ -42,7 +42,15 @@ const routes: Routes = [
   {
     path: 'pre-pedido',
     loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
+  },  {
+    path: 'direcciones',
+    loadChildren: () => import('./pages/direcciones/direcciones.module').then( m => m.DireccionesPageModule)
   },
+  {
+    path: 'calificar-repartidor',
+    loadChildren: () => import('./modals/calificar-repartidor/calificar-repartidor.module').then( m => m.CalificarRepartidorPageModule)
+  },
+
 ];
 
 @NgModule({
