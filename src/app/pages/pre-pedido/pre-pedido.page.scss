@@ -28,10 +28,12 @@
   display: flex;
   overflow: auto;
   width: 100%;
+  padding: 10px;
 }
 
 .scroll-horizontal-item {
   flex: none;
+  margin: 5px;
 
   .scroll-item-text {
     font-size: 0.7rem;
@@ -86,10 +88,11 @@
     content: '';
     position: absolute;
     background-color: lightgray;
-    width: 100%;
+    width: 90%;
     height: 1px;
     bottom: 0;
-    margin: 10px auto;
+    margin-bottom: 10px;
+    margin-left: 15px;
   }
 }
 
