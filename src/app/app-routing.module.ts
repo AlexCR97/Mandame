@@ -4,10 +4,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'splash', pathMatch: 'full' },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: 'inicio',
     loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
   },
@@ -42,11 +38,35 @@ const routes: Routes = [
   {
     path: 'pre-pedido',
     loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
-  },  {
+  },
+  {
     path: 'configuraciones',
     loadChildren: () => import('./pages/configuraciones/configuraciones.module').then( m => m.ConfiguracionesPageModule)
   },
-
+  {
+    path: 'direcciones',
+    loadChildren: () => import('./pages/direcciones/direcciones.module').then( m => m.DireccionesPageModule)
+  },
+  {
+    path: 'calificar-repartidor',
+    loadChildren: () => import('./modals/calificar-repartidor/calificar-repartidor.module').then( m => m.CalificarRepartidorPageModule)
+  },
+  {
+    path: 'inicio-admin',
+    loadChildren: () => import('./pages/admin/inicio-admin/inicio-admin.module').then( m => m.InicioAdminPageModule)
+  },
+  {
+    path: 'detalles-pedido',
+    loadChildren: () => import('./pages/admin/detalles-pedido/detalles-pedido.module').then( m => m.DetallesPedidoPageModule)
+  },
+  {
+    path: 'mensajes',
+    loadChildren: () => import('./pages/admin/mensajes/mensajes.module').then( m => m.MensajesPageModule)
+  },
+  {
+    path: 'mandame',
+    loadChildren: () => import('./pages/cliente/mandame/mandame.module').then( m => m.MandamePageModule)
+  },
 ];
 
 @NgModule({

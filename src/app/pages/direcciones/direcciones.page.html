@@ -1,0 +1,40 @@
+
+<ion-content>
+  <div class="top-btn">
+    <p><ion-icon size="large" name="chevron-back-outline"></ion-icon></p>
+    <ion-img class="logo" src="../../../assets/icon/logo-white-arrow.png"></ion-img>
+  </div>
+
+  <section class="principal">
+    <ion-label class="title">
+      Direcciones
+    </ion-label>
+    <div *ngFor="let direccion of direcciones">
+      <ion-card class="card-content">
+        <!-- <div class="card-header">
+          <div class="pedido-item-title">
+            
+            <ion-badge
+              class="status-modificar"
+            >
+              Modificar
+            </ion-badge> 
+          </div>
+        </div> -->
+        <ion-item>
+          <ion-icon class ="icon" name="location"></ion-icon>
+          <ion-text>
+            <ion-label class="text">{{direccion.casa}}</ion-label>
+            <ion-label class="text">{{direccion.direccion}}</ion-label>
+          </ion-text>
+        </ion-item>
+      </ion-card>
+    </div>
+    
+  </section>
+ 
+</ion-content>
+
+<ion-footer>
+  <ion-button color="naranja" expand="block">Nueva dirrección</ion-button>
+</ion-footer>

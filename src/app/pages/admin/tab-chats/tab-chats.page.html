@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <ion-list-header>
+      <h5>Mensajes</h5>
+    </ion-list-header>
+
+    <ion-item class="chat-item" lines="full" *ngFor="let i of chats" routerLink="/mensajes">
+      <ion-avatar slot="start">
+        <img src="{{i.imgSrc}}">
+      </ion-avatar>
+      <ion-text>
+        <ion-label>{{i.usuario}}<span class="hora">{{i.fechaHora}}</span></ion-label>
+        <ion-label class="mensaje">{{i.mensaje}}</ion-label>
+      </ion-text>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

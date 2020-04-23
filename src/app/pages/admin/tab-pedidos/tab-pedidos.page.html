@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- pedidos en transito -->
+  <ion-list>
+    <ion-list-header>
+      <h5>Pedidos en transito</h5>
+    </ion-list-header>
+
+    <ion-card class="pedido-item" *ngFor="let i of pedidosEnTransito" routerLink="/detalles-pedido">
+      <ion-item lines="none">
+        <img src="{{i.imgSrc}}">
+        <ion-label>{{i.descripcion}}</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card>
+
+  </ion-list>
+
+  <!-- pedidos pendientes -->
+  <ion-list>
+    <ion-list-header>
+      <h5>Pedidos pendientes</h5>
+    </ion-list-header>
+
+    <ion-card class="pedido-item" *ngFor="let i of pedidosPendientes" routerLink="/detalles-pedido">
+      <ion-item lines="none">
+        <img src="{{i.imgSrc}}">
+        <ion-label>{{i.descripcion}}</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card>
+
+  </ion-list>
+
+  <!-- pedidos concluidos -->
+  <ion-list>
+    <ion-list-header>
+      <h5>Pedidos concluidos</h5>
+    </ion-list-header>
+
+    <ion-card class="pedido-item" *ngFor="let i of pedidosConcluidos" routerLink="/detalles-pedido">
+      <ion-item lines="none">
+        <img src="{{i.imgSrc}}">
+        <ion-label>{{i.descripcion}}</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card>
+
+  </ion-list>
+
+</ion-content>
