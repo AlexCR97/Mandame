@@ -1,0 +1,44 @@
+<ion-content>
+  <div class="top-btn">
+      <ion-avatar class="logo" >
+        <img [src]="foto" >
+      </ion-avatar>
+  </div>
+
+  <section class="principal">
+      
+        
+    <div class="contenedor">
+      <div class="contenedor-iconos-end">
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      </div>
+      
+      <p class="cnombre">¡Califica a {{nombre}}!</p>
+      <div class="contenedor-iconos-center">
+        <ion-icon class="icon" name="star"></ion-icon>
+        <ion-icon class="icon" name="star"></ion-icon>
+        <ion-icon class="icon" name="star"></ion-icon>
+        <ion-icon class="icon" name="star"></ion-icon>
+        <ion-icon class="icon" name="star"></ion-icon>
+      </div>
+     <p class="text">Comentario Opcional</p>
+     <ion-item>
+      <ion-label position="floating" color="gray">ej. Llegó muy rapido</ion-label>
+      <ion-input class="comentario" [(ngModel)]="comentario"></ion-input>
+    </ion-item>
+      
+    </div>
+
+  </section>
+
+  
+ 
+  
+</ion-content>
+<ion-footer>
+  <ion-button color="naranja" expand="block">Calificar</ion-button>
+</ion-footer>
