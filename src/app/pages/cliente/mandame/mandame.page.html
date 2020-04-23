@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h4>Mandame</h4>
+
+  <!-- origen -->
+  <div>
+    <ion-label color="success">
+      <h6>Origen</h6>
+    </ion-label>
+  
+    <ion-card class="direccion-item">
+      <ion-item lines="none">
+        <ion-icon name="location"></ion-icon>
+        <ion-text>
+          <ion-label>Nombre de casa</ion-label>
+          <ion-label class="direccion">Calle Lorem Ipsum #000 Colonia</ion-label>
+        </ion-text>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <!-- destino -->
+  <div>
+    <ion-label color="success">
+      <h6>Destino</h6>
+    </ion-label>
+  
+    <ion-card class="direccion-item">
+      <ion-item lines="none">
+        <ion-icon name="location"></ion-icon>
+        <ion-text>
+          <ion-label>Nombre de casa</ion-label>
+          <ion-label class="direccion">Calle Lorem Ipsum #000 Colonia</ion-label>
+        </ion-text>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <!-- indicaciones -->
+  <div>
+    <ion-label color="danger">
+      <h6>Indicaciones</h6>
+    </ion-label>
+
+    <ion-card class="indicaciones-item">
+      <ion-card-content>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta iure dolores, distinctio officia porro modi consequuntur.
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+  <!-- total -->
+  <div>
+    <ion-label>
+      <h6><b>Total</b></h6>
+    </ion-label>
+
+    <ion-card class="total-item">
+      <ion-card-content>
+        <ion-text>
+          <ion-label>Total de los productos</ion-label>
+          <ion-label class="total">$200</ion-label>
+        </ion-text>
+        <ion-text>
+          <ion-label>Costo del envío</ion-label>
+          <ion-label class="total">$35</ion-label>
+        </ion-text>
+        <ion-text>
+          <ion-label>Total</ion-label>
+          <ion-label class="total">$235</ion-label>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block">Realizar Pedido</ion-button>
+</ion-footer>

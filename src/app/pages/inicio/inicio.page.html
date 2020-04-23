@@ -109,7 +109,7 @@
 
     <div class="ion-padding">
       <p class="banner-text">¡Bienvenido Usuario!</p>
-      <h1 class="banner-text">¿En que te podemos ayudar?</h1>
+      <h1 class="banner-text">¿En qué te podemos ayudar?</h1>
     </div>
 
     <br>
@@ -127,11 +127,11 @@
       </ion-segment-button>
 
       <ion-segment-button value="masVendidos">
-        <ion-label class="ion-text-capitalize">Mas vendidos</ion-label>
+        <ion-label class="ion-text-capitalize">Más vendidos</ion-label>
       </ion-segment-button>
 
       <ion-segment-button value="proximamente">
-        <ion-label class="ion-text-capitalize">Proximamente</ion-label>
+        <ion-label class="ion-text-capitalize">Próximamente</ion-label>
       </ion-segment-button>
 
     </ion-segment>
@@ -281,7 +281,7 @@
           <div class="padding">
             <ion-card-header>
               <ion-card-title>
-                <p>Pizza de peperoni</p>
+                <p>Pizza de Pepperoni</p>
               </ion-card-title>
               <ion-card-subtitle>
                 <p>Ingredientes</p>
@@ -328,10 +328,24 @@
 
   </div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="add-circle"></ion-icon>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+
+    <ion-fab-button color="naranja" class="">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+
+    <ion-fab-list side="top">
+
+      <ion-fab-button color="naranja" routerLink="/contacts/create" routerDirection="forward" data-desc="Pago de servicio">
+        <ion-icon name="logo-usd"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button color="naranja" routerLink="/reminder/create" routerDirection="forward" data-desc="Manda-me">
+        <ion-icon name="arrow-redo"></ion-icon>
+      </ion-fab-button>
+
+    </ion-fab-list>
+
   </ion-fab>
 
 </ion-content>
