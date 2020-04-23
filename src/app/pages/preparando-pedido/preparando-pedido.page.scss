@@ -1,0 +1,109 @@
+@font-face{
+    font-family: Montserrat-Medium;
+    src: url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swa');
+}
+
+$color-principal: #FF6800;
+$color-secundario: #B3B1B1; 
+
+ion-content{
+    --ion-background-color: #fff;
+}
+
+*{
+    
+    color: black;
+    font-family: Montserrat;
+}
+
+.top-btn{
+    background: $color-principal;
+    height: 120px;
+    z-index: -1;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+
+    p{
+        color: black;
+    }
+}
+
+@mixin badges($color, $background) {
+    font-family: sans-serif;
+    color: $color;
+    background-color: $background;
+    font-size: 10px;
+    font-weight: 100;
+    padding: 2px 10px;
+}
+
+.principal{
+    z-index: 1;
+    position: relative;
+    top: -20px;
+    padding: 0 15px;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    background-color: #fff;
+
+    #title{
+        font-weight: bold;
+    }
+    .lugar {
+        background-color: #eaeaea;
+        height: 90px;
+        widows: 150px;
+
+    }
+
+    .top-shop{
+        
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+
+        .description{
+            padding-top: 10px;
+            margin: 10px;
+
+            .title{
+                .status{
+                    @include badges(green, #eaeaea); 
+                }
+            }
+
+            .subtitle{
+                font-size: 14px;
+                .name{
+                    color: $color-secundario;
+                }           
+            }
+        }
+    }
+}
+.logo {
+    
+    height:45px;
+    width: 80px;
+    position: absolute;
+    left: 140px;
+    top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.icons { 
+    margin-right: 10px;
+    color: $color-principal;
+}
+
+ion-label{
+    font-weight: bold;
+}
+ion-fab-button{
+    --background: #FF6800;
+
+    ion-icon {
+        color: white;
+    }
+}

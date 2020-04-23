@@ -40,6 +40,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
   },
   {
+    path: 'preparando-pedido',
+    loadChildren: () => import('./pages/preparando-pedido/preparando-pedido.module').then( m => m.PreparandoPedidoPageModule)
+  },
+  {
     path: 'configuraciones',
     loadChildren: () => import('./pages/configuraciones/configuraciones.module').then( m => m.ConfiguracionesPageModule)
   },
