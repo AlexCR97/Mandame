@@ -57,21 +57,23 @@
 				}
 
 				.recibido {
-					background-color: black;
+					background-color: #505050;
 					color: white;
 					align-self: flex-start;
 				}
 
 				.fecha-enviado {
-					color: lightgray;
+					color: rgb(139, 139, 139);
 					font-size: 0.7em;
 					align-self: flex-end;
+					margin-right: 10px;
 				}
 
 				.fecha-recibido {
-					color: lightgray;
+					color: rgb(139, 139, 139);
 					font-size: 0.7em;
 					align-self: flex-start;
+					margin-left: 10px;
 				}
 			}
 		}
