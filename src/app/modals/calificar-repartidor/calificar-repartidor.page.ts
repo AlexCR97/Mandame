@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './calificar-repartidor.page.html',
   styleUrls: ['./calificar-repartidor.page.scss'],
 })
-export class CalificarRepartidorPage implements OnInit {
+export class CalificarRepartidorPage implements OnInit { 
 
   nombre:string;
   foto:string;

@@ -6,8 +6,20 @@
 $color-principal: #FF6800;
 $color-secundario: #B3B1B1; 
 
+
 ion-content{
+    position: relative;
+    top:-60px;
     --ion-background-color: #fff;
+}
+
+ion-segment{
+    ion-segment-button{
+        ion-label{
+            text-transform: none !important;
+        }
+    }
+    
 }
 
 *{
@@ -17,13 +29,28 @@ ion-content{
     font-family: Montserrat;
 }
 
+.margin-y{
+    margin: 10px 0;
+}
+
+.background{
+    transition: all 500ms ease;
+    background: $color-principal !important;
+}
+
+.none{
+    transition: all 500ms ease;
+    background: transparent !important;
+}
+
 .padding{
     padding: 5px;
 }
 
 .top-btn{
-    background: $color-principal;
-    height: 120px;
+    background: url('../../../assets/img/Pizza-de-pepperoni.jpg');
+    background-size: cover;
+    height: 140px;
     z-index: -1;
     padding: 10px 20px;
     display: flex;
@@ -43,6 +70,10 @@ ion-content{
     padding: 2px 10px;
 }
 
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+}
 .principal{
     z-index: 1;
     position: relative;

@@ -1,17 +1,42 @@
 
-<ion-content>
-  <div class="top-btn">
-    <p><ion-icon size="large" name="chevron-back-outline"></ion-icon></p>
-    <ion-img class="logo" src="../../../assets/icon/logo-white-arrow.png"></ion-img>
-  </div>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="naranja">
+    <ion-buttons slot="start">
+      <ion-button  (click)="clickedStar()">
+        <ion-icon class="white" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title mode="ios">
+        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <section class="principal">
-    <ion-label class="title">
+<ion-content class="ion-padding">
+
+    <ion-label class="bold">
       Direcciones
     </ion-label>
     <div *ngFor="let direccion of direcciones">
-      <ion-card class="card-content">
-        <!-- <div class="card-header">
+      <ion-card mode="ios">
+        <ion-card-content class="direccion-content">
+          <div class="detalles-entrega">
+            <div class="icon">
+              <ion-icon name="location-sharp" size="large"></ion-icon>
+            </div>
+            <div class="detalles">
+              <p class="title">Nombre Casa</p>
+              <p class="description">Calle #No, Colonia</p>
+            </div>
+          </div>
+          <ion-badge class="badge">
+            Cambiar
+          </ion-badge>
+        </ion-card-content>
+      </ion-card>
+      
+      <!--<ion-card class="card-content">
+        <div class="card-header">
           <div class="pedido-item-title">
             
             <ion-badge
@@ -21,20 +46,19 @@
             </ion-badge> 
           </div>
         </div> -->
-        <ion-item>
+        <!-- <ion-item>
           <ion-icon class ="icon" name="location"></ion-icon>
           <ion-text>
             <ion-label class="text">{{direccion.casa}}</ion-label>
             <ion-label class="text">{{direccion.direccion}}</ion-label>
           </ion-text>
         </ion-item>
-      </ion-card>
+      </ion-card> -->
     </div>
     
-  </section>
  
 </ion-content>
 
-<ion-footer>
-  <ion-button color="naranja" expand="block">Nueva dirrección</ion-button>
+<ion-footer class="no">
+  <ion-button color="naranja" expand="full">Nueva dirrección</ion-button>
 </ion-footer>

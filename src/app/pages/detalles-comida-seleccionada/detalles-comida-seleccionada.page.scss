@@ -1,7 +1,79 @@
+$color-principal: #FF6800;
+$color-secundario: #B3B1B1; 
+
+
+*{
+    font-family: Montserrat;
+}
+
+ion-content{
+    position: relative;
+    top:-60px;
+    --ion-background-color: #fff;
+}
+
+ion-toolbar {
+    color: black;
+    --background: transparent;
+    --ion-color-base: transparent;
+}
+
+.textarea{
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+ion-textarea{
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 0 10px;
+    border: 1px solid #eaeaea;
+}
+
+.bold{
+    font-family: Montserrat;
+    font-weight: 600;
+}
+
+.img-header{
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+    background: url('../../../assets/img/pizzah.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+
 .item-adicional {
-    font-size: 0.7em;
+    font-size: .8em;
     color: rgb(167, 167, 167);
 }
+
+ion-button{
+    &.bg-principal{
+        --background: #FF6800 !important;
+    }
+}
+ .bg{
+     color: black;
+     font-weight: 500;
+     background-color: #F9F9F9;
+ }
+
+
+
+.background{
+    transition: all 500ms ease;
+    background: $color-principal !important;
+}
+
+.none{
+    transition: all 500ms ease;
+    background: transparent !important;
+}
+
+
+
 
 .descripcion {
     margin-bottom: 10px;;
@@ -12,22 +84,30 @@
     color: rgb(167, 167, 167);
 }
 
-.bottom-input {
-    position: fixed;
-    bottom: 10px;
+.item-native{
+    padding: 0 !important;
 }
 
+
 .numeric-input {
-    border: 1px solid rgb(235, 118, 22);
-    border-radius: 10px;
-    box-shadow: 1px 1px 3px 1px darkorange;
-    padding: 3px;
-    margin-right: 10px;
-    margin-left: 10px;
-}
+    
+
+    & > *{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    }
+    
 
 .btn-filled {
     background: #000;
+}
+
+.center{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .input-comentario {
@@ -36,4 +116,39 @@
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.ml{
+    margin-left: 5px;
+}
+
+.complements{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+
+}
+
+.hacks{
+    border: 1px solid rgba(255,104,0, .5);
+    border-radius: 10px;
+    width: 100%;
+    height: 45px;
+    background: white;
+    display: flex;
+    align-items: center;
+        justify-content: center;
+
+    .f-50{
+        flex: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .f-25{
+        --color: orange !important;
+        --background: none !important;
+        flex: 25%;
+    }
 }

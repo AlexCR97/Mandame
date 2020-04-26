@@ -1,24 +1,7 @@
-.top-btn {
-    background: #ff4000;
-    height: 120px;
-    z-index: -1;
-    padding: 10px 10px;
-    display: flex;
-    justify-content: flex-start;
-
-    p {
-        color: white;
-    }
-
-    .logo {
-        display: flex;
-        align-self: center;
-        margin-bottom: 20px;
-        margin-left: auto;
-        margin-right: auto;
-        height: 90px;
-        width: 90px;
-    }
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat;
 }
 
 @mixin badges($color, $background) {
@@ -29,69 +12,68 @@
     font-weight: 100;
     padding: 2px 10px;
 }
-
-.principal{
-    z-index: 1;
-    position: relative;
-    top: -25px;
-    padding: 15px 25px;
-    border-top-left-radius: 2em;
-    border-top-right-radius: 2em;
-    background-color: #fff;
-
-    .title {
-        font-size: 1.5rem;
-        margin-left: 5%;        
-    }
+.status{
+    @include badges(green, #eaeaea); 
+    margin-left: 5px;
 }
 
-ion-card {
-    border-radius: 5px;
+.bold{
+    font-weight: 600 !important;
+}
 
-    .card-header {
-        padding: 5px 15px;
+.light{
+    font-size: 12px !important;
+}
 
-        .status-proceso {
+.title{
+    font-weight: bold;
+}
+
+.padding{
+    padding: 10px;
+}
+
+.margin{
+    margin: 5px 0;
+}
+
+ion-card{
+    background: #fff;
+    margin: 15px 5px;
+
+    img{
+        width: 100%;
+        max-height: 100px;
+        object-fit: cover;
+    } 
+    ion-card-title{
+        margin: 2px 0;
+        p{
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+    ion-card-subtitle{
+        margin-bottom: 2px;
+        p{
+            font-size: 8px;
+            color: gray;
+            text-transform: none;
+            font-weight: normal;
+        }
+    }
+    ion-card-content{
+       
+        .status{
+            margin-top: 5px;
             @include badges(green, #eaeaea);
-            margin-left: 15px;
-        }
+            font-size: 8px;
+            color: black;
 
-        .status-finalizado {
-            @include badges(red, #eaeaea);
-            margin-left: 15px;
-        }
-    }
-
-    .pedido-item-title {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-
-        p {
-            margin: 0;
-        }
-    }
-
-    ion-card-title {
-        font-size: 1rem;
-        padding: 10px 10px;
-    }
-
-    .card-content {
-
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-
-        .item-content {
-            font-size: 1em;
-
-            .icon {
-                margin-right: 5px;
-            }
-            .text {
+            &:nth-child(2){
                 margin-left: 5px;
             }
         }
+        
     }
 }

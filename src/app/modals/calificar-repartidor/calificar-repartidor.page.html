@@ -1,22 +1,16 @@
 <ion-content>
-  <div class="top-btn">
-      <ion-avatar class="logo" >
-        <img [src]="foto" >
+  <!-- <div class="top-btn">
+      <ion-avatar class="logo">
+        <img [src]="foto">
       </ion-avatar>
-  </div>
+  </div> -->
 
-  <section class="principal">
-      
-        
+  <div class="background"></div>
+  <div class="centro">
+    <img class="foto" src="../../../assets/img/fotodegary.jpg" alt="">
+  </div>
+  
     <div class="contenedor">
-      <div class="contenedor-iconos-end">
-        <ion-buttons slot="end">
-          <ion-button>
-            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      </div>
-      
       <p class="cnombre">¡Califica a {{nombre}}!</p>
       <div class="contenedor-iconos-center">
         <ion-icon class="icon" name="star"></ion-icon>
@@ -25,20 +19,19 @@
         <ion-icon class="icon" name="star"></ion-icon>
         <ion-icon class="icon" name="star"></ion-icon>
       </div>
-     <p class="text">Comentario Opcional</p>
-     <ion-item>
-      <ion-label position="floating" color="gray">ej. Llegó muy rapido</ion-label>
-      <ion-input class="comentario" [(ngModel)]="comentario"></ion-input>
-    </ion-item>
+      <ion-list class="ion-margin-top">
+        <ion-list-header mode="md">
+          <ion-label class="bold">Comentario opcional</ion-label>
+        </ion-list-header>
+        <div class="textarea">
+          <ion-textarea rows="2" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
+        </div>
+          
+      </ion-list>
       
     </div>
 
-  </section>
-
-  
- 
-  
 </ion-content>
-<ion-footer>
-  <ion-button color="naranja" expand="block">Calificar</ion-button>
+<ion-footer fullscreen>
+  <ion-button color="naranja" expand="full">Calificar</ion-button>
 </ion-footer>

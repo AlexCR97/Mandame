@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ScrollDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-restaurant',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestaurantPage implements OnInit {
 
-  constructor() { }
+  showToolbar = false;
+  select: string;
 
-  ngOnInit() {
+  constructor() {
+    
   }
 
+  ngOnInit() {
+    this.select="Lorem";
+  }
+
+  segmentChanged(ev: any) {
+  }
+
+  onScroll($event: CustomEvent<ScrollDetail>) {
+    if ($event && $event.detail && $event.detail.scrollTop) {
+      const scrollTop = $event.detail.scrollTop;
+      this.showToolbar = scrollTop >= 100;
+    }
+}
 }

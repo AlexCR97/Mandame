@@ -1,48 +1,80 @@
-<ion-content>
-  <div class="top-btn">
+<ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
+  <ion-toolbar color="naranja">
+    <ion-buttons slot="start">
+      <ion-button (click)="clickedStar()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title mode="ios">
+        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- <div class="top-btn">
     <p><ion-icon size="large" name="chevron-back-outline"></ion-icon></p>
     <ion-img class="logo" src="../../../assets/icon/logo-white-arrow.png"></ion-img>
-  </div>
-
-  <section class="principal">
+  </div> -->
     <ion-label class="title">
       Mis pedidos
     </ion-label>
-    <div *ngFor="let pedido of pedidos">
-      <ion-card>
-        <ion-img src="../../../assets/img/pizzah.jpg"></ion-img>
-        <div class="card-header">
-          <div class="pedido-item-title">
-            <p>{{pedido.titulo}}</p>
-            <ion-badge
-              class="status-proceso"
-              *ngIf="pedido.estado === 1"
-            >
-              En proceso
-            </ion-badge>
-            <ion-badge
-              class="status-finalizado"
-              *ngIf="pedido.estado === 3"            
-            >
-              Terminado
-            </ion-badge>
-          </div>
+    <ion-card>
+      <img src="../../../assets/img/pizzah.jpg" alt="">
+        <div class="padding">
+          <ion-card-header>
+            <ion-card-title>
+              <p class="bold">Pizza de peperoni <ion-badge class="ion-margin-start status">En proceso</ion-badge></p>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="light margin"><ion-icon name="cart"></ion-icon> Dominos Pizza</p>
+            <p class="light"><ion-icon name="person"></ion-icon> Edgar Vazquez</p>
+          </ion-card-content>
         </div>
-
-        <ion-card-content>
-          <div class="card-content">
-            <div class="item-content">
-              <ion-icon class="icon" name="business-outline"></ion-icon>
-              <ion-label class="text">{{pedido.negocio}}</ion-label>
-            </div>
-            <div class="item-content">
-              <ion-icon class="icon" name="person-circle-outline"></ion-icon>
-              <ion-label class="text">{{pedido.repartidor}}</ion-label>
-            </div>
-          </div>
-        </ion-card-content>
-
-      </ion-card>
-    </div>
-  </section>
+    </ion-card>
+    <ion-card>
+      <img src="../../../assets/img/pizzah.jpg" alt="">
+        <div class="padding">
+          <ion-card-header>
+            <ion-card-title>
+              <p class="bold">Pizza de peperoni <ion-badge class="ion-margin-start status">En proceso</ion-badge></p>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="light margin"><ion-icon name="cart"></ion-icon> Dominos Pizza</p>
+            <p class="light"><ion-icon name="person"></ion-icon> Edgar Vazquez</p>
+          </ion-card-content>
+        </div>
+    </ion-card>
+    <ion-card>
+      <img src="../../../assets/img/pizzah.jpg" alt="">
+        <div class="padding">
+          <ion-card-header>
+            <ion-card-title>
+              <p class="bold">Pizza de peperoni <ion-badge class="ion-margin-start status">En proceso</ion-badge></p>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="light margin"><ion-icon name="cart"></ion-icon> Dominos Pizza</p>
+            <p class="light"><ion-icon name="person"></ion-icon> Edgar Vazquez</p>
+          </ion-card-content>
+        </div>
+    </ion-card>
+    <!-- <div *ngFor="let pedido of pedidos"> -->
+      <!-- <ion-card>
+        <img src="../../../assets/img/pizzah.jpg" alt="">
+          <ion-card-header>
+            <ion-card-title>
+              <p>Pizza de peperoni</p>
+            </ion-card-title>
+            <ion-card-subtitle>
+              <p>Ingredientes</p>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-badge class="status"><ion-icon name="card"></ion-icon> 125.00MXN</ion-badge><ion-badge class="status"><ion-icon name="time"></ion-icon> 30-60 Min</ion-badge>
+          </ion-card-content>
+      </ion-card> -->
+    <!-- //</div> -->
 </ion-content>
