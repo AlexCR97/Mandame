@@ -1,13 +1,21 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button color="dark">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Configuraciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        Guardar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
 <ion-content>
-
-  <button color="Light" class="boton" outline>
-    <ion-icon name="chevron-back-sharp" color="dark"></ion-icon>
-  </button>
-
-  <ion-item>
-    <h6>Configuraciones</h6>
-  </ion-item>
-
   <div class="center">
     <ion-avatar class="image-center">
       <img name="profile_pic" src="../../../assets/img/perfil_prueba.JPG">
@@ -15,24 +23,16 @@
     <ion-label>Cambiar foto</ion-label>
   </div>
 
-  <ion-item>
-    <ion-label position="stacked">Nombre</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked">Apellidos</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked">Teléfono</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="stacked">Contraseña</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-
+  <ion-list>
+    
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Telefono</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contraseña</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

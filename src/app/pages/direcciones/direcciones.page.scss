@@ -30,21 +30,47 @@
     padding: 2px 10px;
 }
 
-.principal{
-    z-index: 1;
-    position: relative;
-    top: -25px;
-    padding: 15px 25px;
-    border-top-left-radius: 2em;
-    border-top-right-radius: 2em;
-    background-color: #fff;
-
-    .title {
-        font-size: 1.0rem;
-        margin-left: 5%;
-        color:black;       
-    }
+.bold{
+    font-weight: 600;
 }
+
+.no{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.direccion-content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .detalles-entrega {
+      display: flex;
+      flex-direction: row;
+
+        .description{
+            font-size: 10px;
+            color: #a5a5a5;
+        }
+
+        .title {
+          color: #555555;
+        }
+
+      .icon {
+        margin-right: 10px;
+        color: #a5a5a5;
+      }
+    }
+
+    .badge {
+      display: flex;
+      align-self: center;
+
+      @include badges(green, #eaeaea);
+    }
+  }
+
 
 ion-card {
     border-radius: 5px;
@@ -95,4 +121,9 @@ body{
 
 ion-footer{
     background-color: #fff;
+
+    & > * {
+        margin: 0;
+        padding: 0;
+    }
 }

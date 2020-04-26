@@ -1,3 +1,7 @@
+*{
+    font-family: Montserrat;
+}
+
 .image-center{
     margin:0 auto;
     height: 65px;
@@ -7,6 +11,7 @@
 }
 
 .center{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;

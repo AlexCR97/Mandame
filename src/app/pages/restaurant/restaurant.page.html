@@ -1,13 +1,24 @@
-<!-- <ion-header>
+<ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar>
-    <ion-title>restaurant</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="light" (click)="clickedStar()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title mode="ios">
+        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clickedStar()">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header> -->
-<ion-content fullscreen>
-  <div class="top-btn">
-    <p><ion-icon name="chevron-back-outline"></ion-icon></p>
-    <p><ion-icon name="heart-outline"></ion-icon></p>
-  </div>
+  
+</ion-header>
+<ion-content fullscreen (ionScroll)="onScroll($event)" [scrollEvents]="true">
+<div class="top-btn">
+</div>
 
   <section class="principal">
     <div class="top-shop">
@@ -25,55 +36,86 @@
     <div class="description-shop">
       <p>Entrega aproximada: <span>40 Minutos</span><ion-icon name="information-circle-outline"></ion-icon></p>  
     </div>
+    
     <div class="articles">
-      <div class="nav">
+      <ion-segment class="margin-y" [(ngModel)]="select" (ionChange)="segmentChanged($event)" scrollable mode="md"  color="dark">
+        <ion-segment-button selected [(value)]="i" *ngFor="let i of ['Lorem','ipsum','asit','amet','lorem']">
+          <ion-label>{{i}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <!-- <div class="nav">
         <button class="btn active">Todos</button>
         <button class="btn">Pizza</button>
         <button class="btn">Papas</button>
         <button class="btn">Postres</button>
+      </div> -->
+      
+      <div [ngSwitch]="select">
+        <ion-grid *ngSwitchCase="'Lorem'">
+          <ion-row>
+            <ion-col size="6" *ngFor="let i of [1,1,1,1,1]">
+              <ion-card>
+                <img src="../../../assets/img/pizzah.jpg" alt="">
+                <div class="padding">
+                  <ion-card-header>
+                    <ion-card-title>
+                      <p> Pizza de peperoni</p>
+                    </ion-card-title>
+                    <ion-card-subtitle>
+                      <p>Ingredientes</p>
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-badge class="status"><ion-icon name="card"></ion-icon> 125.00MXN</ion-badge><ion-badge class="status"><ion-icon name="time"></ion-icon> 30-60 Min</ion-badge>
+                  </ion-card-content>
+                </div>
+              </ion-card>
+            </ion-col></ion-row>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'ipsum'">
+          <ion-row>
+            <ion-col size="6" *ngFor="let i of [1,1]">
+              <ion-card>
+                <img src="../../../assets/img/pizzah.jpg" alt="">
+                <div class="padding">
+                  <ion-card-header>
+                    <ion-card-title>
+                      <p> Pizza de peperoni</p>
+                    </ion-card-title>
+                    <ion-card-subtitle>
+                      <p>Ingredientes</p>
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-badge class="status"><ion-icon name="card"></ion-icon> 125.00MXN</ion-badge><ion-badge class="status"><ion-icon name="time"></ion-icon> 30-60 Min</ion-badge>
+                  </ion-card-content>
+                </div>
+              </ion-card>
+            </ion-col></ion-row>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'asit'">
+          <ion-row>
+            <ion-col size="6" *ngFor="let i of [1,1,1]">
+              <ion-card>
+                <img src="../../../assets/img/pizzah.jpg" alt="">
+                <div class="padding">
+                  <ion-card-header>
+                    <ion-card-title>
+                      <p> Pizza de peperoni</p>
+                    </ion-card-title>
+                    <ion-card-subtitle>
+                      <p>Ingredientes</p>
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-badge class="status"><ion-icon name="card"></ion-icon> 125.00MXN</ion-badge><ion-badge class="status"><ion-icon name="time"></ion-icon> 30-60 Min</ion-badge>
+                  </ion-card-content>
+                </div>
+              </ion-card>
+            </ion-col></ion-row>
+        </ion-grid>
       </div>
       
-      
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-card>
-              <img src="../../../assets/pizzah.jpg" alt="">
-              <div class="padding">
-                <ion-card-header>
-                  <ion-card-title>
-                    <p> Pizza de peperoni</p>
-                  </ion-card-title>
-                  <ion-card-subtitle>
-                    <p>Ingredientes</p>
-                  </ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-badge class="status"><ion-icon name="card"></ion-icon> 125.00MXN</ion-badge><ion-badge class="status"><ion-icon name="time"></ion-icon> 30-60 Min</ion-badge>
-                </ion-card-content>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col>
-            <ion-card>
-              <img src="../../../assets/pizzah.jpg" alt="">
-              <div class="padding">
-                <ion-card-header>
-                  <ion-card-title>
-                    <p> Pizza de peperoni</p>
-                  </ion-card-title>
-                  <ion-card-subtitle>
-                    <p>Ingredientes</p>
-                  </ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-badge class="status"><ion-icon name="card"></ion-icon> 125.00MXN</ion-badge><ion-badge class="status"><ion-icon name="time"></ion-icon> 30-60 Min</ion-badge>
-                </ion-card-content>
-              </div>       
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
     </div>
 
     
