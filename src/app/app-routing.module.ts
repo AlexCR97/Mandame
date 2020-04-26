@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'pre-pedido',
-    loadChildren: () => import('./pages/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
+    loadChildren: () => import('./modals/pre-pedido/pre-pedido.module').then( m => m.PrePedidoPageModule)
   },
   {
     path: 'preparando-pedido',
@@ -71,6 +71,27 @@ const routes: Routes = [
     path: 'mandame',
     loadChildren: () => import('./pages/cliente/mandame/mandame.module').then( m => m.MandamePageModule)
   },
+  {
+    path: 'detalles-pedido-repartidor',
+    loadChildren: () => import('./pages/repartidor/detalles-pedido-repartidor/detalles-pedido-repartidor.module').then( m => m.DetallesPedidoRepartidorPageModule)
+  },
+  {
+    path: 'inicio-repartidor',
+    loadChildren: () => import('./pages/repartidor/inicio-repartidor/inicio-repartidor.module').then( m => m.InicioRepartidorPageModule)
+  },
+  {
+    path: 'tab-pedidos-repartidor',
+    loadChildren: () => import('./pages/repartidor/tab-pedidos-repartidor/tab-pedidos-repartidor.module').then( m => m.TabPedidosRepartidorPageModule)
+  },
+  {
+    path: 'tab-chats-repartidor',
+    loadChildren: () => import('./pages/repartidor/tab-chats-repartidor/tab-chats-repartidor.module').then( m => m.TabChatsRepartidorPageModule)
+  },  {
+    path: 'mensajes-admin',
+    loadChildren: () => import('./pages/admin/mensajes-admin/mensajes-admin.module').then( m => m.MensajesAdminPageModule)
+  },
+
+
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,14 @@ export class LoginPage implements OnInit {
   public email: string;
   public password: string;
 
-  constructor() { }
+  constructor(
+    public router: Router,
+  ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  onSubmitLogin() {
-
+  intentarLogin() {
+    this.router.navigateByUrl('/inicio');
   }
 
 }

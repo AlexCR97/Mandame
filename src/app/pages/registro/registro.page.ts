@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -11,13 +12,14 @@ export class RegistroPage implements OnInit {
   public password: string;
   public confirmPassword: string;
 
-  constructor() { }
+  constructor(
+    public router: Router,
+  ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  onSubmitLogin() {
-
+  intentarRegistro() {
+    this.router.navigateByUrl('/inicio');
   }
 
 }

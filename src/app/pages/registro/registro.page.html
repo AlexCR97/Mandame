@@ -1,59 +1,53 @@
-<ion-header translucent no-border>
-  <img class="icon-arrow" src="../../../assets/icon/Arrow.png">  
-</ion-header>
+<ion-content>
 
-<ion-content class="ion-padding">
-  
-  <img class="logo" src="assets/icon/logo.png" alt="">
+  <img src="../../assets/img/flecha-fondo-naranja.png" class="flecha">
 
-  <div class="text-welcome">
+  <div class="ion-padding">
+
+    <img src="../../assets/img/logo.png" class="logo">
+
+    <div class="bienvenida">
       <p>Para usar nuestro servicio</p>
-      <h3>Inicia Sesion</h3>
-  </div>
-
-  
-  <div class="space-between">
-    <div class="followings">
-      <h3>Iniciar sesión</h3>
+      <h3>Regístrate</h3>
     </div>
 
-    <div class="followings">
-      <h3><strong>Registro </strong></h3>
+    <div class="links">
+      <p routerLink="/login">Iniciar Sesión</p>
+      <p><b>Registrarse</b></p>
     </div>
+
+    <!-- usuario -->
+    <div>
+      <p class="textbox-label">Usuario</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="person"></ion-icon>
+        <input type="text" placeholder="correo@ejemplo.com">
+      </ion-item>
+    </div>
+    <br>
+
+    <!-- contrasena -->
+    <div>
+      <p class="textbox-label">Contraseña</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input type="password" placeholder="Tu contraseña">
+      </ion-item>
+    </div>
+    <br>
+
+    <!-- confirmar contrasena -->
+    <div>
+      <p class="textbox-label">Confirmar contraseña</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input type="password" placeholder="Confirma tu contraseña">
+      </ion-item>
+    </div>
+    <br>
+
+    <ion-button color="naranja" class="ion-text-capitalize" expand="full" (click)="intentarRegistro()">Registrarme</ion-button>
+    
   </div>
 
-
-
-  <div class="components">
-    <p class="label-component">Usuario</p>
-    <ion-item class="user-input">
-      <ion-label position="floating">mandame@gmail.com</ion-label>
-      <ion-icon   slot="start" name="person" size="small"></ion-icon>
-      
-      <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
-    </ion-item>
-    <br>
-    <p class="label-component">Constraseña</p>
-    <ion-item class="user-input">
-      <ion-label position="floating">*****</ion-label>
-      <ion-icon slot="start" name="lock-closed-outline" size="small"></ion-icon>
-      <ion-input type="password"[(ngModel)]="password" name="password"></ion-input>
-    </ion-item>
-  
-
-    <br>
-    <p class="label-component">Confirmar Contraseña</p>
-    <ion-item class="user-input">
-      <ion-label position="floating">*****</ion-label>
-      <ion-icon slot="start" name="lock-closed-outline" size="small"></ion-icon>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="password"></ion-input>
-
-    </ion-item>
-
-    <br>
-    <ion-button class="register-button" (click)="onSubmitLogin()" expand="block">Registrarme</ion-button>
-    <br>
-
-  </div>
-  
 </ion-content>

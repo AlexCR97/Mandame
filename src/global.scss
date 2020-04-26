@@ -46,6 +46,28 @@
     border: 1px solid blue;
 }
 
+.mdm-btn-numeric {
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 1px lightgray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+
+    ion-icon {
+        margin: 0px 5px;
+    }
+
+    p {
+        margin: 0px 15px;
+    }
+}
+
+.mdm-btn-outline-naranja {
+    background-color: white;
+    border: 1px solid var(--ion-color-naranja);
+}
+
 .mdm-center-horizontal {
     display: flex;
     justify-content: center;
@@ -61,6 +83,59 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.mdm-chip {
+    border-radius: 10px;
+    background-color: lightgray;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    width: auto;
+
+    ion-icon {
+        font-size: 12px;
+        margin: 0px 3px 0px 0px;
+    }
+
+    p {
+        color: black;
+        font-size: 8px;
+        margin: 0px
+    }
+}
+
+.mdm-mb-2 {
+    margin-bottom: 6px;
+}
+
+.mdm-mr-1 {
+    margin-right: 3px;
+}
+
+.mdm-mr-2 {
+    margin-right: 6px;
+}
+
+.mdm-mr-3 {
+    margin-right: 9px;
+}
+
+.mdm-producto-item {
+    ion-card {
+        width: 70px;
+        height: 70px;
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    p {
+        font-size: 12px;
+        text-align: center;
+    }
 }
 
 .mdm-textbox-card {
@@ -88,4 +163,18 @@
 
 .mdm-textbox-card:hover {
     box-shadow: 2px 2px 5px gray;
+}
+
+.mdm-scroll-horizontal {
+    display: flex;
+    overflow: auto;
+    width: 100%;
+}
+
+.mdm-scroll-horizontal-item {
+    flex: none;
+}
+
+.mdm-scroll-horizontal-item:not(:first-child) {
+    margin-left: 10px;
 }

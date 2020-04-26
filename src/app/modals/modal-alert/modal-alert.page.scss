@@ -1,26 +1,12 @@
-ion-toolbar {
-    --ion-background-color: white;
-
-    ion-icon{
-        color: black
-    }
-}
-
-ion-content{
-    --ion-background-color: white;
-
-    p{
-        color: black;
-    }
-}
-
-.centrar-imagen {
+.centrar {
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
-    
+    align-items: center;
+}
 
-    img{
-        width: 40%;
-    }
+.logo {
+    height: 110px;
+    margin-bottom: 20px;
 }
