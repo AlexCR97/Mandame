@@ -2,9 +2,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="naranja">
     <ion-buttons slot="start">
-      <ion-button  (click)="clickedStar()">
-        <ion-icon class="white" name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title mode="ios">
         <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
@@ -34,29 +32,7 @@
           </ion-badge>
         </ion-card-content>
       </ion-card>
-      
-      <!--<ion-card class="card-content">
-        <div class="card-header">
-          <div class="pedido-item-title">
-            
-            <ion-badge
-              class="status-modificar"
-            >
-              Modificar
-            </ion-badge> 
-          </div>
-        </div> -->
-        <!-- <ion-item>
-          <ion-icon class ="icon" name="location"></ion-icon>
-          <ion-text>
-            <ion-label class="text">{{direccion.casa}}</ion-label>
-            <ion-label class="text">{{direccion.direccion}}</ion-label>
-          </ion-text>
-        </ion-item>
-      </ion-card> -->
     </div>
-    
- 
 </ion-content>
 
 <ion-footer class="no">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ScrollDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-inicio',
@@ -7,6 +7,9 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
+
+  anchorToolbar = false;
+  showTitle = false;
 
   private segmentSuperior = 'ofertas';
   private segmentCentral = 'comida';
@@ -113,18 +116,15 @@ export class InicioPage implements OnInit {
     },
   ];
 
-  constructor(
-    public modalController: ModalController,
-  ) { }
+  constructor() { }
 
   ngOnInit() { }
 
-  modalTest() {
-    console.log('testing modal...');
-
-    /*const modal = await this.modalController.create({
-
-    });*/
+  onScroll($event: CustomEvent<ScrollDetail>) {
+    if ($event && $event.detail && $event.detail.scrollTop) {
+      const scrollTop = $event.detail.scrollTop;
+      this.anchorToolbar = scrollTop >= 70;
+      this.showTitle = scrollTop >= 70;
+    }
   }
-
 }

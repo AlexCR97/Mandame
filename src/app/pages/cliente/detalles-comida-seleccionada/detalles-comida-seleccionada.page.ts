@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetallesComidaSeleccionadaPage implements OnInit {
 
-  adicionales: any[] = [];
+  adicionales = [];
 
   constructor() {
     this.loadData();

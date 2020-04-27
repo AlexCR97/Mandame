@@ -1,15 +1,27 @@
-body{
-
-    background-color: white;
+.center {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-
     justify-content: center;
+    align-items: center;
 }
 
-img{
-    width: 35%;
-    display: block;
-margin: auto;
+.img-left {
+    margin-right: 600px;
+    width: 130px;
+}
+
+.img-center {
+    margin: 0px;
+    width: 130px;
+    transition: all 300ms ease;
+}
+
+.img-right {
+    margin-left: 600px;
+    width: 130px;
+    transition: all 300ms ease;
+}
+
+.img-invisible {
+    width: 0px;
+    transition: all 300ms ease;
 }

@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class SplashPage implements OnInit {
 
+  imgClassQueue = ['img-left', 'img-center', 'img-right', 'img-left', 'img-center', 'img-right', 'img-left', 'img-center', 'img-right', 'img-left', 'img-center', 'img-invisible'];
+  imgClass = 'img-invisible';
+
   timerTick: Subscription;
 
   constructor(
@@ -16,11 +19,19 @@ export class SplashPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.timerTick = timer(1000, 1000).subscribe(second => {
-      if (second >= 3) {
+    let index = 0;
+    this.imgClass = this.imgClassQueue[index];
+
+    this.timerTick = timer(0, 500).subscribe(second => {
+
+      this.imgClass = this.imgClassQueue[index];
+
+      if (index >= this.imgClassQueue.length) {
         this.timerTick.unsubscribe();
         this.router.navigateByUrl('/login');
       }
+
+      index++;
     });
   }
 

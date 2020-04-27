@@ -1,24 +1,29 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar>
+
     <ion-buttons slot="start">
       <ion-button color="light" (click)="clickedStar()">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
     <ion-title mode="ios">
         <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
     </ion-title>
+
     <ion-buttons slot="end">
       <ion-button (click)="clickedStar()">
         <ion-icon name="heart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    
   </ion-toolbar>
   
 </ion-header>
+
 <ion-content fullscreen (ionScroll)="onScroll($event)" [scrollEvents]="true">
-<div class="top-btn">
-</div>
+  <div class="top-btn">
+  </div>
 
   <section class="principal">
     <div class="top-shop">

@@ -1,9 +1,3 @@
-<!-- <ion-header>
-  <ion-img
-      :src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max"
-    ></ion-img>
-</ion-header> -->
-
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar color="dart">
     <ion-buttons color="dark" slot="start">
@@ -50,59 +44,11 @@
         <ion-label>Comentario opcional</ion-label>
       </ion-list-header>
       <div class="textarea">
-        <ion-textarea rows="2" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
+        <ion-textarea rows="4" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
       </div>
     </ion-list>
-    <!-- <ion-item-group>
-      <ion-item-divider>
-        <ion-label>Adicionales</ion-label>
-      </ion-item-divider>
-      <ion-list>
-        <ion-item *ngFor="let adicional of adicionales">
-          <ion-label class="item-adicional">
-            {{adicional.nombre}}
-          </ion-label>
-          <ion-item lines="none">
-            <ion-label class="item-adicional">
-              +${{adicional.precio}}
-            </ion-label>
-            <ion-checkbox color="success"></ion-checkbox>
-          </ion-item>
-        </ion-item>
-      </ion-list>
-    </ion-item-group> -->
-    <!-- <ion-list>
-      <ion-list-header>
-        Notes
-      </ion-list-header>
-      <ion-item>
-        <ion-label>Extra queso</ion-label>
-        <ion-note slot="end" color="primary">99</ion-note>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Secondary Note</ion-label>
-        <ion-note slot="end" color="secondary">99</ion-note>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Tertiary Note</ion-label>
-        <ion-note slot="end" color="tertiary">99</ion-note>
-      </ion-item>
-    </ion-list> -->
-    <!-- <ion-item lines="none">
-      <ion-label slot="start">
-        Comentarios
-      </ion-label>
-      <ion-label class="chiquito" slot="end">
-        0/40
-      </ion-label>
-    </ion-item>
-    <ion-item class="input-comentario" lines="none">
-      <ion-input size=5 placeholder="Texto aqui"></ion-input>
-    </ion-item> -->
-  
 </ion-content>
+
 <ion-footer mode="ios">
   <ion-grid>
     <ion-row>

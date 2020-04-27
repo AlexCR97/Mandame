@@ -1,5 +1,35 @@
+.toolbar-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
 ion-toolbar {
     --background: transparent;
+}
+
+.toolbarAnchor {
+    background: var(--ion-color-naranja);
+    transition: all 300ms ease;
+}
+
+.toolbarAlpha {
+    background: transparent;
+    transition: all 300ms ease;
+}
+
+.logoVisible {
+    transition: all 300ms ease;
+    width: 40px;
+    height: 20px;
+}
+
+.logoInvisible {
+    transition: all 300ms ease;
+    width: 0px;
+    height: 0px;
 }
 
 .logo-menu {

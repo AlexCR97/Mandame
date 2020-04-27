@@ -11,9 +11,7 @@ export class RestaurantPage implements OnInit {
   showToolbar = false;
   select: string;
 
-  constructor() {
-    
-  }
+  constructor() { }
 
   ngOnInit() {
     this.select="Lorem";
@@ -27,5 +25,5 @@ export class RestaurantPage implements OnInit {
       const scrollTop = $event.detail.scrollTop;
       this.showToolbar = scrollTop >= 100;
     }
-}
+  }
 }

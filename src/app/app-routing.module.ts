@@ -5,15 +5,15 @@ const routes: Routes = [
   { path: '', redirectTo: 'splash', pathMatch: 'full' },
   {
     path: 'inicio',
-    loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+    loadChildren: () => import('./pages/cliente/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
     path: 'detalles-comida-seleccionada',
-    loadChildren: () => import('./pages/detalles-comida-seleccionada/detalles-comida-seleccionada.module').then( m => m.DetallesComidaSeleccionadaPageModule)
+    loadChildren: () => import('./pages/cliente/detalles-comida-seleccionada/detalles-comida-seleccionada.module').then( m => m.DetallesComidaSeleccionadaPageModule)
   },
   {
     path: 'restaurant',
-    loadChildren: () => import('./pages/restaurant/restaurant.module').then( m => m.RestaurantPageModule)
+    loadChildren: () => import('./pages/cliente/restaurant/restaurant.module').then( m => m.RestaurantPageModule)
   },
   {
     path: 'splash',
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'pedidos',
-    loadChildren: () => import('./pages/pedidos/pedidos.module').then( m => m.PedidosPageModule)
+    loadChildren: () => import('./pages/cliente/pedidos/pedidos.module').then( m => m.PedidosPageModule)
   },
   {
     path: 'pre-pedido',
@@ -41,15 +41,15 @@ const routes: Routes = [
   },
   {
     path: 'preparando-pedido',
-    loadChildren: () => import('./pages/preparando-pedido/preparando-pedido.module').then( m => m.PreparandoPedidoPageModule)
+    loadChildren: () => import('./pages/cliente/preparando-pedido/preparando-pedido.module').then( m => m.PreparandoPedidoPageModule)
   },
   {
     path: 'configuraciones',
-    loadChildren: () => import('./pages/configuraciones/configuraciones.module').then( m => m.ConfiguracionesPageModule)
+    loadChildren: () => import('./pages/cliente/configuraciones/configuraciones.module').then( m => m.ConfiguracionesPageModule)
   },
   {
     path: 'direcciones',
-    loadChildren: () => import('./pages/direcciones/direcciones.module').then( m => m.DireccionesPageModule)
+    loadChildren: () => import('./pages/cliente/direcciones/direcciones.module').then( m => m.DireccionesPageModule)
   },
   {
     path: 'calificar-repartidor',
@@ -86,7 +86,8 @@ const routes: Routes = [
   {
     path: 'tab-chats-repartidor',
     loadChildren: () => import('./pages/repartidor/tab-chats-repartidor/tab-chats-repartidor.module').then( m => m.TabChatsRepartidorPageModule)
-  },  {
+  },
+  {
     path: 'mensajes-admin',
     loadChildren: () => import('./pages/admin/mensajes-admin/mensajes-admin.module').then( m => m.MensajesAdminPageModule)
   },
