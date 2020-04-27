@@ -90,7 +90,11 @@ const routes: Routes = [
   {
     path: 'mensajes-admin',
     loadChildren: () => import('./pages/admin/mensajes-admin/mensajes-admin.module').then( m => m.MensajesAdminPageModule)
+  },  {
+    path: 'pruebas',
+    loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule)
   },
+
 
 
 ];
