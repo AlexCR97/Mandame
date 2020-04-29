@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-button (click)="cambiarSegmentAnterior(segmentId)">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{segmentTitulo}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- contenedor de segments -->
+  <div [ngSwitch]="segmentId">
+
+    <!-- segment tu perfil -->
+    <div *ngSwitchCase="'segment1'">
+
+      <!-- foto -->
+      <div>
+
+        <div class="mdm-center-horizontal">
+          <ion-avatar class="foto">
+            <img src="../../../assets/img/perfil_prueba.JPG">
+          </ion-avatar>
+        </div>
+
+        <div class="mdm-center-horizontal">
+          <ion-fab-button class="fab-agregar-imagen" color="naranja">
+            <ion-icon name="camera"></ion-icon>
+          </ion-fab-button>
+        </div>
+
+      </div><!-- foto -->
+
+      <br>
+
+      <!-- nombre de usuario -->
+      <div>
+        <p class="textbox-label">Nombre de usuario</p>
+        <ion-item class="mdm-textbox-card" lines="none">
+          <input type="text" placeholder="Tu nombre de usuario">
+        </ion-item>
+      </div>
+
+      <!-- siguiente -->
+      <div class="btn-container">
+        <ion-button color="naranja" class="ion-text-capitalize" (click)="cambiarSegment('segment2')">Siguiente</ion-button>
+      </div>
+
+    </div><!-- segment tu perfil -->
+
+    <!-- segment numero de telefono -->
+    <div *ngSwitchCase="'segment2'">
+
+      <p>Ingresa tu numero de telefono para poder brindarte un mejor servicio</p>
+
+      <!-- telefono -->
+      <ion-item class="mdm-textbox-card" lines="none">
+        <input type="number" placeholder="Tu numero de telefono">
+      </ion-item>
+
+      <div class="btn-container">
+        <ion-button color="naranja" class="ion-text-capitalize" fill="outline" (click)="cambiarSegment('segment3')">Omitir</ion-button>
+        <ion-button color="naranja" class="ion-text-capitalize" (click)="cambiarSegment('segment3')">Siguiente</ion-button>
+      </div>
+
+    </div><!-- segment numero de telefono -->
+
+    <!-- segment direcciones -->
+    <div *ngSwitchCase="'segment3'">
+
+      <p>Proporciona tu dirección para saber a donde entregar tu pedido. Despues puedes agregar mas direcciones.</p>
+
+      <!-- calle -->
+      <div>
+        <p class="textbox-label">Calle</p>
+        <ion-item class="mdm-textbox-card" lines="none">
+          <input type="text" placeholder="Tu calle" [(ngModel)]="direccion.calle">
+        </ion-item>
+      </div>
+
+      <!-- numero -->
+      <p class="textbox-label">Numero</p>
+      <ion-grid>
+        <ion-row>
+
+          <!-- exterior -->
+          <ion-col>
+            <p class="textbox-label">Exterior</p>
+            <ion-item class="mdm-textbox-card" lines="none">
+              <input type="number" placeholder="Exterior" [(ngModel)]="direccion.numeroExterior">
+            </ion-item>
+          </ion-col>
+
+          <!-- interior -->
+          <ion-col>
+            <p class="textbox-label">Interior</p>
+            <ion-item class="mdm-textbox-card" lines="none">
+              <input type="number" placeholder="Interior" [(ngModel)]="direccion.numeroInterior">
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- colonia -->
+      <div>
+        <p class="textbox-label">Colonia</p>
+        <ion-item class="mdm-textbox-card" lines="none">
+          <input type="text" placeholder="Tu colonia" [(ngModel)]="direccion.colonia">
+        </ion-item>
+      </div>
+
+      <ion-button color="naranja" class="ion-text-capitalize" expand="block" fill="outline">Añadir ubicación con mapa</ion-button>
+
+      <div class="btn-container">
+        <ion-button color="naranja" class="ion-text-capitalize" (click)="intentarActualizacion()">Siguiente</ion-button>
+      </div>
+
+    </div><!-- segment direcciones -->
+
+  </div><!-- segment direcciones -->
+
+</ion-content>
