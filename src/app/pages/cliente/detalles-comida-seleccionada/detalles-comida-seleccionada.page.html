@@ -1,76 +1,77 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
-  <ion-toolbar color="dart">
-    <ion-buttons color="dark" slot="start">
-      <ion-button (click)="clickedStar()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title mode="ios">
-        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
-    </ion-title>
-  </ion-toolbar>
-  
+    <ion-toolbar color="dart">
+        <ion-buttons color="dark" slot="start">
+            <ion-button (click)="clickedStar()">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title mode="ios">
+            <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+        </ion-title>
+    </ion-toolbar>
+
 </ion-header>
 
 <ion-content class="content">
-  <div class="img-header">
-    <!-- <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max" alt=""> -->
-  </div>
+    <div class="img-header">
+        <!-- <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max" alt=""> -->
+    </div>
     <ion-item lines="none">
-      <ion-label class="bold">
-        Pizza Hawaiiana
-      </ion-label>
+        <ion-label class="bold">
+            Pizza Hawaiiana
+        </ion-label>
     </ion-item>
     <ion-item lines="none">
-      <ion-text class="item-adicional descripcion">
-        Pizza Hawaiiana que incluye pina, jamon, tocino, rellena de queso en el
-        pan.
-      </ion-text>
+        <ion-text class="item-adicional descripcion">
+            Pizza Hawaiiana que incluye pina, jamon, tocino, rellena de queso en el pan.
+        </ion-text>
     </ion-item>
     <ion-list>
-      <ion-list-header class="bg" mode="md">
-        <ion-label >Adicionales</ion-label>
-      </ion-list-header>
-      <ion-item *ngFor="let i of [1,1,1]" mode="ios" class="item-adicional">
-        <ion-label>Complemento</ion-label>
-        <div slot="end" class="complements">
-          <ion-label>+$15.00</ion-label>
-          <ion-checkbox class="ml" color="success"></ion-checkbox>
-        </div>
-      </ion-item>
+        <ion-list-header class="bg" mode="md">
+            <ion-label>Adicionales</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let adicional of adicionalesChecks" mode="ios" class="item-adicional">
+            <ion-label>{{adicional.valor.nombre}}</ion-label>
+            <div slot="end" class="complements">
+                <ion-label>+${{adicional.valor.precio}}</ion-label>
+                <ion-checkbox [(ngModel)]="adicional.isChecked" (ionChange)="checkboxChanged($event, adicional)" class="ml" color="success"></ion-checkbox>
+            </div>
+        </ion-item>
     </ion-list>
     <ion-list>
-      <ion-list-header mode="md">
-        <ion-label>Comentario opcional</ion-label>
-      </ion-list-header>
-      <div class="textarea">
-        <ion-textarea rows="4" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
-      </div>
+        <ion-list-header mode="md">
+            <ion-label>Comentario opcional</ion-label>
+        </ion-list-header>
+        <div class="textarea">
+            <ion-textarea [(ngModel)]="comentario" id="txtComment" rows="4" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
+        </div>
     </ion-list>
 </ion-content>
 
 <ion-footer mode="ios">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" class="center">
-        <div class="hacks">
-          <ion-button size="default" class="f-25">
-            <ion-icon name="remove-outline"></ion-icon>
-          </ion-button>
-          <div class="f-50">
-            <ion-label>0</ion-label>
-          </div>
-          <ion-button size="default" class="f-25">
-            <ion-icon name="add-outline"></ion-icon>
-          </ion-button>
-        </div>
-          
-      </ion-col>
-      <ion-col size="6">
-          <ion-button expand="block" class="bg-principal">
-           Agregar $100.00
-          </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" class="center">
+                <div class="hacks">
+                    <ion-button (click)='remove()' size="default" class="f-25">
+                        <ion-icon name="remove-outline"></ion-icon>
+                    </ion-button>
+                    <div class="f-50">
+                        <ion-label>
+                            {{itemCount}}
+                        </ion-label>
+                    </div>
+                    <ion-button (click)='add()' size="default" class="f-25">
+                        <ion-icon name="add-outline"></ion-icon>
+                    </ion-button>
+                </div>
+
+            </ion-col>
+            <ion-col size="6">
+                <ion-button expand="block" class="bg-principal" (click)='agregar()'>
+                    Agregar ${{total}}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-footer>

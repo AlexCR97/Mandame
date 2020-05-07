@@ -14,4 +14,8 @@ export class PruebasService {
   getUsers(): Observable<any[]> {
     return this.afs.collection('usuarios').valueChanges();
   }
+
+  getAdicionalesFromRestaurant(idRestaurant) {
+    return this.afs.collection('adicionales', ref => ref.where('id_restaurant','==', idRestaurant )).valueChanges()
+  }
 }
