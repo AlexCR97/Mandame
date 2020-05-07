@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Usuario } from '../dbdocs/usuario';
 import { Observable } from 'rxjs';
+import { Direccion } from '../dbdocs/direccion';
+import { Usuario } from '../dbdocs/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,76 @@ import { Observable } from 'rxjs';
 export class RegistroService {
 
   constructor(
-    private afa: AngularFireAuth,
-    private afs: AngularFirestore,
+    public afa: AngularFireAuth,
+    public afs: AngularFirestore,
   ) { }
 
   private agregarUsuario(usuario: Usuario) {
     return this.afs.doc<Usuario>(`usuarios/${usuario.uid}`).set(usuario);
   }
 
+  completarPerfilUsuario(usuario: Usuario, direccion: Direccion): Promise<void> {
+    const db = this.afs.firestore;
+    const batch = db.batch();
+
+    // registrar nueva direccion
+    let direccionUid = this.afs.createId();
+    let direccionDocRef = db.collection('direcciones').doc(direccionUid);
+
+    batch.set(direccionDocRef, direccion);
+
+    // agregar uid de la nueva direccion al array de direcciones del usuario
+    usuario.direcciones.push(direccionUid);
+
+    // actualizar usuario
+    let usuarioDocRef = db.collection('usuarios').doc(usuario.uid);
+
+    batch.update(usuarioDocRef, usuario);
+
+    // terminar transaccion
+    return batch.commit();
+  }
+
   async correoDisponible(correo: string) {
     let methods = await this.afa.auth.fetchSignInMethodsForEmail(correo);
     return methods.length == 0;
+  }
+
+  getDireccion(uid): Observable<Direccion> {
+    return this.afs.doc<Direccion>(`direcciones/${uid}`).valueChanges();
+  }
+
+  getDirecciones(): Observable<Direccion[]> {
+    return this.afs.collection<Direccion>('direcciones').valueChanges();
+  }
+
+  getDireccionesUsuario(usuarioUid: string, resolver: (direcciones: Direccion[]) => void) {
+    console.log('START getDireccionesUsuario...');
+
+    this.getUsuario(usuarioUid).subscribe(usuario => {
+
+      console.log('usuario obtenido:');
+      console.log(usuario);
+
+      let direccionsUids = usuario.direcciones;
+      let direcciones = Array<Direccion>();
+
+      console.log('direcciones del usuario');
+      console.log(direccionsUids);
+
+      direccionsUids.forEach(async direccionUid => {
+        let direccion = await this.getDireccion(direccionUid).toPromise();
+
+        console.log('direccion obtenida:');
+        console.log(direccion);
+
+        direcciones.push(direccion);
+      });
+
+      resolver(direcciones);
+
+      console.log('END getDireccionesUsuario...');
+    });
   }
 
   getUsuario(uid: string): Observable<Usuario> {

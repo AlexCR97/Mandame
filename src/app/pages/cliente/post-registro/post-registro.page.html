@@ -43,7 +43,7 @@
       <div>
         <p class="textbox-label">Nombre de usuario</p>
         <ion-item class="mdm-textbox-card" lines="none">
-          <input type="text" placeholder="Tu nombre de usuario">
+          <input type="text" placeholder="Tu nombre de usuario" [(ngModel)]="usuario.nombre">
         </ion-item>
       </div>
 
@@ -61,7 +61,7 @@
 
       <!-- telefono -->
       <ion-item class="mdm-textbox-card" lines="none">
-        <input type="number" placeholder="Tu numero de telefono">
+        <input type="number" placeholder="Tu numero de telefono" [(ngModel)]="usuario.telefono">
       </ion-item>
 
       <div class="btn-container">
