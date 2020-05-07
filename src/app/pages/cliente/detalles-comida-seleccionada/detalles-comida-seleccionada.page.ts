@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CacheService } from 'src/app/services/cache.service';
-import { isGeneratedFile } from '@angular/compiler/src/aot/util';
-import { PruebasService } from 'src/app/services/pruebas.service';
 import { Router } from '@angular/router';
+import { RestaurantService } from 'src/app/services/restaurant.service';
 
 @Component({
   selector: 'app-detalles-comida-seleccionada',
@@ -66,7 +65,7 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
   constructor(
     private router: Router,
     private cache: CacheService,
-    private afs: PruebasService) {
+    private afs: RestaurantService) {
 
   }
 
@@ -119,6 +118,7 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
   agregar() {
     this.prepararPedido();
     this.cache.cart.push(this.pedidoCompleto);
+    // TODO Regresar a pantalla anterior
   }
 
   prepararPedido() {
