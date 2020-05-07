@@ -94,6 +94,10 @@ const routes: Routes = [
     path: 'pruebas',
     loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule)
   },
+  {
+    path: 'post-registro',
+    loadChildren: () => import('./pages/cliente/post-registro/post-registro.module').then( m => m.PostRegistroPageModule)
+  },
 
 
 
