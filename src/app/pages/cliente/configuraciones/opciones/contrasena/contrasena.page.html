@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/configuraciones" color="dark" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contraseña</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" disabled>Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label position="stacked">Nueva contraseña</ion-label>
+      <ion-input #antigua [(ngModel)]="password" (ionChange)="habilitarTexto()" required type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Apellido</ion-label>
+      <ion-input #nueva [(ngModel)]="newPassword" (ionChange)="habilitarBoton()" required type="password" disabled></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>
