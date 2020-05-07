@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RegistroService } from 'src/app/services/registro.service';
 import { Usuario } from 'src/app/dbdocs/usuario';
 import { LoadingController } from '@ionic/angular';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
 
 @Component({
   selector: 'app-registro',
@@ -33,10 +34,19 @@ export class RegistroPage implements OnInit {
 
     console.log('Iniciando sesion...');
 
-    this.router.navigateByUrl('/inicio');
+    this.router.navigateByUrl('/post-registro');
   }
 
   async intentarRegistro() {
+
+    console.log('Obteniendo direcciones...');
+
+    this.registroService.getDirecciones().subscribe(direcciones => {
+      console.log(direcciones);
+    });
+
+    return;
+
     let credencialesValidas = await this.validarCredenciales();
 
     if (!credencialesValidas) {
@@ -71,6 +81,8 @@ export class RegistroPage implements OnInit {
       usuarioRegistrado => {
         console.log('Usuario registrado es:');
         console.log(usuarioRegistrado);
+
+        CacheUsuario.usuario = usuarioRegistrado;
 
         this.iniciarSesion();
       },
