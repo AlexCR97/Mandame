@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { Direccion } from '../dbdocs/direccion';
 import { Usuario } from '../dbdocs/usuario';
@@ -11,8 +11,8 @@ import { Usuario } from '../dbdocs/usuario';
 export class RegistroService {
 
   constructor(
-    private afa: AngularFireAuth,
-    private afs: AngularFirestore,
+    public afa: AngularFireAuth,
+    public afs: AngularFirestore,
   ) { }
 
   private agregarUsuario(usuario: Usuario) {
