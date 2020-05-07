@@ -1,4 +1,5 @@
 export interface Usuario {
+    apellido: string;
     direcciones: string[];
     email: string;
     foto: string;
