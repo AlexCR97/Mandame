@@ -1,0 +1,135 @@
+.toolbar-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+ion-toolbar {
+    --background: transparent;
+}
+
+.toolbarAnchor {
+    background: var(--ion-color-naranja);
+    transition: all 300ms ease;
+}
+
+.toolbarAlpha {
+    background: transparent;
+    transition: all 300ms ease;
+}
+
+.logoVisible {
+    transition: all 300ms ease;
+    width: 40px;
+    height: 20px;
+}
+
+.logoInvisible {
+    transition: all 300ms ease;
+    width: 0px;
+    height: 0px;
+}
+
+.logo-menu {
+    width: 70px;
+    height: 35px;
+    display: block;
+    margin: auto;
+    padding: 5px;
+}
+
+.banner {
+    background-image: url('src/assets/img/banner-inicio.png');
+    background-size: cover;
+}
+
+.banner-text {
+    color: whitesmoke;
+    text-shadow: 2px 2px 4px black;
+}
+
+.contenedor-principal {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.40);
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+.segment-superior-card {
+    width: 170px;
+    height: 100px;
+
+    img {
+        width: 170px;
+        height: 100px;
+    }
+}
+
+.producto-item {
+    ion-card {
+        width: 70px;
+        height: 70px;
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    p {
+        font-size: 12px;
+        text-align: center;
+    }
+}
+
+.ordenes-container {
+    ion-grid {
+        --ion-grid-column-padding: 0px;
+    }
+}
+
+.orden-item {    
+    img {
+        width: 100%;
+        height: 100px;
+    }
+
+    ion-card-header {
+        padding: 6px;
+
+        ion-card-title {
+            font-size: 14px;
+        }
+    
+        ion-card-subtitle {
+            font-size: 12px;
+        }
+    }
+
+    ion-card-content {
+        padding: 6px;
+        display: flex;
+    }
+}
+
+ion-fab-button[data-desc] {
+    position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+    position: absolute;
+    content: attr(data-desc);
+    z-index: 1;
+    right: 55px;
+    bottom: 4px;
+    background-color: var(--ion-color-dark);
+    padding: 9px;
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+}
+
+

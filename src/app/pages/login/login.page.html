@@ -1,0 +1,47 @@
+<ion-content>
+
+  <img src="../../assets/img/flecha-fondo-naranja.png" class="flecha">
+
+  <div class="ion-padding">
+
+    <img src="../../assets/img/logo.png" class="logo">
+
+    <div class="bienvenida">
+      <p>Bienvenido a <b>Mandame</b></p>
+      <h3>Inicia Sesión</h3>
+    </div>
+
+    <div class="links">
+      <p><b>Iniciar Sesión</b></p>
+      <p routerLink="/registro">Registrarse</p>
+    </div>
+
+    <!-- usuario -->
+    <div>
+      <p class="textbox-label">Usuario</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="person"></ion-icon>
+        <input type="text" [(ngModel)]="email" placeholder="correo@ejemplo.com">
+      </ion-item>
+    </div>
+
+    <br>
+
+    <!-- contrasena -->
+    <div>
+      <p class="textbox-label">Contraseña</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input   type="password" [(ngModel)]="password" placeholder="Tu contraseña">
+      </ion-item>
+    </div>
+
+    <br>
+
+    <ion-button color= "naranja"  class="ion-text-capitalize" expand="full" (click)="intentarLogin()">Iniciar Sesión</ion-button>
+    
+    <p class="ion-text-center">Olvide mi contraseña</p>
+
+  </div>
+
+</ion-content>

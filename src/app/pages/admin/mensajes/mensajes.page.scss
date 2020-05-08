@@ -1,0 +1,61 @@
+.mensaje-item {
+    display: flex;
+    margin-bottom: 10px;
+
+    .espacio {
+        width: 40%;
+    }
+
+    p {
+        font-size: 13px;
+        margin: -6px 0px 0px 0px;
+    }
+}
+
+.mensaje-item-receptor {
+    flex-direction: row-reverse;
+
+    ion-card {
+        --background: var(--ion-color-dark);
+        color: lightgray;
+    }
+}
+
+.mensaje-item-emisor {
+    ion-card {
+        --background: var(--ion-color-naranja);
+        color: black;
+    }
+
+    p {
+        text-align: right;
+    }
+}
+
+ion-grid {
+    border: 1px solid red;
+    --ion-grid-padding: 0px;
+
+    ion-row {
+        border: 1px solid blue;
+        padding: 0px;
+
+        ion-col {
+            border: 1px solid green;
+            --ion-grid-column-padding: 0px;
+        }
+    }
+}
+
+.enviar-mensaje {
+    padding: 0px 5px;
+
+    .mdm-textbox-card {
+        width: 85%;
+    }
+
+    .btn-enviar {
+        margin-left: 5px;
+        width: 15%;
+    }
+}

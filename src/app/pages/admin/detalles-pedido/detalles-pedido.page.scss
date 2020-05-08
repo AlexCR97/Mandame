@@ -1,0 +1,58 @@
+.detalles-pedido-item {
+    img {
+        width: 30px;
+        height: 30px;
+        margin-right: 15px;
+    }
+
+    .restaurant {
+        margin-bottom: 4px;
+    }
+
+    .tiempo {
+        font-size: 13px;
+
+        span {
+            color: var(--ion-color-naranja);
+        }
+    }
+}
+
+.producto-item {
+    .nombre {
+        margin-bottom: 4px;
+    }
+
+    .cantidad {
+        color: gray;
+        font-size: 13px;
+    }
+}
+
+.separador {
+    width: 100%;
+    height: 1px;
+    background-color: lightgray;
+}
+
+.comentario-item {
+    color: gray;
+}
+
+.direccion-item {
+    ion-icon {
+        margin-right: 15px;
+    }
+
+    .repartidor {
+        margin-bottom: 4px;
+    }
+
+    .direccion {
+        font-size: 13px;
+
+        span {
+            color: var(--ion-color-naranja);
+        }
+    }
+}

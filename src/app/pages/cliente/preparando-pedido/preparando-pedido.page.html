@@ -1,0 +1,64 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="naranja">
+    <ion-buttons slot="start">
+      <ion-button  (click)="clickedStar()">
+        <ion-icon class="white" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title mode="ios">
+        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <div class="top-shop">
+      <div class="description">
+        <p class="title"><span class="name" id="title">Pedido #{{numPedido}}</span></p>
+        <p class="subtitle margin"><span class="name">{{lugar}}</span></p>
+      </div>
+    </div>
+    <div class="lugar margin">
+      <img src="../../../assets/img/pizzah.jpg">
+    </div>
+
+    <ion-list>
+      <ion-item lines="none">
+        <ion-icon slot="start" class="active" name="hourglass-outline"></ion-icon>
+        <ion-label color="medium">Pedido Confirmado</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-label color="medium">Preparando Pedido</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-label color="medium">Pedido Recolectado</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-label color="medium">Pedido en transito</ion-label>
+      </ion-item>
+    
+      
+      <ion-item lines="none">
+        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-label color="medium">Entegado</ion-label>
+      </ion-item>
+    </ion-list>
+  
+  <ion-button class="margin-top ion-text-capitalize" disabled color="naranja"  expand="block">Calificar Repartidor </ion-button>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="mail-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+

@@ -1,0 +1,33 @@
+.flecha {
+    width: 100%;
+}
+
+.logo {
+    width: 140px;
+    margin-top: -30px;
+    margin-bottom: 10px;
+}
+
+.bienvenida {
+    p, h3 {
+        margin: 0px;
+    }
+
+    p {
+        color: gray;
+    }
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+
+    p {
+        color: gray;
+        margin-left: 10px;
+    }
+}
+
+.textbox-label {
+    margin: 0px 0px 7px 0px;
+}

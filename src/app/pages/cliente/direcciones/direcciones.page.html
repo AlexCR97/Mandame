@@ -1,0 +1,40 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar color="naranja">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="ios">
+        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <ion-label class="bold">
+      Direcciones
+    </ion-label>
+    <div *ngFor="let direccion of direcciones">
+      <ion-card mode="ios">
+        <ion-card-content class="direccion-content">
+          <div class="detalles-entrega">
+            <div class="icon">
+              <ion-icon name="location-sharp" size="large"></ion-icon>
+            </div>
+            <div class="detalles">
+              <p class="title">Nombre Casa</p>
+              <p class="description">Calle #No, Colonia</p>
+            </div>
+          </div>
+          <ion-badge class="badge">
+            Cambiar
+          </ion-badge>
+        </ion-card-content>
+      </ion-card>
+    </div>
+</ion-content>
+
+<ion-footer class="no">
+  <ion-button color="naranja" expand="full">Nueva dirrección</ion-button>
+</ion-footer>

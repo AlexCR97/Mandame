@@ -1,0 +1,125 @@
+.background{
+    background-color: #ff6600;
+    width: 100%;
+    height: 200px;
+}
+
+*{
+
+    font-family: Montserrat;
+}
+
+ion-footer{
+    margin: 0 !important;
+    padding: 0 !important;
+
+    & > *{
+        margin: 0 !important;
+    padding: 0 !important;
+    }
+}
+
+ion-content{
+    position: relative !important;
+}
+.top-btn {
+    background: transparent;
+    height: 120px;
+    z-index: -1;
+    padding: 10px 10px;
+    display: flex;
+    justify-content: flex-start;
+
+    .logo {
+        display: flex;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+        height: 125px;
+        width: 125px;
+    }
+}
+
+.principal{
+    z-index: 1;
+    position: relative;
+    top: -25px;
+    padding: 15px 25px;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    background-color: #fff;
+}
+.centro{
+    width: 100%;
+    position: relative;
+    top: -50px;
+    display: flex;
+    justify-content: center;
+}
+.foto{
+    border: 2px solid #ff6600;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.contenedor{
+    position: relative;
+    top: -50px;
+}
+
+
+.contenedor-iconos-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bold{
+    font-weight: 600 !important;
+}
+
+
+.cnombre{
+    font-weight: 600;
+    color: black;
+    text-align: center;
+}
+.icon{
+    margin: 0 10px;
+    font-size: 20px;
+    color: orange;
+}
+
+.text{
+    font: 1.0rem;
+    color: black;
+    text-align: left;
+    
+}
+
+.textarea{
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+ion-textarea{
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 0 10px;
+    border: 1px solid #eaeaea;
+}
+
+.comentario{
+    font: 1.0rem;
+    color:white;
+    width: 100%;
+}
+
+ion-icon{
+    color: black;
+    align-self: end;
+}
+
+
+

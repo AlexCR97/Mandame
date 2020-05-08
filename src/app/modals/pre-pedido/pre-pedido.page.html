@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Ya casi esta tu pedido...</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- complementos -->
+  <section>
+
+    <h5><b>Complementos</b></h5>
+
+    <div class="mdm-scroll-horizontal">
+
+      <!-- producto item -->
+      <div class="mdm-scroll-horizontal-item mdm-producto-item" *ngFor="let i of complementoItems">
+        <ion-card class="mdm-center-both">
+          <img src="{{i.imgSrc}}">
+        </ion-card>
+        <p>{{i.desc}}</p>
+      </div><!-- producto item -->
+
+    </div>
+    
+  </section><!-- complementos -->
+
+  <!-- pedidos -->
+  <section>
+
+    <h5><b>Pedido</b></h5>
+
+    <ion-item>
+      <ion-label color="naranja">{{nombreNegocio}}</ion-label>
+    </ion-item>
+
+    <ion-list>
+      <ion-item class="mdm-mb-2" *ngFor="let i of ordenItems">
+        <ion-text>
+          <ion-label>{{i.desc}}</ion-label>
+          <ion-label>$ {{i.precio}}</ion-label>
+        </ion-text>
+        <div class="mdm-btn-numeric mdm-btn-outline-naranja" slot="end">
+          <ion-icon color="naranja" name="remove"></ion-icon>
+          <p>{{i.cantidad}}</p>
+          <ion-icon color="naranja" name="add"></ion-icon>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </section><!-- pedidos -->
+
+  <!-- direccion -->
+  <section>
+    <h5><b>Dirección de entrega</b></h5>
+
+    <ion-card class="direccion-item">
+      <ion-item lines="none">
+        <ion-icon name="location"></ion-icon>
+        <ion-text>
+          <ion-label class="titulo">{{direccionEntrega.nombreCasa}}</ion-label>
+          <ion-label class="subtitulo">{{direccionEntrega.direccion}}</ion-label>
+        </ion-text>
+      </ion-item>
+    </ion-card>
+
+  </section><!-- direccion -->
+
+  <!-- total -->
+  <section>
+
+    <h5><b>Total</b></h5>
+
+    <ion-card>
+      <ion-card-content>
+        <div class="item-total">
+          <p>Total de los productos</p>
+          <p><span>$ {{subTotal}}</span></p>
+        </div>
+        <div class="item-total">
+          <p>Costo del envío</p>
+          <p><span>$ {{costoEnvio}}</span></p>
+        </div>
+        <div class="item-total">
+          <p>Total</p>
+          <p><span>$ {{total}}</span></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  </section><!-- total-->
+
+</ion-content>
+
+<ion-footer>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block">Realizar pedido</ion-button>
+</ion-footer>
