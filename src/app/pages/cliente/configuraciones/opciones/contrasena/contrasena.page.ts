@@ -3,6 +3,9 @@ import { IonButton, IonInput } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { ConfiguracionesService } from 'src/app/services/configuraciones.service';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
 
 @Component({
   selector: 'app-contrasena',
@@ -15,62 +18,52 @@ export class ContrasenaPage {
   @ViewChild("antigua", {static: false}) antigua: IonInput;
   @ViewChild("nueva", {static: false}) nueva: IonInput;
 
-  password: string | number;
-  newPassword: string | number;
+  password = '';
+  confirmPassword = '';
+  cargandoDialog;
 
   constructor(
+    public configService: ConfiguracionesService,
+    public guiUtils: GuiUtilsService,
     public loadingController: LoadingController,
-    private navCtrl: NavController,
-    public toastController: ToastController) {
+    private navController: NavController,
+    public toastController: ToastController
+  ) {
+    this.password = '';
+    this.confirmPassword = '';
+  }
 
-      this.password = '';
-      this.newPassword = '';
-
-    }
-
-  habilitarTexto(){
+  habilitarTexto() {
     this.nueva.disabled = false;
   }
 
-  habilitarBoton(){
+  habilitarBoton() {
     this.boton.disabled = false;
   }
 
-  confirm(){
-    if( this.password === this.newPassword ){
-      this.presentLoading();
-    }else{
-      this.errorToast();
+  async confirm() {
+    // contrasenas validas
+    if (this.password == this.confirmPassword) {
+      this.cargandoDialog = await this.guiUtils.mostrarCargando('Cambiando tu contraseña...');
+
+      this.configService.actualizarContrasena(CacheUsuario.usuario.uid, this.confirmPassword)
+      .then(() => {
+        console.log('Exito al cambiar contrasena :D');
+        this.guiUtils.cerrarCargando(this.cargandoDialog);
+        this.guiUtils.mostrarToast('¡Tu contraseña ha sido cambiada! :D', 3000, 'success');
+
+        this.navController.back();
+      })
+      .catch(error => {
+        console.error('Error al cambiar contrasena :(');
+        console.error(error);
+        this.guiUtils.cerrarCargando(this.cargandoDialog);
+        this.guiUtils.mostrarToast('No se pudo cambiar tu contraseña :(', 3000, 'danger');
+      });
+    }
+    // contrasenas invalidas
+    else {
+      this.guiUtils.mostrarToast('Verifica que las contraseñas sean iguales', 3000, 'danger');
     }
   }
-
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      duration: 2000
-    });
-    await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-    this.navCtrl.back();
-    this.successToast();
-  }
-
-  async errorToast() {
-    const toast = await this.toastController.create({
-      message: 'Las contraseñas no son iguales',
-      color: "danger",
-      duration: 4000
-    });
-    toast.present();
-  }
-
-  async successToast() {
-    const toast = await this.toastController.create({
-      message: 'Contraseña cambiada',
-      color: "success",
-      duration: 4000
-    });
-    toast.present();
-  }
-
 }

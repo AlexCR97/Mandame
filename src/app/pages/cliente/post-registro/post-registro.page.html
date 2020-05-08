@@ -39,11 +39,19 @@
 
       <br>
 
-      <!-- nombre de usuario -->
+      <!-- nombre -->
       <div>
-        <p class="textbox-label">Nombre de usuario</p>
+        <p class="textbox-label">Nombre</p>
         <ion-item class="mdm-textbox-card" lines="none">
-          <input type="text" placeholder="Tu nombre de usuario" [(ngModel)]="usuario.nombre">
+          <input type="text" placeholder="Tu nombre" [(ngModel)]="usuario.nombre">
+        </ion-item>
+      </div>
+
+      <!-- apellido -->
+      <div>
+        <p class="textbox-label">Apellido</p>
+        <ion-item class="mdm-textbox-card" lines="none">
+          <input type="text" placeholder="Tu apellido" [(ngModel)]="usuario.apellido">
         </ion-item>
       </div>
 

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { RegistroService } from 'src/app/services/registro.service';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { LoadingController } from '@ionic/angular';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 
 @Component({
   selector: 'app-login',
@@ -9,22 +13,38 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  public email: string;
-  public password: string;
+  email: string;
+  password: string;
+  cargandoDialog;
 
   constructor(
+    public guiUtils: GuiUtilsService,
+    public loadingController: LoadingController,
+    public registroService: RegistroService,
     public router: Router,
-    private authService: AuthService
-
   ) { }
 
   ngOnInit() { }
 
-  intentarLogin() {
-    this.authService.login(this.email, this.password).then(res => {
+  async intentarLogin() {
+    console.log('Iniciando sesion...');
+
+    this.cargandoDialog = await this.guiUtils.mostrarCargando('Iniciando sesión...');
+
+    this.registroService.iniciarSesion(this.email, this.password,
+    usuario => {
+      console.log('Exito al iniciar sesion :D');
+      this.guiUtils.cerrarCargando(this.cargandoDialog);
+
+      CacheUsuario.usuario = usuario;
+
       this.router.navigateByUrl('/inicio');
-
-    }).catch(err => alert('los datos no son correctos'));
+    },
+    error => {
+      console.error('Error al iniciar sesion :(');
+      console.error(error);
+      this.guiUtils.cerrarCargando(this.cargandoDialog);
+      this.guiUtils.mostrarToast('Verifica tu correo y contraseña', 3000, 'danger');
+    });
   }
-
 }

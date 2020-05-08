@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { Usuario } from 'src/app/dbdocs/usuario';
 
 @Component({
   selector: 'app-configuraciones',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfiguracionesPage implements OnInit {
 
+  usuario: Usuario = CacheUsuario.usuario;
+
   constructor() { }
 
   ngOnInit() {
+    console.log('Usuario:');
+    console.log(this.usuario);
   }
-
 }

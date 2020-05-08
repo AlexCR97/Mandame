@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistroService } from 'src/app/services/registro.service';
 import { Usuario } from 'src/app/dbdocs/usuario';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 
 @Component({
   selector: 'app-registro',
@@ -18,19 +19,17 @@ export class RegistroPage implements OnInit {
   cargandoDialog;
 
   constructor(
+    public guiUtils: GuiUtilsService,
     public loadingController: LoadingController,
     public registroService: RegistroService,
     public router: Router,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() { }
 
-  async cerrarCargando() {
-    this.cargandoDialog.dismiss();
-  }
-
   iniciarSesion() {
-    this.cerrarCargando();
+    this.guiUtils.cerrarCargando(this.cargandoDialog);
 
     console.log('Iniciando sesion...');
 
@@ -38,15 +37,6 @@ export class RegistroPage implements OnInit {
   }
 
   async intentarRegistro() {
-
-    console.log('Obteniendo direcciones...');
-
-    this.registroService.getDirecciones().subscribe(direcciones => {
-      console.log(direcciones);
-    });
-
-    return;
-
     let credencialesValidas = await this.validarCredenciales();
 
     if (!credencialesValidas) {
@@ -56,18 +46,11 @@ export class RegistroPage implements OnInit {
     this.registrarUsuario();
   }
 
-  async mostrarCargando(mensaje: string) {
-    this.cargandoDialog = await this.loadingController.create({
-      message: mensaje,
-    });
-
-    await this.cargandoDialog.present();
-  }
-
-  registrarUsuario() {
-    this.mostrarCargando('Registrando...');
+  async registrarUsuario() {
+    this.cargandoDialog = await this.guiUtils.mostrarCargando('Registrando...');
 
     let usuario: Usuario = {
+      apellido: '',
       direcciones: [],
       email: this.correo,
       foto: '',
@@ -87,8 +70,10 @@ export class RegistroPage implements OnInit {
         this.iniciarSesion();
       },
       error => {
-        this.cerrarCargando();
-        console.log('Error es: ' + error);
+        this.guiUtils.cerrarCargando(this.cargandoDialog);
+        console.error('Error al registrar usuario');
+        console.error(error);
+        this.guiUtils.mostrarToast('La contraseña debe de tener al menos 6 caracteres', 3000, 'danger');
       }
     );
   }
@@ -102,15 +87,16 @@ export class RegistroPage implements OnInit {
 
     if (!correoDisponible) {
       console.log('El correo no esta disponible');
+      this.guiUtils.mostrarToast('El correo no esta disponible', 3000, 'danger');
       return false;
     }
 
     if (this.contrasena != this.confirmarContrasena) {
       console.log('Las contrasenas no coinciden');
+      this.guiUtils.mostrarToast('Las contrasenas no coinciden', 3000, 'danger');
       return false;
     }
 
     return true;
   }
-
 }

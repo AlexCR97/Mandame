@@ -94,8 +94,7 @@ export class RegistroService {
   iniciarSesion(correo: string, contrasena: string, resolver: (usuario: Usuario) => void, manejarError: (error: any) => void) {
     this.afa.auth.signInWithEmailAndPassword(correo, contrasena)
     .then(async result => {
-      let usuario = await this.getUsuario(result.user.uid).toPromise();
-      resolver(usuario);
+      this.getUsuario(result.user.uid).subscribe(usuario => resolver(usuario));
     })
     .catch(error => {
       manejarError(error);
