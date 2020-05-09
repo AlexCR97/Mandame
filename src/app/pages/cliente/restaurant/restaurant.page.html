@@ -30,16 +30,16 @@
       <ion-avatar class="img-avatar">
         <img src="https://gravatar.com/avatar">
       </ion-avatar>
-      <div class="description">
-        <p class="title"><span class="name" id="title">Dominos Pizza</span><ion-badge class="status">Abierto</ion-badge></p>
+      <div class="description"  *ngFor="let restaurants of Restaurant">
+        <p class="title"><span class="name" id="title">{{restaurants.nombre}}</span><ion-badge class="status">{{restaurants.estado}}</ion-badge></p>
         <p class="subtitle">
-          <span class="name">Pizzeria</span><ion-icon name="star"></ion-icon><span class="star">
-            4.5</span>
+          <span class="name">{{restaurants.categoria}}</span><ion-icon name="star"></ion-icon><span class="star">
+            {{restaurants.calificacion}}</span>
         </p>
       </div>
     </div>
-    <div class="description-shop">
-      <p>Entrega aproximada: <span>40 Minutos</span><ion-icon name="information-circle-outline"></ion-icon></p>  
+    <div class="description-shop" *ngFor="let restaurants of Restaurant">
+      <p>Entrega aproximada: <span>{{restaurants.tiempoaprox}} minutos</span><ion-icon name="information-circle-outline"></ion-icon></p>  
     </div>
     
     <div class="articles">

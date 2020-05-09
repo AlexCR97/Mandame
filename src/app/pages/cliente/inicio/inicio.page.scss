@@ -115,6 +115,10 @@ ion-toolbar {
     }
 }
 
+ion-segment-button{
+    min-width: 105px;
+}
+
 ion-fab-button[data-desc] {
     position: relative;
 }
