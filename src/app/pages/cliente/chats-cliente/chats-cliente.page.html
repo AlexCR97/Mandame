@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="foo()">
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <ion-list-header>
+      <h5>Mensajes</h5>
+    </ion-list-header>
+
+    <ion-item class="chat-item" lines="full" *ngFor="let i of chats" routerLink="/mensajes">
+      <ion-avatar slot="start">
+        <img src="../../../../assets/img/foto-perfil-01.jpg">
+      </ion-avatar>
+      <ion-text>
+        <ion-label>{{i.nombre}} {{i.apellido}}<span class="hora">Hace cierto tiempo</span></ion-label>
+        <ion-label class="mensaje">Lorem ipsum dolor sit amet, consectetur </ion-label>
+      </ion-text>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<!-- fab -->
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+
+  <ion-fab-button color="naranja" (click)="crearNuevoChat()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+
+</ion-fab><!-- fab -->

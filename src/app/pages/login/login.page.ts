@@ -38,7 +38,35 @@ export class LoginPage implements OnInit {
 
       CacheUsuario.usuario = usuario;
 
-      this.router.navigateByUrl('/inicio');
+      console.log('Usuario obtenido:');
+      console.log(usuario);
+
+      switch (usuario.posicion) {
+        
+        case 'cliente': {
+          console.log('Cuenta de cliente detectada. Iniciando sesion...');
+          this.router.navigateByUrl('/inicio');
+          break;
+        }
+        
+        case 'repartidor': {
+          console.log('Cuenta de repartidor detectada. Iniciando sesion...');
+          this.router.navigateByUrl('/inicio-repartidor');
+          break;
+        }
+
+        case 'admin': {
+          console.log('Cuenta de admin detectada. Iniciando sesion...');
+          this.router.navigateByUrl('/inicio-admin');
+          break;
+        }
+
+        default: {
+          console.log('Ninguna cuenta detectada :(');
+          this.guiUtils.mostrarToast('Este correo no parece estar vinculado con ninguna cuenta', 3000, 'danger');
+          break;
+        }
+      }
     },
     error => {
       console.error('Error al iniciar sesion :(');

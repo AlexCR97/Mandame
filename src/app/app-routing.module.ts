@@ -65,7 +65,7 @@ const routes: Routes = [
   },
   {
     path: 'mensajes',
-    loadChildren: () => import('./pages/admin/mensajes/mensajes.module').then( m => m.MensajesPageModule)
+    loadChildren: () => import('./pages/mensajes/mensajes.module').then( m => m.MensajesPageModule)
   },
   {
     path: 'mandame',
@@ -90,7 +90,8 @@ const routes: Routes = [
   {
     path: 'mensajes-admin',
     loadChildren: () => import('./pages/admin/mensajes-admin/mensajes-admin.module').then( m => m.MensajesAdminPageModule)
-  },  {
+  },
+  {
     path: 'pruebas',
     loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule)
   },
@@ -98,9 +99,10 @@ const routes: Routes = [
     path: 'post-registro',
     loadChildren: () => import('./pages/cliente/post-registro/post-registro.module').then( m => m.PostRegistroPageModule)
   },
-
-
-
+  {
+    path: 'chats-cliente',
+    loadChildren: () => import('./pages/cliente/chats-cliente/chats-cliente.module').then( m => m.ChatsClientePageModule)
+  },
 ];
 
 @NgModule({
