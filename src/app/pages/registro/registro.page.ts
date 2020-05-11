@@ -71,6 +71,7 @@ export class RegistroPage implements OnInit {
       direcciones: [],
       email: this.correo,
       foto: '',
+      apellido:'',
       nombre: '',
       posicion: 'cliente',
       telefono: '',
