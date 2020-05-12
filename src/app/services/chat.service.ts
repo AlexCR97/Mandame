@@ -62,51 +62,106 @@ export class ChatService {
     return batch.commit();
   }
 
+  getChats(uidUsuario: string, resolver: (repartidores: Usuario[]) => void, manejarError: (error: any) => void) {
+    this.afs.collection<any>('chats').snapshotChanges()
+    // Filtrar por chats del usuario actual
+    .pipe(map(chatSnapshots => {
+      return chatSnapshots.filter(snapshot => {
+        let chatUid = snapshot.payload.doc.id;
+        let uids = chatUid.split('-');
+        let uidEmisor = uids[0];
+        return uidEmisor == uidUsuario;
+      });
+    }))
+    // Convertir snapshots a usuarios repartidores
+    .pipe(map(chatSnapshots => {
+      return chatSnapshots.map(async snapshot => {
+        let chatUid = snapshot.payload.doc.id;
+        let uids = chatUid.split('-');
+        let uidReceptor = uids[1];
+        let usuarioDoc = await this.afs.firestore.collection('usuarios').doc(uidReceptor).get();
+
+        let usuario: Usuario = {
+          apellido: usuarioDoc.get('apellido'),
+          direcciones: usuarioDoc.get('direcciones'),
+          email: usuarioDoc.get('email'),
+          foto: usuarioDoc.get('foto'),
+          nombre: usuarioDoc.get('nombre'),
+          posicion: usuarioDoc.get('posicion'),
+          telefono: usuarioDoc.get('telefono'),
+          uid: usuarioDoc.get('uid'),
+        };
+        
+        return usuario;
+      });
+    }))
+    // Obtener asincronamente los repartidores
+    .subscribe(promises => {
+      Promise.all(promises).then(usuarios => {
+        resolver(usuarios);
+      })
+      .catch(error => {
+        manejarError(error);
+      });
+    });
+  }
+
   getMensajes(uidEmisor: string, uidReceptor: string): Observable<Mensaje[]> {
     return this.afs.collection<Mensaje>('mensajes').valueChanges().pipe(
       map(mensajes => {
-        return mensajes.filter(msj => msj.emisor == uidEmisor && msj.receptor == uidReceptor);
+        return mensajes
+          .filter(msj => msj.emisor == uidEmisor && msj.receptor == uidReceptor)
+          .sort((msj1, msj2) => (new Date(msj1.fechaHora)).getTime() - (new Date(msj2.fechaHora)).getTime())
       })
     );
   }
 
-  getRepartidorLibreRandom(resolver: (repartidor: Repartidor) => void, manejarError: (error: any) => void) {
-    this.getRepartidoresLibres(
-      repartidoresLibres => {
-        console.log('getRepartidorLibreRandom');
-        console.log('Repartidores libres:');
-        console.log(repartidoresLibres);
+  getRepartidorLibre(resolver: (repartidores: Repartidor) => void, manejarError: (error: any) => void) {
+    this.afs.collection<any>('usuarios').snapshotChanges()
+    // Filtrar por usuarios con posicion de repartidor
+    .pipe(map(usuariosSnapshots => {
+      return usuariosSnapshots.filter(snapshot => {
+        let posicion = snapshot.payload.doc.get('posicion');
+        return posicion == 'repartidor';
+      });
+    }))
+    // Convertir snapshots a usuarios repartidores
+    .pipe(map(usuariosSnapshots => {
+      return usuariosSnapshots.map(async snapshot => {
+        let usuarioDoc = snapshot.payload.doc
+        let repartidorDoc = await this.afs.firestore.collection('repartidores').doc(usuarioDoc.id).get();
 
-        if (repartidoresLibres.length == 0) {
-          manejarError('No hay ningun repartidor disponible :(');
-        }
-        else {
-          let index = this.randomInt(0, repartidoresLibres.length);
-          resolver(repartidoresLibres[index]);
-        }
-      },
-      manejarError
-    );
-  }
+        let repartidor: Repartidor = {
+          apellido: usuarioDoc.get('apellido'),
+          calificacion: repartidorDoc.get('calificacion'),
+          email: usuarioDoc.get('email'),
+          estado: repartidorDoc.get('estado'),
+          foto: usuarioDoc.get('foto'),
+          nombre: usuarioDoc.get('nombre'),
+          telefono: usuarioDoc.get('telefono'),
+          uid: usuarioDoc.get('uid'),
+        };
+        
+        return repartidor;
+      });
+    }))
+    // Obtener asincronamente los repartidores
+    .subscribe(promises => {
+      Promise.all(promises).then(usuarios => {
 
-  getRepartidoresLibres(resolver: (repartidores: Repartidor[]) => void, manejarError: (error: any) => void) {
-    this.getRepartidores(
-      repartidoresObtenidos => {
-        console.log('getRepartidoresLibres');
-        console.log('Repartidores obtenidos:');
-        console.log(repartidoresObtenidos);
-        console.log('Length: ' + repartidoresObtenidos.length);
-        console.log('Repartidor 0: ' + repartidoresObtenidos[0]);
+        // Filtrar repartidores que esten libres
+        let repartidoresLibres = usuarios.filter(i => i.estado == "Libre");
 
-        let repartidoresLibres = repartidoresObtenidos.filter(rep => rep.estado == "Libre");
+        // Obtener un repartidor al azar
+        let index = this.randomInt(0, repartidoresLibres.length - 1);
+        let repartidor = repartidoresLibres[index];
 
-        console.log('Repartidores obtenidos filtrados');
-        console.log(repartidoresLibres);
-
-        resolver(repartidoresLibres);
-      },
-      manejarError
-    );
+        resolver(repartidor);
+      })
+      .catch(error => {
+        manejarError(error);
+      });
+    });
   }
 
   getRepartidores(resolver: (repartidores: Repartidor[]) => void, manejarError: (error: any) => void) {

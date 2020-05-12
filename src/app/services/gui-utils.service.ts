@@ -32,6 +32,14 @@ export class GuiUtilsService {
   }
 
   async cerrarCargando(cargandoDialog) {
+    if (cargandoDialog == undefined) {
+      return;
+    }
+
+    if (cargandoDialog == null) {
+      return;
+    }
+    
     cargandoDialog.dismiss();
   }
 

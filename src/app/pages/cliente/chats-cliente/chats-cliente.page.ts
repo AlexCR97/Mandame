@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
-import { Repartidor } from 'src/app/dbdocs/repartidor';
 import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheChat } from 'src/app/services/cache-chat';
 import { Mensaje } from 'src/app/dbdocs/mensaje';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Usuario } from 'src/app/dbdocs/usuario';
+import { Router } from '@angular/router';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 
 @Component({
   selector: 'app-chats-cliente',
@@ -12,59 +15,64 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class ChatsClientePage implements OnInit {
 
-  chats = Array<Repartidor>()
+  cargandoDialog;
+  chats: Usuario[];
 
   constructor(
     public chatService: ChatService,
+    public guiUtls: GuiUtilsService,
+    public router: Router,
     public utils: UtilsService,
   ) { }
 
   ngOnInit() {
-    this.chatService.getMensajes(CacheUsuario.usuario.uid, 'GGa1ciJZLgTI7W0XF97TxiE2IDc2').subscribe(mensajes => {
-      console.log('Se obtuvieron nuevos mensajes!');
+    console.log('Obteniendo chats con repartidores...');
+    this.chatService.getChats(CacheUsuario.usuario.uid,
+      repartidores => {
+        console.log('Repartidores obtenidos en Chats Cliente');
+        console.log(repartidores);
 
-      mensajes = mensajes.sort((m1, m2) => {
-        return (new Date(m1.fechaHora)).getTime() - (new Date(m2.fechaHora)).getTime();
-      });
+        CacheChat.setAllChatUsuario(repartidores);
+        this.chats = CacheChat.getAllChatsUsuarios();
+      },
+      error => {
+        console.error('Error al obtener los repartidores :(');
+        console.error(error);
+      }
+    );
+  }
 
-      console.log(mensajes);
+  abrirMensajes(uidReceptor: string) {
+    this.router.navigate(['/mensajes'], {
+      queryParams: {
+        uidReceptor: uidReceptor,
+      }
     });
   }
 
   crearNuevoChat() {
     // GGa1ciJZLgTI7W0XF97TxiE2IDc2
     // j8NJPw3hIyYV4ZAoCa1b4p9bOzI2
+    console.log('Buscando un repartidor libre...');
+    //this.cargandoDialog = this.guiUtls.mostrarCargando('Buscando un repartidor libre...');
 
-    let mensaje: Mensaje = {
-      contenido: 'Prueba 1',
-      fechaHora: this.utils.getFechaHoyString(),
-      emisor: CacheUsuario.usuario.uid,
-      receptor: 'GGa1ciJZLgTI7W0XF97TxiE2IDc2',
-    };
+    this.chatService.getRepartidorLibre(
+      repartidor => {
+        console.log('Repartidor libre obtenido!');
+        console.log(repartidor);
+        this.guiUtls.cerrarCargando(this.cargandoDialog);
+        this.guiUtls.mostrarToast(`Se encontro el repartidor ${repartidor.nombre} ${repartidor.apellido}`, 3000, 'success');
 
-    console.log('Enviando mensaje...');
+        let repartidorUsuario = CacheChat.repartidorToUsuario(repartidor);
+        CacheChat.setChatUsuario(repartidorUsuario);
 
-    this.chatService.enviarMensaje(mensaje)
-    .then(() => {
-      console.log('Mensaje enviado!');
-    })
-    .catch(error => {
-      console.error('Error el enviar mensaje');
-      console.error(error);
-    });
-  }
-
-  foo() {
-    this.chatService.getRepartidores(
-      repartidores => {
-        console.log('Repartidores');
-        console.log(repartidores);
-
-        this.chats = repartidores;
+        this.abrirMensajes(repartidor.uid);
       },
       error => {
-        console.error('Error al obtener repartidores');
+        console.error('Error al obtener un repartidor');
         console.error(error);
+        this.guiUtls.cerrarCargando(this.cargandoDialog);
+        this.guiUtls.mostrarToast('No se encontro ningun repartidor libre :(', 3000, 'danger');
       }
     );
   }
