@@ -13,4 +13,8 @@ export class RestaurantService {
   getAdicionalesFromRestaurant(idRestaurant) {
     return this.afs.collection('adicionales', ref => ref.where('id_restaurant','==', idRestaurant )).valueChanges()
   }
+
+  getRestaurant() {
+    return this.afs.collection('restaurantes').valueChanges();
+  }
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -21,7 +23,9 @@ import { environment } from 'src/environments/environment';
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
   ],
   providers: [
     StatusBar,
