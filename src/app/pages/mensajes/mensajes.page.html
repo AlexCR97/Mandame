@@ -18,19 +18,19 @@
   </ion-toolbar>
 
   <ion-item lines="full">
-    <ion-label>Edgar Vazquez</ion-label>
+    <ion-label>{{usuarioReceptor.nombre}} {{usuarioReceptor.apellido}}</ion-label>
     <ion-icon name="alert-circle-outline" slot="end"></ion-icon>
   </ion-item>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <div *ngFor="let i of mensajes" class="mensaje-item" [ngClass]="{'mensaje-item-emisor': i.isEmisor, 'mensaje-item-receptor': !i.isEmisor}">
+  <div *ngFor="let i of mensajesChat" class="mensaje-item" [ngClass]="{'mensaje-item-emisor': i.emisor == uidEmisor, 'mensaje-item-receptor': i.receptor == uidReceptor}">
     <div class="espacio"></div>
     <div>
       <ion-card>
         <ion-card-content>
-          <ion-label>{{i.mensaje}}</ion-label>
+          <ion-label>{{i.contenido}}</ion-label>
         </ion-card-content>
       </ion-card>
       <p class="ion-padding-horizontal">{{i.fechaHora}}</p>
@@ -42,10 +42,10 @@
 <ion-footer class="enviar-mensaje mdm-center-vertical">
 
   <ion-item class="mdm-textbox-card" lines="none">
-    <ion-input placeholder="Escribe un mensaje"></ion-input>
+    <ion-input placeholder="Escribe un mensaje" [(ngModel)]="inputText"></ion-input>
   </ion-item>
 
-  <ion-button class="btn-enviar" color="naranja">
+  <ion-button class="btn-enviar" color="naranja" (click)="onBtnEnviarClick()">
     <ion-icon name="send" slot="icon-only"></ion-icon>
   </ion-button>
 

@@ -21,7 +21,7 @@
       <p class="textbox-label">Usuario</p>
       <ion-item class="mdm-textbox-card" lines="none">
         <ion-icon name="person"></ion-icon>
-        <input type="text" placeholder="correo@ejemplo.com">
+        <input type="text" placeholder="correo@ejemplo.com" [(ngModel)]="correo">
       </ion-item>
     </div>
     <br>
@@ -31,7 +31,7 @@
       <p class="textbox-label">Contraseña</p>
       <ion-item class="mdm-textbox-card" lines="none">
         <ion-icon name="lock-closed"></ion-icon>
-        <input type="password" placeholder="Tu contraseña">
+        <input type="password" placeholder="Tu contraseña" [(ngModel)]="contrasena">
       </ion-item>
     </div>
     <br>
@@ -41,7 +41,7 @@
       <p class="textbox-label">Confirmar contraseña</p>
       <ion-item class="mdm-textbox-card" lines="none">
         <ion-icon name="lock-closed"></ion-icon>
-        <input type="password" placeholder="Confirma tu contraseña">
+        <input type="password" placeholder="Confirma tu contraseña" [(ngModel)]="confirmarContrasena">
       </ion-item>
     </div>
     <br>
