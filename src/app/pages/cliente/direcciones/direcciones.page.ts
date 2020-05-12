@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DireccionesService } from 'src/app/services/direcciones.service';
+import { Direccion } from 'src/app/dbdocs/direccion';
+import { Usuario } from 'src/app/dbdocs/usuario';
+import { LoadingController } from '@ionic/angular';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
+
 
 @Component({
   selector: 'app-direcciones',
@@ -7,22 +14,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DireccionesPage implements OnInit {
 
-  direcciones: any[];
+  direcciones: any = [];
+  constructor(
+    public loadingController: LoadingController,
+    public direccionesService: DireccionesService,
 
-  constructor() { }
+  ) { }
 
   ngOnInit() {
-    this.direcciones = [
-      {
-        casa: "Nombre de la Casa",
-        direccion: "Calle Lorem Ipsun #00 Colonia"
-
-      },
-      {
-        casa: "Nombre de la Casa",
-        direccion: "Calle Lorem Ipsun #00 Colonia"
-      }
-    ]
+    this.direccionesService.getDireccion(CacheUsuario.usuario.uid).subscribe(direccion => {
+      this.direcciones = direccion;
+    })
   }
-
 }
