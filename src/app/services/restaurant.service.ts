@@ -11,7 +11,7 @@ export class RestaurantService {
   ) { }
 
   getAdicionalesFromRestaurant(idRestaurant) {
-    return this.afs.collection('adicionales', ref => ref.where('id_restaurant','==', idRestaurant )).snapshotChanges()
+    return this.afs.collection('complementos', ref => ref.where('id_restaurant','==', idRestaurant )).snapshotChanges()
   }
 
   getRestaurant() {
