@@ -97,14 +97,15 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
     this.afs.getAdicionalesFromRestaurant(id_restaurant).subscribe(data => {
       this.adicionales = data.map(e => {
         return {
-          /*id: e.payload.doc.id,
+          id: e.payload.doc.id,
           nombre: e.payload.doc.data()['nombre'], 
           categoria: e.payload.doc.data()['categoria'],
           porcion: e.payload.doc.data()['porcion'],
-          precio: e.payload.doc.data()['precio']*/
+          precio: e.payload.doc.data()['precio']
         }
       });
     });
+    console.log('Data loaded: ', this.adicionales);
   }
 
   checkboxChanged(event, adicional) {
