@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { RestaurantService } from 'src/app/services/restaurant.service';
+import { CacheService } from 'src/app/services/cache.service';
 
 @Component({
   selector: 'app-pre-pedido',
@@ -9,85 +14,86 @@ export class PrePedidoPage implements OnInit {
 
   nombreNegocio = "Domino's Pizza"
 
-  complementoItems = [
-    {
-      desc: 'Complemento 1',
-      imgSrc: '../../../assets/img/b1.svg',
-      precio: 15.5,
-    },
-    {
-      desc: 'Complemento 2',
-      imgSrc: '../../../assets/img/b2.svg',
-      precio: 15.5,
-    },
-    {
-      desc: 'Complemento 3',
-      imgSrc: '../../../assets/img/b3.svg',
-      precio: 15.5,
-    },
-    {
-      desc: 'Complemento 4',
-      imgSrc: '../../../assets/img/b4.svg',
-      precio: 15.5,
-    },
-    {
-      desc: 'Complemento 5',
-      imgSrc: '../../../assets/img/b5.svg',
-      precio: 15.5,
-    },
-    {
-      desc: 'Complemento 6',
-      imgSrc: '../../../assets/img/b1.svg',
-      precio: 15.5,
-    },
-  ];
+  complementoItems: any[];
 
-  ordenItems = [
-    {
-      desc: 'Pizza Hawaiana',
-      precio: 100.50,
-      cantidad: 2
-    },
-    {
-      desc: 'Pizza Carnes Frias',
-      precio: 150.25,
-      cantidad: 1
-    },
-    {
-      desc: 'Pizza Hawaiana',
-      precio: 100.50,
-      cantidad: 2
-    },
-    {
-      desc: 'Pizza Carnes Frias',
-      precio: 150.25,
-      cantidad: 1
-    },
-  ];
+  ordenItems: any[];
 
   direccionEntrega = {
-    nombreCasa: 'Nombre de casa',
-    direccion: 'Calle Lorem Ipsum #000 Colonia',
+    nombreCasa: '',
+    direccion: '',
   };
 
   costoEnvio = 45.00;
   subTotal = 0;
   total = 0;
 
-  constructor() {
-    console.log('constructor call');
-    this.calcularTotal();
+  constructor(
+    private modalController: ModalController,
+    private router: Router,
+    private restaurantService: RestaurantService){
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.cargarOrdenes();
+    this.cargarComplementos();
+    // TODO: CHECK HOW TO LOAD EACH COMPLEMENT IMAGE
+    this.calcularTotal();
+
+    // REVIEW: TEST PURPOSES ONLY, DELETE AFTER
+    CacheUsuario.usuario = {
+      apellido: 'Reyna',
+      direcciones: [
+        'Chichenitza',
+        'Carol. Yucat.',
+        '#407'
+      ],
+      email: 'andresreyna15@gmail.com',
+      foto: 'url',
+      nombre: 'J. A. Reyna Espinoza',
+      posicion: 'Aqui mero',
+      telefono: 'Este',
+      uid: 'string',
+    };
+
+    this.cargarDireccion();
+  }
+
+  cargarDireccion() {
+    this.direccionEntrega.nombreCasa = CacheUsuario.usuario.nombre;
+    this.direccionEntrega.direccion = CacheUsuario.usuario.direcciones.toString();
+  }
+
+  cargarOrdenes() {
+    this.ordenItems = CacheService.carrito;
+    console.log('ordenes: ', this.ordenItems);
+  }
+
+  cargarComplementos() {
+    this.restaurantService.getComplementos().subscribe(data => {
+      this.complementoItems = data.map(complemento => {
+          return {
+            nombre: complemento['nombre'],
+            precio: complemento['precio'],
+            contenido: complemento['contenido'],
+            foto: complemento['foto'],
+            seleccionado: false
+          }  
+      });
+    });
+  }
+
+  seleccionarComplemento(complemento) {
+    if(!complemento.seleccionado) {
+      this.total += complemento.precio;
+      complemento.seleccionado = true;
+    } else {
+      this.total -= complemento.precio;
+      complemento.seleccionado = false;
+    }
+  }
 
   calcularTotal() {
     console.log('CalcularTotal():');
-
-    this.complementoItems.forEach(c => {
-      this.subTotal += c.precio;
-      console.log(c);
-    });
 
     this.ordenItems.forEach(o => {
       console.log(o);
@@ -97,11 +103,40 @@ export class PrePedidoPage implements OnInit {
     this.total += this.subTotal + this.costoEnvio;
   }
 
-  increase() {
-    console.log('Increasing!');
+  aumentarCantidad(orden) {
+    console.log('Order: ', orden);
+    orden.cantidad = orden.cantidad + 1;
+    this.total += orden.precio;
+    this.subTotal += orden.precio;
+    console.log('Nueva cantidad: ', orden.cantidad);
+
   }
 
-  decrease() {
-    console.log('Decreasing!');
+  disminuirCantidad(orden) {
+    console.log('Order: ', orden);
+    if(orden.cantidad > 1) {
+      orden.cantidad = orden.cantidad - 1;
+      this.total -= orden.precio;
+      this.subTotal -= orden.precio;
+    } else {
+      return ;
+    }
+    console.log('Nueva cantidad: ', orden.cantidad);
+  }
+
+  dismissModal() {
+    this.modalController.dismiss({ 'dismissed': true });
+  }
+
+  ordenChanged(orden) {
+    console.log('Orden has changed!');
+    console.log('cantidad: ', orden.cantidad);
+  }
+
+  realizarPedido() {
+    console.log('Realizando pedido!');
+    this.dismissModal();
+    // TODO: AGREGAR PEDIDO A LA BASE DE DATOS.
+
   }
 }

@@ -17,4 +17,8 @@ export class RestaurantService {
   getRestaurant() {
     return this.afs.collection('restaurantes').valueChanges();
   }
+
+  getComplementos() {
+     return this.afs.collection('complementos').valueChanges() 
+  }
 }

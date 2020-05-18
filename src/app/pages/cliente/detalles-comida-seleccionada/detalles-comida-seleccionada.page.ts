@@ -55,6 +55,26 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
     restaurant_id: "1"
   };
 
+  // TODO: Sustituir adicionales con 'Ingredientes', pues son los que se aumentan o disminuyen.
+  // Tal que asi quedara el producto.
+  // pedidoCompleto = {
+  //   producto = {
+  //     categoria: "especialidades",
+  //     foto: "url",
+  //     ingredientes: [
+  //       "Queso",
+  //       "Aceitunas Negras",
+  //       "Chile Verde"(string),
+  //       "Champiñones",
+  //       "Cebolla Morada" ],
+  //     nombre: "Veggy",
+  //     precio: "90",
+  //     restaurante: "8fXc1Y"
+  //   },
+  //   cantidad: 0,
+  //   total: 0.0
+  // }
+
   pedidoCompleto = {
     producto: { },
     adicionales: [],
@@ -64,7 +84,6 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
 
   constructor(
     private router: Router,
-    private cache: CacheService,
     private afs: RestaurantService) {
 
   }
@@ -118,7 +137,7 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
 
   agregar() {
     this.prepararPedido();
-    this.cache.cart.push(this.pedidoCompleto);
+    CacheService.carrito.push(this.pedidoCompleto);
     // TODO Regresar a pantalla anterior
   }
 
