@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DireccionesService } from 'src/app/services/direcciones.service';
-import { Direccion } from 'src/app/dbdocs/direccion';
-import { Usuario } from 'src/app/dbdocs/usuario';
 import { LoadingController } from '@ionic/angular';
 import { CacheUsuario } from 'src/app/services/cache-usuario';
 
@@ -22,8 +20,13 @@ export class DireccionesPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("Usuario")
+    console.log(CacheUsuario.usuario) 
     this.direccionesService.getDireccion(CacheUsuario.usuario.uid).subscribe(direccion => {
+      console.log("Obteniendo")
+      console.log(direccion)
       this.direcciones = direccion;
     })
+    console.log(this.direcciones)
   }
 }
