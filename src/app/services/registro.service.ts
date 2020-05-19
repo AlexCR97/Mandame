@@ -69,11 +69,18 @@ export class RegistroService {
       console.log(direccionsUids);
 
       direccionsUids.forEach(async direccionUid => {
-        let direccion = await this.getDireccion(direccionUid).toPromise();
+        let direccionDoc = await this.afs.firestore.collection('direcciones').doc(direccionUid).get();
+
+        let direccion: Direccion = {
+          calle: direccionDoc.get('calle'),
+          numeroExterior: direccionDoc.get('numeroExterior'),
+          numeroInterior: direccionDoc.get('numeroInterior'),
+          colonia: direccionDoc.get('colonia'),
+        };
 
         console.log('direccion obtenida:');
         console.log(direccion);
-
+        
         direcciones.push(direccion);
       });
 
