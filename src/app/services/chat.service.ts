@@ -109,9 +109,9 @@ export class ChatService {
   getMensajes(uidEmisor: string, uidReceptor: string): Observable<Mensaje[]> {
     return this.afs.collection<Mensaje>('mensajes').valueChanges().pipe(
       map(mensajes => {
-        return mensajes
-          .filter(msj => msj.emisor == uidEmisor && msj.receptor == uidReceptor)
-          .sort((msj1, msj2) => (new Date(msj1.fechaHora)).getTime() - (new Date(msj2.fechaHora)).getTime())
+        let mensajesEmisorReceptor = mensajes.filter(msj => (msj.emisor == uidEmisor && msj.receptor == uidReceptor) || (msj.emisor == uidReceptor && msj.receptor == uidEmisor));
+        let mensajesOrdenadosPorFecha = mensajesEmisorReceptor.sort((msj1, msj2) => (new Date(msj1.fechaHora)).getTime() - (new Date(msj2.fechaHora)).getTime());
+        return mensajesOrdenadosPorFecha;
       })
     );
   }

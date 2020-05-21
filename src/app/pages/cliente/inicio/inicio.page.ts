@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/core';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
 
 @Component({
   selector: 'app-inicio',
@@ -7,6 +8,8 @@ import { ScrollDetail } from '@ionic/core';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
+
+  usuario = CacheUsuario.usuario;
 
   anchorToolbar = false;
   showTitle = false;
