@@ -148,6 +148,9 @@ export class PrePedidoPage implements OnInit {
     let pedido = {
       aproximacion: 0,
       cliente: CacheUsuario.usuario.uid,
+      cantidad: CacheService.carrito.map(value => {
+        return value.cantidad
+      })
       comentarios: CacheService.carrito.map(value => {
         return value.comentario
       }),
