@@ -32,6 +32,8 @@ export class PrePedidoPage implements OnInit {
   subTotal = 0;
   total = 0;
 
+  @Input() val: number;
+
   constructor(
     private modalController: ModalController,
     private router: Router,
@@ -135,7 +137,8 @@ export class PrePedidoPage implements OnInit {
   }
 
   dismissModal() {
-    this.modalController.dismiss({ 'dismissed': true });
+    console.log('input: ', this.val);
+    this.modalController.dismiss({ 'res': 1 });
   }
 
   ordenChanged(orden) {
@@ -189,7 +192,6 @@ export class PrePedidoPage implements OnInit {
     );
 
     this.dismissModal();
-    // TODO: AGREGAR PEDIDO A LA BASE DE DATOS.
 
   }
 }

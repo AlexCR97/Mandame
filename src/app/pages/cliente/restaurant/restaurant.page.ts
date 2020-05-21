@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/core';
-import { RestaurantService } from "../../../services/restaurant.service"
+import { RestaurantService } from "../../../services/restaurant.service";
+import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
+import { ModalController } from '@ionic/angular';
 
 interface restaurant {
   calificacion : number[]
@@ -24,7 +26,8 @@ export class RestaurantPage implements OnInit {
 
   public Restaurant : any = [];
 
-  constructor(public restaurantservice : RestaurantService) { }
+  constructor(public restaurantservice : RestaurantService,
+    private modalController: ModalController) { }
 
   ngOnInit() {
     this.select = "Lorem";
@@ -45,5 +48,26 @@ export class RestaurantPage implements OnInit {
       const scrollTop = $event.detail.scrollTop;
       this.showToolbar = scrollTop >= 100;
     }
+  }
+
+  // TODO: Change the btnClick name to another most meaningful
+  btnClick() {
+    console.log('Down Button Click');
+    this.presentModal();
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: PrePedidoPage,
+      componentProps: {
+        'val': 0
+      }
+    });
+    modal.onDidDismiss().then((data) => {
+      console.log('Data: ', data);
+      // TODO: ADD CUSTOM ALERT HERE.
+      // TODO: CHANGE COLOR ANV ALUES OF DOWN BUTTON
+    });
+    return await modal.present();
   }
 }

@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { environment } from 'src/environments/environment';
 
+import { PrePedidoPageModule } from 'src/app/modals/pre-pedido/pre-pedido.module';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -26,6 +28,7 @@ import { environment } from 'src/environments/environment';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    PrePedidoPageModule
   ],
   providers: [
     StatusBar,

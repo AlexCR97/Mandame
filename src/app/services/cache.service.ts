@@ -12,6 +12,8 @@ export class CacheService {
   //   total: 0.0
   // }  
 
+  // Temporalmente el carrito tiene datos estaticos, hasta que esten conectadas algunas otras pantallas
+  // que manden los valores a las demas, se mantendra asi
   public static carrito: any[] = [
   	{
       categoria: 'especialidades',
