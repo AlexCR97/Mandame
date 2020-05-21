@@ -138,7 +138,7 @@ export class PrePedidoPage implements OnInit {
 
   dismissModal() {
     console.log('input: ', this.val);
-    this.modalController.dismiss({ 'res': 1 });
+    this.modalController.dismiss(1);
   }
 
   ordenChanged(orden) {

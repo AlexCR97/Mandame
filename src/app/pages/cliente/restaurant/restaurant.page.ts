@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/core';
 import { RestaurantService } from "../../../services/restaurant.service";
 import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
+import { ModalAlertPage } from 'src/app/modals/modal-alert/modal-alert.page';
 import { ModalController } from '@ionic/angular';
 
 interface restaurant {
@@ -53,19 +54,24 @@ export class RestaurantPage implements OnInit {
   // TODO: Change the btnClick name to another most meaningful
   btnClick() {
     console.log('Down Button Click');
-    this.presentModal();
+    this.presentModal(0);
   }
 
-  async presentModal() {
+  async presentModal(modalid) {
     const modal = await this.modalController.create({
-      component: PrePedidoPage,
+      component: modalid == 0 ? PrePedidoPage : ModalAlertPage,
       componentProps: {
         'val': 0
-      }
+      },
+      cssClass: modalid == 1 ? "dialog-modal" : "prepedido-modal"
     });
     modal.onDidDismiss().then((data) => {
-      console.log('Data: ', data);
-      // TODO: ADD CUSTOM ALERT HERE.
+      console.log('Data: ', data.data);
+      
+
+      if(data.data === 1) {
+        this.presentModal(1);
+      }
       // TODO: CHANGE COLOR ANV ALUES OF DOWN BUTTON
     });
     return await modal.present();

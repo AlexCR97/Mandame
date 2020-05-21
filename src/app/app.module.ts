@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 
 import { PrePedidoPageModule } from 'src/app/modals/pre-pedido/pre-pedido.module';
+import { ModalAlertPageModule } from 'src/app/modals/modal-alert/modal-alert.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,8 @@ import { PrePedidoPageModule } from 'src/app/modals/pre-pedido/pre-pedido.module
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    PrePedidoPageModule
+    PrePedidoPageModule,
+    ModalAlertPageModule
   ],
   providers: [
     StatusBar,
