@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { CacheUsuario } from 'src/app/services/cache-usuario';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { CacheService } from 'src/app/services/cache.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
+import { CacheChat } from 'src/app/services/cache-chat';
 
 @Component({
   selector: 'app-pre-pedido',
@@ -11,6 +14,8 @@ import { CacheService } from 'src/app/services/cache.service';
   styleUrls: ['./pre-pedido.page.scss'],
 })
 export class PrePedidoPage implements OnInit {
+
+  cargandoDialog;
 
   nombreNegocio = "Domino's Pizza"
 
@@ -30,7 +35,9 @@ export class PrePedidoPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private router: Router,
-    private restaurantService: RestaurantService){
+    private restaurantService: RestaurantService,
+    private chatService: ChatService,
+    public guiUtls: GuiUtilsService){
   }
 
   ngOnInit() { 
@@ -59,8 +66,11 @@ export class PrePedidoPage implements OnInit {
   }
 
   cargarDireccion() {
-    this.direccionEntrega.nombreCasa = CacheUsuario.usuario.nombre;
-    this.direccionEntrega.direccion = CacheUsuario.usuario.direcciones.toString();
+    if(CacheUsuario.usuario) {
+      console.log('Usuario: ', CacheUsuario.usuario);
+      this.direccionEntrega.nombreCasa = CacheUsuario.usuario.nombre;
+      this.direccionEntrega.direccion = CacheUsuario.usuario.direcciones.toString();
+    }
   }
 
   cargarOrdenes() {
@@ -135,6 +145,46 @@ export class PrePedidoPage implements OnInit {
 
   realizarPedido() {
     console.log('Realizando pedido!');
+    let pedido = {
+      aproximacion: 0,
+      cliente: CacheUsuario.usuario.uid,
+      comentarios: CacheService.carrito.map(value => {
+        return value.comentario
+      }),
+      direccion: [],
+      estado: 'En espera', // Estado por defecto
+      nombre: CacheUsuario.usuario.nombre,
+      precios: CacheService.carrito.map(value => {
+        return value.precio
+      }),
+      productos: CacheService.carrito.map(value => {
+        return value.nombre
+      }),
+      repartidor: { },
+      restaurante: CacheService.restaurante
+    }
+
+    this.chatService.getRepartidorLibre(
+      repartidor => {
+        console.log('Repartidor libre obtenido!');
+        console.log(repartidor);
+
+        pedido.repartidor = repartidor.uid;
+        this.restaurantService.agregarPedido(pedido).then(res => {
+          console.log('Pedido agregado exitosamente');
+        }).catch(err => {
+          console.log('Fallo al agregar pedido!');
+        });
+
+      },
+      error => {
+        console.error('Error al obtener un repartidor');
+        console.error(error);
+        this.guiUtls.cerrarCargando(this.cargandoDialog);
+        this.guiUtls.mostrarToast('No se encontro ningun repartidor libre :(', 3000, 'danger');
+      }
+    );
+
     this.dismissModal();
     // TODO: AGREGAR PEDIDO A LA BASE DE DATOS.
 

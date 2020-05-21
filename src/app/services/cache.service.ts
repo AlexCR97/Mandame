@@ -5,28 +5,53 @@ import { Injectable } from '@angular/core';
 })
 export class CacheService {
 
+  // pedidoCompleto = {
+  //   producto: { },
+  //   adicionales: [],
+  //   cantidad: 0,
+  //   total: 0.0
+  // }  
+
   public static carrito: any[] = [
   	{
+      categoria: 'especialidades',
+      foto: 'url',
+      ingredientes: [
+      ],
+      nombre: 'Veggy',
+      precio: 90.0,
+      restaurante: 'Domino\'s Pizza', // Objeto con nombre en lugar de uid del restaurante, para no consultar solo por eso.
     	desc: 'Pizza Hawaiana',
-    	precio: 100.50,
-    	cantidad: 2
+    	cantidad: 2, // Cantidad es agregado a otro objeto modificado en detalles-comida seleccionada, para sacar un total
+      comentario: 'Tal cosa sin tal cosa y tal cosa para tal cosa'
   	},
   	{
-    	desc: 'Pizza Carnes Frias',
-    	precio: 150.25,
-    	cantidad: 1
+    	categoria: 'especialidades',
+      foto: 'url',
+      ingredientes: [
+      ],
+      nombre: '5 Carnes',
+      precio: 100.0,
+      restaurante: 'Domino\'s Pizza', // Objeto con nombre en lugar de uid del restaurante, para no consultar solo por eso.
+      desc: 'Margarita Espacial',
+      cantidad: 2, // Cantidad es agregado a otro objeto modificado en detalles-comida seleccionada, para sacar un total
+      comentario: 'Tal cosa sin tal cosa y tal cosa para tal cosa'
   	},
   	{
-	    desc: 'Pizza Hawaiana',
-    	precio: 100.50,
-    	cantidad: 2
-	},
-	{
-	    desc: 'Pizza Carnes Frias',
-	    precio: 150.25,
-	    cantidad: 1
+	    categoria: 'especialidades',
+      foto: 'url',
+      ingredientes: [
+      ],
+      nombre: 'Orilla rellena',
+      precio: 125.0,
+      restaurante: 'Domino\'s Pizza', // Objeto con nombre en lugar de uid del restaurante, para no consultar solo por eso.
+      desc: '5 Carnes',
+      cantidad: 2, // Cantidad es agregado a otro objeto modificado en detalles-comida seleccionada, para sacar un total
+      comentario: 'Tal cosa sin tal cosa y tal cosa para tal cosa'
 	} 
 	];
+
+  public static restaurante = 'restaurante ejemplo';
 
   constructor() { 
   }

@@ -8,7 +8,7 @@ export class RestaurantService {
 
   constructor(
     private afs: AngularFirestore
-  ) { }
+    ) { }
 
   getAdicionalesFromRestaurant(idRestaurant) {
     return this.afs.collection('complementos', ref => ref.where('id_restaurant','==', idRestaurant )).snapshotChanges()
@@ -19,6 +19,10 @@ export class RestaurantService {
   }
 
   getComplementos() {
-     return this.afs.collection('complementos').valueChanges() 
+    return this.afs.collection('complementos').valueChanges() 
+  }
+
+  agregarPedido(pedido) {
+    return this.afs.collection('pedidos').add(pedido);
   }
 }
