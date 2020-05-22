@@ -2,8 +2,14 @@
     display: flex;
     margin-bottom: 10px;
 
-    .espacio {
-        width: 40%;
+    .fecha-expandida {
+        font-size: 13px !important;
+        transition: all 0.2s ease;
+    }
+
+    .fecha-no-expandida {
+        font-size: 0px !important;
+        transition: all 0.2s ease;
     }
 
     p {
@@ -14,36 +20,25 @@
 
 .mensaje-item-receptor {
     flex-direction: row-reverse;
+    margin-right: auto;
 
     ion-card {
-        --background: var(--ion-color-dark);
-        color: lightgray;
+        // TODO Cambiar el color del card a negro
+        //--background: #222428;
+        color: #222428 !important;
     }
 }
 
 .mensaje-item-emisor {
+    margin-left: auto;
+
     ion-card {
         --background: var(--ion-color-naranja);
-        color: black;
+        color: #222428 !important;
     }
 
     p {
         text-align: right;
-    }
-}
-
-ion-grid {
-    border: 1px solid red;
-    --ion-grid-padding: 0px;
-
-    ion-row {
-        border: 1px solid blue;
-        padding: 0px;
-
-        ion-col {
-            border: 1px solid green;
-            --ion-grid-column-padding: 0px;
-        }
     }
 }
 

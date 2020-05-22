@@ -28,13 +28,13 @@
       <h5>Mensajes</h5>
     </ion-list-header>
 
-    <ion-item class="chat-item" lines="full" *ngFor="let i of chats" routerLink="/mensajes">
+    <ion-item class="chat-item" lines="full" *ngFor="let i of chats" (click)="abrirMensajes(i.uid)">
       <ion-avatar slot="start">
-        <img src="{{i.imgSrc}}">
+        <img src="../../../../assets/img/foto-perfil-01.jpg">
       </ion-avatar>
       <ion-text>
-        <ion-label>{{i.usuario}}<span class="hora">{{i.fechaHora}}</span></ion-label>
-        <ion-label class="mensaje">{{i.mensaje}}</ion-label>
+        <ion-label>{{i.nombre}} {{i.apellido}}<span class="hora">Hace cierto tiempo</span></ion-label>
+        <ion-label class="mensaje">Lorem ipsum dolor sit amet, consectetur </ion-label>
       </ion-text>
     </ion-item>
 

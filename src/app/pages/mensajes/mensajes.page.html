@@ -23,18 +23,18 @@
   </ion-item>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content #ionContent class="ion-padding">
 
-  <div *ngFor="let i of mensajesChat" class="mensaje-item" [ngClass]="{'mensaje-item-emisor': i.emisor == uidEmisor, 'mensaje-item-receptor': i.receptor == uidReceptor}">
-    <div class="espacio"></div>
+  <div *ngFor="let i of mensajesChat" class="mensaje-item" [ngClass]="{'mensaje-item-emisor': i.emisor == uidEmisor, 'mensaje-item-receptor': i.receptor == uidReceptor}" (click)="onMensajeItemClick(i)">
     <div>
       <ion-card>
         <ion-card-content>
           <ion-label>{{i.contenido}}</ion-label>
         </ion-card-content>
       </ion-card>
-      <p class="ion-padding-horizontal">{{i.fechaHora}}</p>
+      <p class="ion-padding-horizontal" [ngClass]="i.fechaExpandida ? 'fecha-expandida' : 'fecha-no-expandida'">{{i.fechaHora}}</p>
     </div>
+    <div class="espacio"></div>
   </div>
   
 </ion-content>

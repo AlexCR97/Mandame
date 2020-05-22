@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/dbdocs/usuario';
+import { ChatService } from 'src/app/services/chat.service';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
+import { Router } from '@angular/router';
+import { UtilsService } from 'src/app/services/utils.service';
+import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheChat } from 'src/app/services/cache-chat';
 
 @Component({
   selector: 'app-tab-chats-repartidor',
@@ -7,29 +14,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabChatsRepartidorPage implements OnInit {
 
-  chats = [
-    {
-      imgSrc: '../../../../assets/img/foto-perfil-01.jpg',
-      usuario: 'Barbara Blade',
-      fechaHora: 'Hace 2 min.',
-      mensaje: 'Soluta ab eligendi itaque id architecto veritatis, atque placeat',
-    },
-    {
-      imgSrc: '../../../../assets/img/foto-perfil-02.jpg',
-      usuario: 'Eloyito Guemez',
-      fechaHora: 'Hace 13 min.',
-      mensaje: 'Autem, accusamus? Fugit obcaecati non maxime, unde labore',
-    },
-    {
-      imgSrc: '../../../../assets/img/foto-perfil-03.jpg',
-      usuario: 'Armando Casas',
-      fechaHora: 'Hace 28 min.',
-      mensaje: 'Nostrum natus soluta tenetur nesciunt eos',
-    },
-  ];
+  cargandoDialog;
+  chats: Usuario[];
 
-  constructor() { }
+  constructor(
+    public chatService: ChatService,
+    public guiUtls: GuiUtilsService,
+    public router: Router,
+    public utils: UtilsService,
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log('Obteniendo chats con usuarios...');
+    this.chatService.getChats(CacheUsuario.usuario.uid,
+      usuarios => {
+        console.log('Usuarios obtenidos en Chats Repartidor');
+        console.table(usuarios);
+
+        CacheChat.setAllChatUsuario(usuarios);
+        this.chats = CacheChat.getAllChatsUsuarios();
+      },
+      error => {
+        console.error('Error al obtener los usuarios :(');
+        console.error(error);
+      }
+    );
+  }
+
+  abrirMensajes(uidReceptor: string) {
+    this.router.navigate(['/mensajes'], {
+      queryParams: {
+        uidReceptor: uidReceptor,
+      }
+    });
+  }
 
 }
