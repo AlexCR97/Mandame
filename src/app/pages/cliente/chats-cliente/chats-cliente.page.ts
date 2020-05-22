@@ -51,9 +51,8 @@ export class ChatsClientePage implements OnInit {
   }
 
   crearNuevoChat() {
-    // GGa1ciJZLgTI7W0XF97TxiE2IDc2
-    // j8NJPw3hIyYV4ZAoCa1b4p9bOzI2
     console.log('Buscando un repartidor libre...');
+    // TODO Este dialogo no se cierra
     //this.cargandoDialog = this.guiUtls.mostrarCargando('Buscando un repartidor libre...');
 
     this.chatService.getRepartidorLibre(

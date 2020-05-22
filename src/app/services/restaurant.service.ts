@@ -6,13 +6,11 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class RestaurantService {
 
+  pedido: any = {};
+
   constructor(
     private afs: AngularFirestore
-  ) { }
-
-  /*getAdicionalesFromRestaurant(idRestaurant) {
-    return this.afs.collection('adicionales', ref => ref.where('id_restaurant','==', idRestaurant )).valueChanges()
-  }*/
+    ) { }
 
   /*getRestaurant() {
     return this.afs.collection('restaurantes').valueChanges();
@@ -24,5 +22,21 @@ export class RestaurantService {
 
   getProductos(idRestaurant){
     return this.afs.collection('productos', ref => ref.where('restaurante', '==', idRestaurant)).valueChanges();
+  }
+
+  getComplementos() {
+    return this.afs.collection('complementos').valueChanges() 
+  }
+
+  agregarPedido(pedido) {
+    return this.afs.collection('pedidos').add(pedido);
+  }
+
+  getPedido(uidPedido) {
+    console.log('uidPedido ', uidPedido, ' from RestaurantService');
+    // TODO: RETRIEVE THE DOCUMENT DATA
+    let res = this.afs.collection('pedidos').doc(uidPedido).valueChanges();
+    console.log('res: ', res);
+    return res;
   }
 }

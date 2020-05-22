@@ -74,8 +74,6 @@ export class PostRegistroPage implements OnInit {
 
       CacheUsuario.usuario = this.usuario;
 
-      this.testDireccionesDelUsuario();
-
       this.router.navigateByUrl('/inicio');
     })
     .catch(error => {
@@ -84,16 +82,5 @@ export class PostRegistroPage implements OnInit {
       this.guiUtils.cerrarCargando(this.cargandoDialog);
       this.guiUtils.mostrarToast('No se pudo actualizar tu perfil', 3000, 'danger');
     });
-  }
-
-  private testDireccionesDelUsuario() {
-    console.log('Obteniendo direcciones del usuario...');
-
-    this.registroService.getDireccionesUsuario(this.usuario.uid,
-      direcciones => {
-        console.log('Direcciones del usuario obtenidas :D');
-        direcciones.forEach(direccion => console.log(direccion));
-      }
-    );
   }
 }

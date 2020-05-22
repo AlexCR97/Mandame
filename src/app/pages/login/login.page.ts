@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
         
         case 'repartidor': {
           console.log('Cuenta de repartidor detectada. Iniciando sesion...');
-          this.router.navigateByUrl('/inicio-repartidor');
+          this.router.navigateByUrl('/inicio-repartidor/tab-pedidos-repartidor');
           break;
         }
 

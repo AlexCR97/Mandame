@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RestaurantPageRoutingModule } from './restaurant-routing.module';
 
 import { RestaurantPage } from './restaurant.page';
+import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
 
 @NgModule({
   imports: [

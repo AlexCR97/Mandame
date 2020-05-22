@@ -13,11 +13,11 @@
     <div class="contenedor">
       <p class="cnombre">¡Califica a {{nombre}}!</p>
       <div class="contenedor-iconos-center">
-        <ion-icon class="icon" name="star"></ion-icon>
-        <ion-icon class="icon" name="star"></ion-icon>
-        <ion-icon class="icon" name="star"></ion-icon>
-        <ion-icon class="icon" name="star"></ion-icon>
-        <ion-icon class="icon" name="star"></ion-icon>
+        <ion-icon color="naranja" class="icon" name="{{iconName[0]? 'star' : 'star-outline'}}" (click)="iconChanged(1)"></ion-icon>
+        <ion-icon color="naranja" class="icon" name="{{iconName[1]? 'star' : 'star-outline'}}" (click)="iconChanged(2)"></ion-icon>
+        <ion-icon color="naranja" class="icon" name="{{iconName[2]? 'star' : 'star-outline'}}" (click)="iconChanged(3)"></ion-icon>
+        <ion-icon color="naranja" class="icon" name="{{iconName[3]? 'star' : 'star-outline'}}" (click)="iconChanged(4)"></ion-icon>
+        <ion-icon color="naranja" class="icon" name="{{iconName[4]? 'star' : 'star-outline'}}" (click)="iconChanged(5)" ></ion-icon>
       </div>
       <ion-list class="ion-margin-top">
         <ion-list-header mode="md">
