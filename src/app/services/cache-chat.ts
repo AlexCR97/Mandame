@@ -7,6 +7,12 @@ export class CacheChat {
     private static chatsUsuarios = new Map<string, Usuario>();
     private static mensajes = new Map<string, Mensaje[]>();
 
+    public static map = new Map([
+        ['', {
+            
+        }]
+    ]);
+
     public static getAllChatsUsuarios(): Usuario[] {
         return Array.from(this.chatsUsuarios.values());
     }
