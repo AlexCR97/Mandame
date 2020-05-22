@@ -10,11 +10,19 @@ export class RestaurantService {
     private afs: AngularFirestore
   ) { }
 
-  getAdicionalesFromRestaurant(idRestaurant) {
+  /*getAdicionalesFromRestaurant(idRestaurant) {
     return this.afs.collection('adicionales', ref => ref.where('id_restaurant','==', idRestaurant )).valueChanges()
+  }*/
+
+  /*getRestaurant() {
+    return this.afs.collection('restaurantes').valueChanges();
+  }*/
+  
+  getRestaurant(idRestaurant) {
+    return this.afs.collection('restaurantes', ref => ref.where('uid','==', idRestaurant)).valueChanges();
   }
 
-  getRestaurant() {
-    return this.afs.collection('restaurantes').valueChanges();
+  getProductos(idRestaurant){
+    return this.afs.collection('productos', ref => ref.where('restaurante', '==', idRestaurant)).valueChanges();
   }
 }
