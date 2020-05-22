@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/dbdocs/usuario';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { ConfiguracionesService } from 'src/app/services/configuraciones.service';
 

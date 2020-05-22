@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
-import { CacheChat } from 'src/app/services/cache-chat';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { CacheChat } from 'src/app/cache/cache-chat';
 import { Mensaje } from 'src/app/dbdocs/mensaje';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Usuario } from 'src/app/dbdocs/usuario';

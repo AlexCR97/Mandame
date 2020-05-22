@@ -92,10 +92,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin/mensajes-admin/mensajes-admin.module').then( m => m.MensajesAdminPageModule)
   },
   {
-    path: 'pruebas',
-    loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule)
-  },
-  {
     path: 'post-registro',
     loadChildren: () => import('./pages/cliente/post-registro/post-registro.module').then( m => m.PostRegistroPageModule)
   },

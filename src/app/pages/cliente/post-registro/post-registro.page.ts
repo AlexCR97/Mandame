@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Direccion } from 'src/app/dbdocs/direccion';
 import { Usuario } from 'src/app/dbdocs/usuario';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RegistroService } from 'src/app/services/registro.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { Router } from '@angular/router';

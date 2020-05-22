@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RestaurantService } from 'src/app/services/restaurant.service';
-import { CacheService } from 'src/app/services/cache.service';
+import { CacheService } from 'src/app/cache/cache.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
-import { CacheChat } from 'src/app/services/cache-chat';
+import { CacheChat } from 'src/app/cache/cache-chat';
 
 @Component({
   selector: 'app-pre-pedido',

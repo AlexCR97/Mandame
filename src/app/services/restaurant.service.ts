@@ -15,6 +15,10 @@ export class RestaurantService {
   /*getRestaurant() {
     return this.afs.collection('restaurantes').valueChanges();
   }*/
+
+  getAdicionalesFromRestaurant(idRestaurant) {
+    return this.afs.collection('complementos', ref => ref.where('id_restaurant', '==', idRestaurant)).snapshotChanges();
+  }
   
   getRestaurant(idRestaurant) {
     return this.afs.collection('restaurantes', ref => ref.where('uid','==', idRestaurant)).valueChanges();

@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ConfiguracionesService } from 'src/app/services/configuraciones.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 
 @Component({
   selector: 'app-contrasena',

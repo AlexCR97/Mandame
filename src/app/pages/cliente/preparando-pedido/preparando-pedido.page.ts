@@ -42,7 +42,8 @@ export class PreparandoPedidoPage implements OnInit {
     this.router.queryParams.subscribe(params => {
       console.log('queryParams: ', params);
       this.uid = params['uid'];
-      this.restaurant.getPedido(this.uid).subscribe(event => {
+      this.restaurant.getPedido(this.uid).subscribe(ev => {
+        let event = ev as any;
         this.pedido.restaurante = event.restaurante,
         this.pedido.url = 'url',
         this.pedido.uidrepartidor = event.repartidor,

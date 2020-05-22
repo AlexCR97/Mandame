@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CacheService } from 'src/app/services/cache.service';
+import { CacheService } from 'src/app/cache/cache.service';
 import { Router } from '@angular/router';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 

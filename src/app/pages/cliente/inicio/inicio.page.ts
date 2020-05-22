@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/core';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 
 @Component({
   selector: 'app-inicio',

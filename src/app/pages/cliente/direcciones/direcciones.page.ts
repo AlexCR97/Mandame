@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DireccionesService } from 'src/app/services/direcciones.service';
 import { LoadingController } from '@ionic/angular';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
-
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 
 @Component({
   selector: 'app-direcciones',

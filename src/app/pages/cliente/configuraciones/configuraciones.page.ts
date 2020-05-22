@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { Usuario } from 'src/app/dbdocs/usuario';
 
 @Component({

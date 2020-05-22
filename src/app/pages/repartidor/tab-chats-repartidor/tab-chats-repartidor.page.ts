@@ -4,8 +4,8 @@ import { ChatService } from 'src/app/services/chat.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/services/utils.service';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
-import { CacheChat } from 'src/app/services/cache-chat';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { CacheChat } from 'src/app/cache/cache-chat';
 
 @Component({
   selector: 'app-tab-chats-repartidor',

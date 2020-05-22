@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { RegistroService } from 'src/app/services/registro.service';
-import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { LoadingController } from '@ionic/angular';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 
