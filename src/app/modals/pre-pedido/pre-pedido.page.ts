@@ -32,6 +32,8 @@ export class PrePedidoPage implements OnInit {
   subTotal = 0;
   total = 0;
 
+  uidPedido: string;
+
   @Input() val: number;
 
   constructor(
@@ -138,7 +140,8 @@ export class PrePedidoPage implements OnInit {
 
   dismissModal() {
     console.log('input: ', this.val);
-    this.modalController.dismiss(1);
+    console.log('uidPedido: ', this.uidPedido);
+    this.modalController.dismiss(this.uidPedido);
   }
 
   ordenChanged(orden) {
@@ -176,12 +179,11 @@ export class PrePedidoPage implements OnInit {
         console.log(repartidor);
 
         pedido.repartidor = repartidor.uid;
-        this.restaurantService.agregarPedido(pedido).then(res => {
-          console.log('Pedido agregado exitosamente');
-        }).catch(err => {
-          console.log('Fallo al agregar pedido!');
+        this.restaurantService.agregarPedido(pedido).then(ref => {
+          this.uidPedido = ref.id;
+          console.log('THEN uidPedido: ', this.uidPedido);
+          this.dismissModal();
         });
-
       },
       error => {
         console.error('Error al obtener un repartidor');
@@ -190,8 +192,6 @@ export class PrePedidoPage implements OnInit {
         this.guiUtls.mostrarToast('No se encontro ningun repartidor libre :(', 3000, 'danger');
       }
     );
-
-    this.dismissModal();
 
   }
 }

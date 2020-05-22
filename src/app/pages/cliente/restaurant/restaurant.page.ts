@@ -54,23 +54,27 @@ export class RestaurantPage implements OnInit {
   // TODO: Change the btnClick name to another most meaningful
   btnClick() {
     console.log('Down Button Click');
-    this.presentModal(0);
+    this.presentPrePedidoModal();
   }
 
-  async presentModal(modalid) {
+  async presentSeguirPedidoModal(uidpedido) {
     const modal = await this.modalController.create({
-      component: modalid == 0 ? PrePedidoPage : ModalAlertPage,
+      component: ModalAlertPage,
       componentProps: {
-        'val': 0
+        'uid': uidpedido
       },
-      cssClass: modalid == 1 ? "dialog-modal" : "prepedido-modal"
+      cssClass: "dialog-modal"
+    });
+    return await modal.present();
+  }
+
+  async presentPrePedidoModal() {
+    const modal = await this.modalController.create({
+      component: PrePedidoPage
     });
     modal.onDidDismiss().then((data) => {
-      console.log('Data: ', data.data);
-      
-
-      if(data.data === 1) {
-        this.presentModal(1);
+      if(data.data) {
+        this.presentSeguirPedidoModal(data.data);
       }
       // TODO: CHANGE COLOR ANV ALUES OF DOWN BUTTON
     });

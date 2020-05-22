@@ -1,6 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
+
+// constructor(public navCtrl: NavController) { }
+// //...
+// let navigationExtras: NavigationExtras = {
+//     queryParams: {
+//         currency: JSON.stringify(currency),
+//         refresh: refresh
+//     }
+// };
+// this.navCtrl.navigateForward(['page-slug'], true, navigationExtras);
 
 @Component({
   selector: 'app-modal-alert',
@@ -11,16 +23,27 @@ export class ModalAlertPage implements OnInit {
 
   imagen:string = "assets/icon/logo.png";
 
+  @Input() uid: any;
+
   constructor(
   	private modalController: ModalController,
-  	private router: Router) { }
+  	private router: Router,
+    public navController: NavController) { }
 
   ngOnInit() {
   }
 
   verPedido() {
+    console.log('UID: ', this.uid);
   	this.dismissModal();
-  	this.router.navigateByUrl('/pedidos')
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        uid: this.uid
+      }
+    }
+
+    this.router.navigate(['/preparando-pedido'], navigationExtras);
   }	
 
   dismissModal() {
