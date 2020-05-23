@@ -39,35 +39,19 @@
       <h4>Productos</h4>
     </ion-item>
 
-    <ion-item class="producto-item" lines="none">
+    <ion-item class="producto-item" lines="none" *ngFor="let producto of productos">
       <ion-text>
-        <ion-label class="nombre">Pizza Grande Hawaiana</ion-label>
-        <ion-label class="cantidad">Cantidad: <span>2</span></ion-label>
+        <ion-label class="nombre">{{producto.desc}}</ion-label>
+        <ion-label class="cantidad">Cantidad: <span>{{producto.cantidad}}</span></ion-label>
       </ion-text>
-      <ion-label class="ion-text-end">$100.00</ion-label>
-    </ion-item>
-
-    <ion-item class="producto-item" lines="none">
-      <ion-text>
-        <ion-label class="nombre">Complemento papotas</ion-label>
-        <ion-label class="cantidad">Cantidad: <span>1</span></ion-label>
-      </ion-text>
-      <ion-label class="ion-text-end">$100.00</ion-label>
-    </ion-item>
-
-    <ion-item class="producto-item" lines="none">
-      <ion-text>
-        <ion-label class="nombre">Pepsi 600ml</ion-label>
-        <ion-label class="cantidad">Cantidad: <span>1</span></ion-label>
-      </ion-text>
-      <ion-label class="ion-text-end">$100.00</ion-label>
+      <ion-label class="ion-text-end">${{producto.precio}}</ion-label>
     </ion-item>
 
     <div class="separador"></div>
 
     <ion-item class="total-item" lines="full">
       <ion-label>Total</ion-label>
-      <ion-label class="ion-text-end" color="naranja">$300.00</ion-label>
+      <ion-label class="ion-text-end" color="naranja">${{total}}</ion-label>
     </ion-item>
 
   </ion-list>
@@ -80,7 +64,7 @@
 
     <ion-item class="comentario-item" lines="none">
       <ion-text>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam nisi aperiam expedita minus delectus. Iusto ut ab repudiandae, impedit praesentium, distinctio sapiente numquam quaerat nostrum quisquam, ducimus cum voluptatum. Nam?
+        <p *ngFor="let comentario of pedido.comentarios">{{comentario}}</p>
       </ion-text>
     </ion-item>
 
@@ -103,9 +87,9 @@
 
 <ion-footer class="enviar-mensaje mdm-center-vertical">
 
-  <ion-button class="ion-text-capitalize" color="naranja" expand="block" fill="outline">Status</ion-button>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block" fill="outline" (click)="onBtnEstadoPedidoClick()">{{estadoPedido.toString()}}</ion-button>
 
-  <ion-button class="btn-enviar" color="naranja">
+  <ion-button class="btn-enviar" color="naranja" (click)="abrirMensajes()">
     <ion-icon name="chatbox" slot="icon-only"></ion-icon>
   </ion-button>
 

@@ -1,11 +1,15 @@
 export interface Pedido{
-    aproximacion:number;
-    cliente:string;
-    comentario:string;
-    direccion:string;
-    estado:string;
-    nombre:string;
-    productos:string[];
-    repartidor:string;
-    restaurantes:string[];
+    aproximacion: number;
+    cantidad: number[];
+    cliente: string;
+    comentarios: string[];
+    direccion: string;
+    espera: string;
+    estado: string;
+    fechaHora: string;
+    precios: number[];
+    productos: string[];
+    repartidor: string;
+    restaurante: string;
+    uid: string;
 }
