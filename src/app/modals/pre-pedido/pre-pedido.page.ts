@@ -7,6 +7,7 @@ import { CacheService } from 'src/app/cache/cache.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
+import { RegistroService } from 'src/app/services/registro.service';
 
 @Component({
   selector: 'app-pre-pedido',
@@ -41,33 +42,23 @@ export class PrePedidoPage implements OnInit {
     private router: Router,
     private restaurantService: RestaurantService,
     private chatService: ChatService,
-    public guiUtls: GuiUtilsService){
+    public guiUtls: GuiUtilsService,
+    private registroService: RegistroService){
   }
 
   ngOnInit() { 
-    this.cargarOrdenes();
-    this.cargarComplementos();
-    // TODO: CHECK HOW TO LOAD EACH COMPLEMENT IMAGE
-    this.calcularTotal();
-
-    // REVIEW: TEST PURPOSES ONLY, DELETE AFTER
-    CacheUsuario.usuario = {
-      apellido: 'Reyna',
-      direcciones: [
-        'Chichenitza',
-        'Carol. Yucat.',
-        '#407'
-      ],
-      email: 'andresreyna15@gmail.com',
-      foto: 'url',
-      nombre: 'J. A. Reyna Espinoza',
-      posicion: 'Aqui mero',
-      telefono: 'Este',
-      uid: 'string',
-    };
-
-    this.cargarDireccion();
+    // TODO: DELETE WHEN PAGES CONNECTED
+    this.registroService.getUsuario('TvGjmJVjkEPEcGuIQLWtn76Gs9P2').subscribe(usuario => {
+      console.log('Usuario perepedido: ', usuario);
+      CacheUsuario.usuario = usuario;
+      this.cargarOrdenes();
+      this.cargarComplementos();
+      this.calcularTotal();
+      this.cargarDireccion();
+    });
   }
+
+  // 9TYcT3e3CrRLqa2JgGMLJSmmjPw1
 
   cargarDireccion() {
     if(CacheUsuario.usuario) {
@@ -85,13 +76,13 @@ export class PrePedidoPage implements OnInit {
   cargarComplementos() {
     this.restaurantService.getComplementos().subscribe(data => {
       this.complementoItems = data.map(complemento => {
-          return {
-            nombre: complemento['nombre'],
-            precio: complemento['precio'],
-            contenido: complemento['contenido'],
-            foto: complemento['foto'],
-            seleccionado: false
-          }  
+        return {
+          nombre: complemento['nombre'],
+          precio: complemento['precio'],
+          contenido: complemento['contenido'],
+          foto: complemento['foto'],
+          seleccionado: false
+        }  
       });
     });
   }
@@ -161,7 +152,7 @@ export class PrePedidoPage implements OnInit {
         return value.comentario
       }),
       direccion: [],
-      estado: 'En espera', // Estado por defecto
+      estado: 'entregado', // Estado por defecto
       nombre: CacheUsuario.usuario.nombre,
       precios: CacheService.carrito.map(value => {
         return value.precio
@@ -191,7 +182,7 @@ export class PrePedidoPage implements OnInit {
         this.guiUtls.cerrarCargando(this.cargandoDialog);
         this.guiUtls.mostrarToast('No se encontro ningun repartidor libre :(', 3000, 'danger');
       }
-    );
+      );
 
   }
 }

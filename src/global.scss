@@ -180,7 +180,10 @@
 }
 
 .dialog-modal {
-    width: 70%;
-    height: 50%;
-    margin: auto;
+    // width: 70%;
+    // height: 50%;
+    // margin: auto;
+    padding: 60px;   
+
+    background: rgba(0,0,0,0.5);
 }

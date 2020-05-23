@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 
 import { PrePedidoPageModule } from 'src/app/modals/pre-pedido/pre-pedido.module';
 import { ModalAlertPageModule } from 'src/app/modals/modal-alert/modal-alert.module';
+import { CalificarRepartidorPageModule } from 'src/app/modals/calificar-repartidor/calificar-repartidor.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,8 @@ import { ModalAlertPageModule } from 'src/app/modals/modal-alert/modal-alert.mod
     AngularFirestoreModule,
     AngularFireStorageModule,
     PrePedidoPageModule,
-    ModalAlertPageModule
+    ModalAlertPageModule,
+    CalificarRepartidorPageModule
   ],
   providers: [
     StatusBar,

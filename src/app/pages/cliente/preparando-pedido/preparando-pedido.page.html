@@ -25,33 +25,33 @@
 
     <ion-list>
       <ion-item lines="none">
-        <ion-icon slot="start" class="active" name="hourglass-outline"></ion-icon>
+        <ion-icon slot="start" [ngClass]="estado1" name="hourglass-outline"></ion-icon>
         <ion-label color="medium">Pedido Confirmado</ion-label>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-icon [ngClass]="estado2" name="checkmark-circle-outline"></ion-icon>
         <ion-label color="medium">Preparando Pedido</ion-label>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-icon [ngClass]="estado3" name="checkmark-circle-outline"></ion-icon>
         <ion-label color="medium">Pedido Recolectado</ion-label>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-icon [ngClass]="estado4" name="checkmark-circle-outline"></ion-icon>
         <ion-label color="medium">Pedido en transito</ion-label>
       </ion-item>
     
       
       <ion-item lines="none">
-        <ion-icon class="inactive" name="time-outline"></ion-icon>
+        <ion-icon [ngClass]="estado5" name="checkmark-circle-outline"></ion-icon>
         <ion-label color="medium">Entegado</ion-label>
       </ion-item>
     </ion-list>
   
-  <ion-button class="margin-top ion-text-capitalize" disabled color="naranja"  expand="block">Calificar Repartidor </ion-button>
+  <ion-button class="margin-top ion-text-capitalize" [disabled]="!entregado" color="naranja"  expand="block" (click)="calificarRepartidor()" >Calificar Repartidor </ion-button>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="contactarRepartidor()">
