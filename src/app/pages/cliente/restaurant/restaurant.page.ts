@@ -23,7 +23,7 @@ export class RestaurantPage implements OnInit {
   select: string;
   nombreRestaurant: string;
 
-  public uidRestaurant: string = '8fXc1YIaCjXTjb6Ry5t4';
+  public uidRestaurant: string = 'K0WCy5wF99fdaQb1kxJ9';
   public restaurant: Restaurant = {
     calificacion: 0,
     categoria: '',
@@ -34,7 +34,7 @@ export class RestaurantPage implements OnInit {
     nombre: '',
     productos: [],
     tiempo_entrega: 0,
-    uid: '8fXc1YIaCjXTjb6Ry5t4',
+    uid: 'K0WCy5wF99fdaQb1kxJ9',
   };
   public productos: Producto[];
   public productosPorCategoria: ProductosPorCategoria[];

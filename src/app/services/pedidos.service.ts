@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Pedido } from '../dbdocs/pedido';
+import { Restaurant } from '../dbdocs/restaurant';
+import { Usuario } from '../dbdocs/usuario';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -67,5 +69,23 @@ export class PedidosService {
 
   updateEstadoPedido(uidPedido: string, nuevoEstado: EstadoPedido): Promise<void> {
     return this.afs.collection('pedidos').doc(uidPedido).update({ estado: nuevoEstado.toString()});
+  }
+
+  getListaPedidos(uidCliente: string){
+    return this.afs.collection<Pedido>('pedidos').valueChanges().pipe(
+      map(pedidos => pedidos.filter(pedido => pedido.cliente == uidCliente))
+    );
+  }
+
+  getRestaurant(uidRestaurant: string) {
+    return this.afs.collection<Restaurant>('restaurantes').valueChanges().pipe(
+      map(restaurants => restaurants.find(r => r.uid == uidRestaurant))
+    );
+  }
+
+  getRepartidor(uidRepartidor: string){
+    return this.afs.collection<Usuario>('usuarios').valueChanges().pipe(
+      map(usuario => usuario.find(u => u.uid == uidRepartidor))
+    );
   }
 }
