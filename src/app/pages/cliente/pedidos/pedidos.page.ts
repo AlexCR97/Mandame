@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/dbdocs/pedido';
-import { Restaurant } from 'src/app/dbdocs/restaurant';
-import { PedidosService } from "../../../services/pedidos.service";
-import { map } from 'rxjs/operators';
-import { async } from '@angular/core/testing';
-//import { ConsoleReporter } from 'jasmine';
-
-interface PedidosPorRestaurante{
-  nombre: string;
-  estado: string;
-  productos: string [];
-  nombreRestaurante: string;
-}
+import { PedidosService, EsperaPedido } from "../../../services/pedidos.service";
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
+import { CachePedidos } from 'src/app/cache/cache-pedidos';
+import { Router } from '@angular/router';
+import { UtilsService } from 'src/app/services/utils.service';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 
 @Component({
   selector: 'app-pedidos',
@@ -20,83 +14,77 @@ interface PedidosPorRestaurante{
 })
 export class PedidosPage implements OnInit {
 
-  pedidos: any[];
   public Pedidos : Pedido[];
-  public pedidosPorRestaurante: PedidosPorRestaurante[];
-  public uidCliente : string = '9TYcT3e3CrRLqa2JgGMLJSmmjPw1'
+  public pedidosPendientes: Pedido[];
+  public pedidosConcluidos: Pedido[];
+  //public uidCliente : string = '9TYcT3e3CrRLqa2JgGMLJSmmjPw1';
+  public uidCliente = '';
   public nombreRestaurant : string;
 
   constructor(
+    public gui: GuiUtilsService,
     public pedidoservice : PedidosService,
+    public router: Router,
+    public utils: UtilsService,
   ) { }
 
   ngOnInit() {
-    this.pedidos = [
-      {
-        img: "../../../assets/img/pizzah.jpg",
-        estado: 1,
-        titulo: "Pizza Hawaiana",
-        negocio: "Domino's Pizza",
-        repartidor: "Edgar Vazquez"
-      },
-      {
-        img: "../../../assets/img/pizzah.jpg",
-        estado: 3,
-        titulo: "Pizza Pepperoni",
-        negocio: "Domino's Pizza",
-        repartidor: "Rie Takahashi"
+    this.uidCliente = CacheUsuario.usuario.uid;
+    
+    // SI HAY CONEXION A INTERNET
+    if (this.utils.tieneConexionInternet()) {
+      console.log('Obteniendo pedidos pendientes...');
+      // TODO Santana: Cambiar la espera del pedido a pendientes
+      this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Todos,
+        pedidos => {
+          console.log('Pedidos obtenidos! :D');
+          console.table(pedidos);
+
+          this.pedidosPendientes = pedidos;
+          CachePedidos.setAllPedidos(this.pedidosPendientes);
+        },
+        error => {
+          console.log('Error al obtener los pedidos :(');
+          console.log(error);
+
+          this.gui.mostrarToast('No se pudieron obtener los pedidos :(', 3000, 'danger');
+        }
+      );
+
+      console.log('Obteniendo pedidos concluidos...');
+      // TODO Santana: Cambiar la espera del pedido a concluidos
+      this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Todos,
+        pedidos => {
+          console.log('Pedidos obtenidos! :D');
+          console.table(pedidos);
+
+          this.pedidosConcluidos = pedidos;
+          CachePedidos.setAllPedidos(this.pedidosConcluidos);
+        },
+        error => {
+          console.log('Error al obtener los pedidos :(');
+          console.log(error);
+
+          this.gui.mostrarToast('No se pudieron obtener los pedidos :(', 3000, 'danger');
+        }
+      );
+    }
+    // NO HAY CONEXION A INTERNET
+    else {
+      // TODO Santana: Cambiar la espera del pedido al correspondiente
+      this.pedidosPendientes = CachePedidos.getAllPedidosDeUsuario(this.uidCliente, EsperaPedido.Todos);
+      this.pedidosConcluidos = CachePedidos.getAllPedidosDeUsuario(this.uidCliente, EsperaPedido.Todos);
+    }
+  }
+
+  abrirDetallesPedido(uid: string) {
+    console.log('abrirDetallesPedido()')
+    console.log(uid);
+
+    this.router.navigate(['/detalles-pedido-cliente'], {
+      queryParams: {
+        uidPedido: uid,
       }
-    ]
-
-    this.pedidoservice.getListaPedidos(this.uidCliente).subscribe(pedido => {
-      console.log('Pedidos de cliente');
-      this.Pedidos = pedido;
-      console.log(this.Pedidos);
-
-      this.pedidosPorRestaurante = this.getListaPedidosPorRestaurante(this.Pedidos);
-      console.log('Pedidos por restaurante');
-      console.log(this.pedidosPorRestaurante);
-    })
-  }
-
-  getListaPedidosPorRestaurante(pedidos: Pedido[]): PedidosPorRestaurante[]{
-    let pedidosPorRestaurante = new Array<PedidosPorRestaurante>();
-
-    pedidos.forEach(pedido =>{
-      this.pedidoservice.getRestaurant(pedido.restaurante).subscribe(restaurante => {
-
-        this.pedidoservice.getRepartidor(pedido.repartidor).subscribe(repartidor =>{
-        
-          pedidosPorRestaurante.push({
-            nombre: repartidor.nombre,
-            estado: pedido.estado,
-            productos: pedido.productos,
-            nombreRestaurante: restaurante.nombre,
-          }); 
-        });
-      });
     });
-
-    return pedidosPorRestaurante;
   }
-
-  /*getListaPedidosPorRestaurante(pedidos: Pedido[]): PedidosPorRestaurante[]{
-    let pedidosPorRestaurante = new Array<PedidosPorRestaurante>();
-    let listaDePedidos = pedidos.map(pedido => pedido);
-    console.log('Entro al metodo');
-
-    listaDePedidos.forEach(async pedido => {
-      let nombreRestaurante = await this.pedidoservice.getRestaurant(pedido.restaurante).pipe(map(restaurant => restaurant.nombre)).toPromise();
-      console.log('Entro al for each')
-      pedidosPorRestaurante.push({
-        nombre: "GGG",
-        estado: pedido.estado,
-        productos: pedido.productos,
-        nombreRestaurante: "RRR",
-      });
-    });
-
-    return pedidosPorRestaurante;
-  }*/
-
 }

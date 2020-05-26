@@ -15,14 +15,17 @@ export class CachePedidos {
         }
 
         return Array.from(this.pedidos.values())
-            .filter(pedido => pedido.espera == espera.toString());
-            // TODO Ordenar pedidos por fecha
-            //.sort();
+            .filter(pedido => pedido.espera == espera.toString())
+            .sort((p1, p2) => (new Date(p1.fechaHora)).getTime() - (new Date(p2.fechaHora)).getTime());
+    }
+
+    public static getAllPedidosDeUsuario(uidUsuario: string, espera: EsperaPedido): Pedido[] {
+        return this.getAllPedidos(espera)
+            .filter(p => p.cliente == uidUsuario);
     }
 
     public static setAllPedidos(pedidos: Pedido[]) {
-        // TODO Cambiar la llave del repartidor por el uid del pedido
-        pedidos.forEach(pedido => this.setPedido(pedido.repartidor, pedido));
+        pedidos.forEach(pedido => this.setPedido(pedido.uid, pedido));
     }
 
     public static setPedido(uidPedido: string, pedido: Pedido) {

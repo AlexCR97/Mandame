@@ -1,4 +1,4 @@
-export interface Pedido{
+export interface Pedido {
     aproximacion: number;
     cantidad: number[];
     cliente: string;
@@ -12,4 +12,8 @@ export interface Pedido{
     repartidor: string;
     restaurante: string;
     uid: string;
+
+    nombreRepartidor?: string;
+    nombreRestaurante?: string;  
+    foto_perfil?: string;
 }

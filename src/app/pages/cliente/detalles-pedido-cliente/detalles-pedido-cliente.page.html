@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- pedidos en transito -->
+  <ion-card class="detalles-pedido-item">
+    <ion-item lines="none">
+      <ion-img [src]="pedido.foto_perfil"></ion-img>
+      <ion-text>
+        <ion-label class="restaurant">{{pedido.nombreRestaurante}}</ion-label>
+        <ion-label class="tiempo">Tiempo Transcurrido: <span>11:37 min</span></ion-label>
+      </ion-text>
+      <ion-icon color="naranja" name="location" slot="end"></ion-icon>
+    </ion-item>
+  </ion-card>
+
+  <!-- productos -->
+  <ion-list>
+
+    <ion-item lines="full">
+      <h4>Productos</h4>
+    </ion-item>
+
+    <ion-item class="producto-item" lines="none" *ngFor="let producto of productos">
+      <ion-text>
+        <ion-label class="nombre">{{producto.desc}}</ion-label>
+        <ion-label class="cantidad">Cantidad: <span>{{producto.cantidad}}</span></ion-label>
+      </ion-text>
+      <ion-label class="ion-text-end">${{producto.precio}}</ion-label>
+    </ion-item>
+
+    <div class="separador"></div>
+
+    <ion-item class="total-item" lines="full">
+      <ion-label>Total</ion-label>
+      <ion-label class="ion-text-end" color="naranja">${{total}}</ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- comentarios -->
+  <ion-list>
+    <ion-list-header>
+      <h4>Comentarios</h4>
+    </ion-list-header>
+
+    <ion-item class="comentario-item" lines="none">
+      <ion-text>
+        <p *ngFor="let comentario of pedido.comentarios">{{comentario}}</p>
+      </ion-text>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- direccion de entrega -->
+  <h4 class="ion-padding-horizontal">Direccion de entrega</h4>
+  
+  <ion-card class="direccion-item">
+    <ion-item lines="none">
+      <ion-icon name="location"></ion-icon>
+      <ion-text>
+        <ion-label class="repartidor">Nombre del repartidor</ion-label>
+        <ion-label class="direccion">Canales #1100, Zona Centro</ion-label>
+      </ion-text>
+    </ion-item>
+  </ion-card>
+
+</ion-content>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="abrirMensajes()">
+    <ion-icon name="chatbox"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

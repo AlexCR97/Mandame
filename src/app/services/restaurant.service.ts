@@ -30,7 +30,7 @@ export class RestaurantService {
     );
   }
 
-  getProductos(uidRestaurant): Observable<Producto[]> {
+  getProductos(uidRestaurant: string): Observable<Producto[]> {
     return this.afs.collection<Producto>('productos').valueChanges().pipe(
       map(productos => productos.filter(producto => producto.restaurante == uidRestaurant))
     );

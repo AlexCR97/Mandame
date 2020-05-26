@@ -6,4 +6,6 @@ export interface Producto {
     nombre: string;
     precio: number;
     restaurante: string;
+
+    uid?: string;
 }

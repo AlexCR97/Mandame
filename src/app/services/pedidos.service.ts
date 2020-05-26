@@ -88,4 +88,49 @@ export class PedidosService {
       map(usuario => usuario.find(u => u.uid == uidRepartidor))
     );
   }
+
+  getPedidosCompletosDeUsuario(
+    uidUsuario: string,
+    espera: EsperaPedido,
+    resolver: (pedidos: Pedido[]) => void,
+    manejarError: (error: any) => void
+  ) {
+    return this.afs.collection<Pedido>('pedidos').valueChanges()
+    .pipe(map(pedidos => {
+
+      // Filtrar por estado
+      if (espera != EsperaPedido.Todos) {
+        pedidos = pedidos.filter(p => p.espera == espera);
+      }
+
+      // Filtrar por usuario
+      let pedidosPorUsuario = pedidos.filter(p => p.cliente == uidUsuario);
+
+      // Completar la informacion de los pedidos
+      let pedidosCompletos = pedidosPorUsuario.map(async pedido => {
+        let nombreRest = (await (this.afs.firestore.collection('restaurantes').doc(pedido.restaurante).get())).get('nombre') as string;
+        let fotoRest = (await (this.afs.firestore.collection('restaurantes').doc(pedido.restaurante).get())).get('foto_perfil') as string;
+        let nombreRep = (await (this.afs.firestore.collection('usuarios').doc(pedido.repartidor).get())).get('nombre') as string;
+
+        pedido.nombreRestaurante = nombreRest;
+        pedido.foto_perfil = fotoRest;
+        pedido.nombreRepartidor = nombreRep;
+
+        return pedido;
+      });
+
+      return pedidosCompletos;
+    }))
+    // Obtener asincronamente los pedidos
+    .subscribe(promises => {
+      Promise.all(promises).then(pedidos => {
+        resolver(pedidos);
+      })
+      .catch(error => {
+        manejarError(error);
+      });
+    },
+    error => manejarError(error));
+  }
+
 }
