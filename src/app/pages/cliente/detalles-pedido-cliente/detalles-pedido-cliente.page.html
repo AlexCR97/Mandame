@@ -23,9 +23,9 @@
   <!-- pedidos en transito -->
   <ion-card class="detalles-pedido-item">
     <ion-item lines="none">
-      <img src="../../../../assets/img/carls_jr.jpeg">
+      <ion-img [src]="pedido.foto_perfil"></ion-img>
       <ion-text>
-        <ion-label class="restaurant">Carl's Jr</ion-label>
+        <ion-label class="restaurant">{{pedido.nombreRestaurante}}</ion-label>
         <ion-label class="tiempo">Tiempo Transcurrido: <span>11:37 min</span></ion-label>
       </ion-text>
       <ion-icon color="naranja" name="location" slot="end"></ion-icon>
@@ -85,13 +85,8 @@
 
 </ion-content>
 
-<ion-footer class="enviar-mensaje mdm-center-vertical">
-
-  <ion-button class="ion-text-capitalize" color="naranja" expand="block" fill="outline" (click)="onBtnEstadoPedidoClick()">{{estadoPedido.toString()}}</ion-button>
-
-  <ion-button class="btn-enviar" color="naranja" (click)="abrirMensajes()">
-    <ion-icon name="chatbox" slot="icon-only"></ion-icon>
-  </ion-button>
-
-</ion-footer>
-
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="abrirMensajes()">
+    <ion-icon name="chatbox"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

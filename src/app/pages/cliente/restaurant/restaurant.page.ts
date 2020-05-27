@@ -4,14 +4,17 @@ import { RestaurantService } from "../../../services/restaurant.service";
 import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
 import { ModalAlertPage } from 'src/app/modals/modal-alert/modal-alert.page';
 import { ModalController } from '@ionic/angular';
+import { Restaurant } from 'src/app/dbdocs/restaurant';
+import { Producto } from 'src/app/dbdocs/producto';
+import { UtilsService } from 'src/app/services/utils.service';
+import { ActivatedRoute } from '@angular/router';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
+import { CachePedidos } from 'src/app/cache/cache-pedidos';
+import { CacheProductos } from 'src/app/cache/cache-productos';
 
-interface restaurant {
-  calificacion : number[]
-  categoria : string
-  estado : string
-  id : string
-  nombre : string
-  tiempoaprox : number[]
+interface ProductosPorCategoria {
+  categoria: string;
+  productos: Producto[];
 }
 
 @Component({
@@ -23,59 +26,90 @@ export class RestaurantPage implements OnInit {
 
   showToolbar = false;
   select: string;
-  nombreRestaurant : string;
+  nombreRestaurant: string;
 
-  public Restaurant : any = [];
-  public Productos : any = [];
-  public productosPorCategoria = [];
+  //public uidRestaurant: string = 'K0WCy5wF99fdaQb1kxJ9';
+  public uidRestaurant: string;
+  public restaurant: Restaurant = {
+    calificacion: 0,
+    categoria: '',
+    complementos: '',
+    estado: '',
+    foto_perfil: '',
+    foto_portada: '',
+    nombre: '',
+    productos: [],
+    tiempo_entrega: 0,
+    uid: 'K0WCy5wF99fdaQb1kxJ9',
+  };
+  public productos: Producto[];
+  public productosPorCategoria: ProductosPorCategoria[];
 
-  constructor(public restaurantservice : RestaurantService,
-    private modalController: ModalController) { }
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    public modalController: ModalController,
+    public restaurantservice: RestaurantService,
+    public utils: UtilsService,
+  ) { }
 
   ngOnInit() {
-    this.select = "Lorem";
+    //TODO Santana: Quitar uid estatica de restaurante
+    //this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
+    this.uidRestaurant = 'K0WCy5wF99fdaQb1kxJ9'
+    
+    console.log('Uid restaurant: ' + this.uidRestaurant);
 
-    this.restaurantservice.getRestaurant("8fXc1YIaCjXTjb6Ry5t4").subscribe(restaurants => {
-      console.log('RESTAURANTS');
+    // Si tiene conexion a internet
+    if (this.utils.tieneConexionInternet()) {
+      console.log('Buscando restaurant...');
+      this.restaurantservice.getRestaurant(this.uidRestaurant).subscribe(restaurant => {
+        console.log('Restaurant encontrado! :D');
+        console.log(restaurant);
+  
+        this.restaurant = restaurant;
+        CacheRestaurantes.setRestaurante(this.restaurant);
+      });
+  
+      console.log('Buscando productos de restaurnt...');
+      this.restaurantservice.getProductos(this.uidRestaurant).subscribe(productos => {
+        console.log('Productos encontrados!');
+        console.table(productos);
+  
+        this.productos = productos;
 
-      this.Restaurant = restaurants;
-      console.log(this.Restaurant);
-    });
-
-    this.restaurantservice.getProductos("8fXc1YIaCjXTjb6Ry5t4").subscribe(productos => {
-     
-      
-      this.Productos = productos;
-      //console.log(this.Productos);
-      
-      //console.log('Todos los Productos')
-      //console.log(this.Productos);
-
-      this.mostrarCategorias(this.Productos);
-    });
+        CacheProductos.setAllProductos(this.productos);
+  
+        console.log('Obteniendo productos por categoria...');
+        this.productosPorCategoria = this.getProductosPorCategoria(this.productos);
+        console.log(this.productosPorCategoria);
+      });
+    }
+    // No tiene conexion a internet
+    else {
+      this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
+      this.productos = CacheProductos.getAllProductosRestaurante(this.uidRestaurant);
+    }
   }
 
-  mostrarCategorias(productos: any []){
+  getProductosPorCategoria(productos: Producto[]): ProductosPorCategoria[] {
+    let productosPorCategoria = new Array<ProductosPorCategoria>();
+
     let categoriasRepetidas = productos.map(producto => producto.categoria);
     let categoriasUnicas = new Set<string>(categoriasRepetidas);
-
-    
 
     categoriasUnicas.forEach(categ =>{
       let prods = productos.filter(prod => prod.categoria == categ);
 
-      this.productosPorCategoria.push({
+      productosPorCategoria.push({
         categoria: categ,
         productos: prods,
       });
     });
 
-    console.log('PRODUCTOS por categoria');
-    console.log(this.productosPorCategoria);
+    return productosPorCategoria;
   }
 
-  segmentChanged(ev: any) {
-  }
+  segmentChanged(ev: any) { }
 
   onScroll($event: CustomEvent<ScrollDetail>) {
     if ($event && $event.detail && $event.detail.scrollTop) {

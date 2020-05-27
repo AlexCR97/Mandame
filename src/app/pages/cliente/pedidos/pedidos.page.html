@@ -12,49 +12,50 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-label class="title">
-      Mis pedidos
+
+  <!-- pedidos pendientes -->
+  <div>
+    <ion-label>
+      <h5>Mis pedidos Pendientes</h5>
     </ion-label>
-    <ion-card>
+  
+    <ion-card *ngFor = "let i of pedidosPendientes" (click)="abrirDetallesPedido(i.uid)">
       <img src="../../../assets/img/pizzah.jpg" alt="">
         <div class="padding">
           <ion-card-header>
             <ion-card-title>
-              <p class="bold">Pizza de peperoni <ion-badge class="ion-margin-start status">En proceso</ion-badge></p>
+              <p class="bold" >{{i.productos.join(", ")}} <ion-badge class="ion-margin-start status">{{i.estado}}</ion-badge></p>
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <p class="light margin"><ion-icon name="cart"></ion-icon> Dominos Pizza</p>
-            <p class="light"><ion-icon name="person"></ion-icon> Edgar Vazquez</p>
+            <p class="light margin"><ion-icon name="cart"></ion-icon>{{i.nombreRestaurante}}</p>
+            <p class="light"><ion-icon name="person"></ion-icon> {{i.nombreRepartidor}}</p>
           </ion-card-content>
         </div>
     </ion-card>
-    <ion-card>
+  </div><!-- pedidos pendientes -->
+
+  <!-- pedidos concluidos -->
+  <div>
+    <ion-label>
+      <h5>Mis pedidos Concluidos</h5>
+    </ion-label>
+  
+    <ion-card *ngFor = "let i of pedidosConcluidos">
       <img src="../../../assets/img/pizzah.jpg" alt="">
         <div class="padding">
           <ion-card-header>
             <ion-card-title>
-              <p class="bold">Pizza de peperoni <ion-badge class="ion-margin-start status">En proceso</ion-badge></p>
+              <p class="bold" >{{i.productos.join(", ")}} <ion-badge class="ion-margin-start status">{{i.estado}}</ion-badge></p>
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <p class="light margin"><ion-icon name="cart"></ion-icon> Dominos Pizza</p>
-            <p class="light"><ion-icon name="person"></ion-icon> Edgar Vazquez</p>
+            <p class="light margin"><ion-icon name="cart"></ion-icon>{{i.nombreRestaurante}}</p>
+            <p class="light"><ion-icon name="person"></ion-icon> {{i.nombre}}</p>
           </ion-card-content>
         </div>
     </ion-card>
-    <ion-card>
-      <img src="../../../assets/img/pizzah.jpg" alt="">
-        <div class="padding">
-          <ion-card-header>
-            <ion-card-title>
-              <p class="bold">Pizza de peperoni <ion-badge class="ion-margin-start status">En proceso</ion-badge></p>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <p class="light margin"><ion-icon name="cart"></ion-icon> Dominos Pizza</p>
-            <p class="light"><ion-icon name="person"></ion-icon> Edgar Vazquez</p>
-          </ion-card-content>
-        </div>
-    </ion-card>
+  </div><!-- pedidos concluidos -->
+
+    
 </ion-content>

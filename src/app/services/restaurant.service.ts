@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { Restaurant } from '../dbdocs/restaurant';
+import { map } from 'rxjs/operators';
+import { Producto } from '../dbdocs/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +24,16 @@ export class RestaurantService {
     return this.afs.collection('complementos', ref => ref.where('id_restaurant', '==', idRestaurant)).snapshotChanges();
   }
   
-  getRestaurant(idRestaurant) {
-    return this.afs.collection('restaurantes', ref => ref.where('uid','==', idRestaurant)).valueChanges();
+  getRestaurant(uidRestaurant: string) {
+    return this.afs.collection<Restaurant>('restaurantes').valueChanges().pipe(
+      map(restaurants => restaurants.find(r => r.uid == uidRestaurant))
+    );
   }
 
-  getProductos(idRestaurant){
-    return this.afs.collection('productos', ref => ref.where('restaurante', '==', idRestaurant)).valueChanges();
+  getProductos(uidRestaurant: string): Observable<Producto[]> {
+    return this.afs.collection<Producto>('productos').valueChanges().pipe(
+      map(productos => productos.filter(producto => producto.restaurante == uidRestaurant))
+    );
   }
 
   getComplementos() {

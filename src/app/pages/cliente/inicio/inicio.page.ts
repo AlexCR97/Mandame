@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/core';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { Usuario } from 'src/app/dbdocs/usuario';
 
 @Component({
   selector: 'app-inicio',
@@ -9,7 +10,17 @@ import { CacheUsuario } from 'src/app/cache/cache-usuario';
 })
 export class InicioPage implements OnInit {
 
-  usuario = CacheUsuario.usuario;
+  //usuario = CacheUsuario.usuario;
+  usuario: Usuario = {
+    apellido: '',
+    direcciones: [''],
+    email: '',
+    foto: '',
+    nombre: '',
+    posicion: '',
+    telefono: '',
+    uid: '',
+  }
 
   anchorToolbar = false;
   showTitle = false;

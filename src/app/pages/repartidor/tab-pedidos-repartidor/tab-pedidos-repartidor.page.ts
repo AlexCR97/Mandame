@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { PedidosService, EsperaPedido } from 'src/app/services/pedidos.service';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { Pedido } from 'src/app/dbdocs/pedido';
+import { Router } from '@angular/router';
+import { CachePedidos } from 'src/app/cache/cache-pedidos';
 
 @Component({
   selector: 'app-tab-pedidos-repartidor',
@@ -7,49 +12,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabPedidosRepartidorPage implements OnInit {
 
-  pedidosEnTransito = [
-    {
-      imgSrc: '../../../../assets/img/carls_jr.jpeg',
-      descripcion: "Carl's Jr",
-    },
-    {
-      imgSrc: '../../../../assets/img/churchs.jfif',
-      descripcion: "Church's",
-    },
-  ];
+  pedidosEnTransito = new Array<Pedido>();
+  pedidosPendientes = new Array<Pedido>();
+  pedidosConcluidos = new Array<Pedido>();
 
-  pedidosPendientes = [
-    {
-      imgSrc: '../../../../assets/img/dominos.png',
-      descripcion: "Domino's Pizza",
-    },
-    {
-      imgSrc: '../../../../assets/img/burger_king.png',
-      descripcion: "Burger King",
-    },
-  ];
+  constructor(
+    public pedidosService: PedidosService,
+    public router: Router,
+  ) { }
 
-  pedidosConcluidos = [
-    {
-      imgSrc: '../../../../assets/img/carls_jr.jpeg',
-      descripcion: "Carl's Jr",
-    },
-    {
-      imgSrc: '../../../../assets/img/dominos.png',
-      descripcion: "Domino's Pizza",
-    },
-    {
-      imgSrc: '../../../../assets/img/churchs.jfif',
-      descripcion: "Church's",
-    },
-    {
-      imgSrc: '../../../../assets/img/burger_king.png',
-      descripcion: "Burger King",
-    },
-  ];
+  ngOnInit() {
+    console.log('Obteniendo pedidos...');
 
-  constructor() { }
+    console.log(EsperaPedido.Todos.toString());
+    console.log(EsperaPedido.EnTransito.toString());
+    console.log(EsperaPedido.Pendiente.toString());
+    console.log(EsperaPedido.Concluido.toString());
 
-  ngOnInit() { }
+    this.pedidosService.getPedidosDeRepartidor(CacheUsuario.usuario.uid, EsperaPedido.EnTransito).subscribe(pedidos => {
+      console.log('Pedidos en transito');
+      console.table(pedidos);
 
+      this.pedidosEnTransito = pedidos;
+      CachePedidos.setAllPedidos(this.pedidosEnTransito);
+    });
+
+    this.pedidosService.getPedidosDeRepartidor(CacheUsuario.usuario.uid, EsperaPedido.Pendiente).subscribe(pedidos => {
+      console.log('Pedidos pendientes');
+      console.table(pedidos);
+
+      this.pedidosPendientes = pedidos;
+      CachePedidos.setAllPedidos(this.pedidosPendientes);
+    });
+
+    this.pedidosService.getPedidosDeRepartidor(CacheUsuario.usuario.uid, EsperaPedido.Concluido).subscribe(pedidos => {
+      console.log('Pedidos concluidos');
+      console.table(pedidos);
+
+      this.pedidosConcluidos = pedidos;
+      CachePedidos.setAllPedidos(this.pedidosConcluidos);
+    });
+  }
+
+  verDetallesPedido(pedido: Pedido) {
+    // TODO Cambiar uid del repartidor por uid del pedido
+    this.router.navigate(['/detalles-pedido-repartidor'], {
+      queryParams: {
+        uidPedido: pedido.repartidor,
+      }
+    });
+  }
 }

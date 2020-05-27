@@ -7,6 +7,10 @@ export class UtilsService {
 
   constructor() { }
 
+  tieneConexionInternet(): boolean {
+    return true;
+  }
+
   getFechaHoy(): Date {
     return new Date(this.getFechaHoyString());
   }

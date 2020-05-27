@@ -98,7 +98,11 @@ const routes: Routes = [
   {
     path: 'chats-cliente',
     loadChildren: () => import('./pages/cliente/chats-cliente/chats-cliente.module').then( m => m.ChatsClientePageModule)
+  },  {
+    path: 'detalles-pedido-cliente',
+    loadChildren: () => import('./pages/cliente/detalles-pedido-cliente/detalles-pedido-cliente.module').then( m => m.DetallesPedidoClientePageModule)
   },
+
 ];
 
 @NgModule({
