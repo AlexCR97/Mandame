@@ -53,7 +53,7 @@ export class PreparandoPedidoPage implements OnInit {
             this.restaurant.getPedido(this.uid).subscribe(ev => {
                 let event = ev as any;
                 this.pedido.restaurante = event.restaurante,
-                this.pedido.url = 'url',
+                this.pedido.url = 'url', // \//TODO: DECIDE WHAT IMAGE IS GOING TO BE USED
                 this.pedido.uidrepartidor = event.repartidor,
                 this.pedido.estado = event.estado
                 this.actualizarEstado(this.pedido.estado);

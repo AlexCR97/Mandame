@@ -108,6 +108,7 @@ export class PrePedidoPage implements OnInit {
     this.total += this.subTotal + this.costoEnvio;
   }
 
+  // TODO: FIX INC, DEC, AREN'T WORKING IN SOME CASES
   aumentarCantidad(orden) {
     console.log('Order: ', orden);
     orden.cantidad = orden.cantidad + 1;
