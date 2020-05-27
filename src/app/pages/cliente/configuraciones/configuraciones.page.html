@@ -8,12 +8,15 @@
 </ion-header>
 
 <ion-content>
+
   <div class="center">
-    <ion-avatar class="image-center">
-      <img name="profile_pic" src="../../../assets/img/perfil_prueba.JPG">
+    <ion-avatar class="image-center" (click)="onCambiarImagenClick()">
+      <ion-img [src]="usuario.foto? usuario.foto : fotoPorDefecto"></ion-img>
     </ion-avatar>
-    <ion-label>Cambiar foto</ion-label>
+    <ion-label (click)="onCambiarImagenClick()">Cambiar foto</ion-label>
+    <input id="inputCambiarImagen" type="file" accept="image/*" style="display: none;" (change)="onInputCambiarImagen($event.target.files)"/>
   </div>
+
   <ion-list lines="full">
     
     <ion-item detail routerLink="nombre">
