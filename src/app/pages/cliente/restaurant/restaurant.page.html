@@ -67,7 +67,7 @@
       <!-- categorias tabs -->
       <ion-segment class="margin-y" [(ngModel)]="select" (ionChange)="segmentChanged($event)" scrollable mode="md" color="dark">
 
-        <ion-segment-button *ngFor="let i of productosPorCategoria" selected [(value)]="i.categoria">
+        <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
           <ion-label>{{i.categoria}}</ion-label>
         </ion-segment-button>
 

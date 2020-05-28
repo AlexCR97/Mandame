@@ -9,3 +9,8 @@ export interface Producto {
 
     uid?: string;
 }
+
+export interface ProductosPorCategoria {
+    categoria: string;
+    productos: Producto[];
+}

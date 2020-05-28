@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Restaurant } from '../dbdocs/restaurant';
+import { Restaurant, RestaurantesPorCategoria } from '../dbdocs/restaurant';
 import { map } from 'rxjs/operators';
 import { Producto } from '../dbdocs/producto';
 
@@ -14,7 +14,7 @@ export class RestaurantService {
 
   constructor(
     private afs: AngularFirestore
-    ) { }
+  ) { }
 
   /*getRestaurant() {
     return this.afs.collection('restaurantes').valueChanges();
@@ -27,6 +27,32 @@ export class RestaurantService {
   getRestaurant(uidRestaurant: string) {
     return this.afs.collection<Restaurant>('restaurantes').valueChanges().pipe(
       map(restaurants => restaurants.find(r => r.uid == uidRestaurant))
+    );
+  }
+
+  getRestaurantes(): Observable<Restaurant[]> {
+    return this.afs.collection<Restaurant>('restaurantes').valueChanges();
+  }
+
+  getRestaurantesPorCategoria() {
+    return this.afs.collection<Restaurant>('restaurantes').valueChanges().pipe(
+      map(restaurants => {
+        let restsPorCategoria = new Array<RestaurantesPorCategoria>();
+
+        let categoriasRepetidas = restaurants.map(producto => producto.categoria);
+        let categoriasUnicas = new Set<string>(categoriasRepetidas);
+
+        categoriasUnicas.forEach(categ =>{
+          let rests = restaurants.filter(prod => prod.categoria == categ);
+
+          restsPorCategoria.push({
+            categoria: categ,
+            restaurantes: rests,
+          });
+        });
+
+        return restsPorCategoria;
+      })
     );
   }
 

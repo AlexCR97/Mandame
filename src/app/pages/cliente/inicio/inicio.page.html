@@ -181,30 +181,14 @@
 
     </div><!--Superior-->
 
-    <!--Central-->
+    <!-- Restaurantes por categoria -->
     <div>
 
       <!-- segments -->
       <ion-segment [(ngModel)]="segmentCentral" color="dark" mode="md" scrollable>
 
-        <ion-segment-button value="comida">
-          <ion-label class="ion-text-capitalize">Comida</ion-label>
-        </ion-segment-button>
-  
-        <ion-segment-button value="tienda">
-          <ion-label class="ion-text-capitalize">Tienda</ion-label>
-        </ion-segment-button>
-  
-        <ion-segment-button value="farmacia">
-          <ion-label class="ion-text-capitalize">Farmacia</ion-label>
-        </ion-segment-button>
-  
-        <ion-segment-button value="papeleria">
-          <ion-label class="ion-text-capitalize">Papeleria</ion-label>
-        </ion-segment-button>
-  
-        <ion-segment-button value="supermercado">
-          <ion-label class="ion-text-capitalize">Supermercado</ion-label>
+        <ion-segment-button *ngFor="let i of restsPorCategoria" [(value)]="i.categoria">
+          <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
         </ion-segment-button>
   
       </ion-segment><!-- segments -->
@@ -212,105 +196,37 @@
       <!-- contenedor de segments -->
       <div [ngSwitch]="segmentCentral">
 
-        <!-- comida -->
-        <div *ngSwitchCase="'comida'">
-          <div class="mdm-scroll-horizontal">
+        <!-- categoria switch container -->
+        <div *ngFor="let i of restsPorCategoria">
 
-            <!-- producto item -->
-            <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let i of comidaItems">
-              <ion-card class="mdm-center-both">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-              <p>{{i.desc}}</p>
-            </div><!-- producto item -->
+          <div *ngSwitchCase="i.categoria">
+            <div class="mdm-scroll-horizontal">
 
-          </div>
-        </div><!-- comida -->
-  
-        <!-- tienda -->
-        <div *ngSwitchCase="'tienda'">
-          <div class="mdm-scroll-horizontal">
+              <!-- producto item -->
+              <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let rest of i.restaurantes">
+                <ion-card class="mdm-center-both">
+                  <ion-img [src]="rest.foto_perfil"></ion-img>
+                </ion-card>
+                <p>{{rest.nombre}}</p>
+              </div><!-- producto item -->
 
-            <!-- producto item -->
-            <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let i of comidaItems">
-              <ion-card class="mdm-center-both">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-              <p>{{i.desc}}</p>
-            </div><!-- producto item -->
+            </div>
+          </div><!-- comida -->
 
-          </div>
-        </div><!-- tienda -->
-  
-        <!-- farmacia -->
-        <div *ngSwitchCase="'farmacia'">
-          <div class="mdm-scroll-horizontal">
-
-            <!-- producto item -->
-            <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let i of comidaItems">
-              <ion-card class="mdm-center-both">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-              <p>{{i.desc}}</p>
-            </div><!-- producto item -->
-
-          </div>
-        </div><!-- farmacia -->
-  
-        <!-- papeleria -->
-        <div *ngSwitchCase="'papeleria'">
-          <div class="mdm-scroll-horizontal">
-
-            <!-- producto item -->
-            <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let i of comidaItems">
-              <ion-card class="mdm-center-both">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-              <p>{{i.desc}}</p>
-            </div><!-- producto item -->
-
-          </div>
-        </div><!-- papeleria -->
-  
-        <!-- supermercado -->
-        <div *ngSwitchCase="'supermercado'">
-          <div class="mdm-scroll-horizontal">
-
-            <!-- producto item -->
-            <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let i of comidaItems">
-              <ion-card class="mdm-center-both">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-              <p>{{i.desc}}</p>
-            </div><!-- producto item -->
-
-          </div>
-        </div><!-- supermercado -->
+        </div><!-- categoria switch container -->
   
       </div><!-- contenedor de segments -->
 
-    </div><!--Central-->
+    </div><!-- Restaurantes por categoria -->
 
-    <!--Inferior-->
+    <!--Productos por categoria -->
     <div>
 
       <!-- segments -->
       <ion-segment [(ngModel)]="segmentInferior" color="dark" mode="md" scrollable>
 
-        <ion-segment-button value="todos">
-          <ion-label class="ion-text-capitalize">Todos</ion-label>
-        </ion-segment-button>
-
-        <ion-segment-button value="tacos">
-          <ion-label class="ion-text-capitalize">Tacos</ion-label>
-        </ion-segment-button>
-
-        <ion-segment-button value="pizza">
-          <ion-label class="ion-text-capitalize">Pizza</ion-label>
-        </ion-segment-button>
-
-        <ion-segment-button value="hamburguesas">
-          <ion-label class="ion-text-capitalize">Hamburguesas</ion-label>
+        <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
+          <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
         </ion-segment-button>
 
       </ion-segment><!-- segments -->
@@ -318,136 +234,41 @@
       <!-- contenedor de segments -->
       <div [ngSwitch]="segmentInferior">
 
-        <!-- todos -->
-        <div *ngSwitchCase="'todos'" class="ordenes-container">
+        <!-- categoria switch container -->
+        <div *ngFor="let i of productosPorCategoria">
+          <div *ngSwitchCase="i.categoria" class="ordenes-container">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" *ngFor="let producto of i.productos">
 
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6" *ngFor="let i of ordenTodosItems">
-
-                <!-- orden -->
-                <ion-card class="orden-item">
-                  <img src="{{i.imgSrc}}">
-                  <ion-card-header>
-                    <ion-card-title>{{i.desc}}</ion-card-title>
-                    <ion-card-subtitle>{{i.empresa}}</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <div class="mdm-chip mdm-mr-2">
-                      <ion-icon name="alert-circle" color="success"></ion-icon>
-                      <p>${{i.precio}}</p>
-                    </div>
-                    <div class="mdm-chip">
-                      <ion-icon name="time" color="secondary"></ion-icon>
-                      <p>{{i.tiempo}}</p>
-                    </div>
-                  </ion-card-content>
-                </ion-card><!-- orden -->
-  
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          
-        </div><!-- todos -->
-
-        <!-- tacos -->
-        <div *ngSwitchCase="'tacos'" class="ordenes-container">
-
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6" *ngFor="let i of ordenTodosItems">
-
-                <!-- orden -->
-                <ion-card class="orden-item">
-                  <img src="{{i.imgSrc}}">
-                  <ion-card-header>
-                    <ion-card-title>{{i.desc}}</ion-card-title>
-                    <ion-card-subtitle>{{i.empresa}}</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <div class="mdm-chip mdm-mr-2">
-                      <ion-icon name="alert-circle" color="success"></ion-icon>
-                      <p>${{i.precio}}</p>
-                    </div>
-                    <div class="mdm-chip">
-                      <ion-icon name="time" color="secondary"></ion-icon>
-                      <p>{{i.tiempo}}</p>
-                    </div>
-                  </ion-card-content>
-                </ion-card><!-- orden -->
-  
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </div><!-- tacos -->
-
-        <!-- pizza -->
-        <div *ngSwitchCase="'pizza'" class="ordenes-container">
-
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6" *ngFor="let i of ordenTodosItems">
-
-                <!-- orden -->
-                <ion-card class="orden-item">
-                  <img src="{{i.imgSrc}}">
-                  <ion-card-header>
-                    <ion-card-title>{{i.desc}}</ion-card-title>
-                    <ion-card-subtitle>{{i.empresa}}</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <div class="mdm-chip mdm-mr-2">
-                      <ion-icon name="alert-circle" color="success"></ion-icon>
-                      <p>${{i.precio}}</p>
-                    </div>
-                    <div class="mdm-chip">
-                      <ion-icon name="time" color="secondary"></ion-icon>
-                      <p>{{i.tiempo}}</p>
-                    </div>
-                  </ion-card-content>
-                </ion-card><!-- orden -->
-  
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </div>
-
-        <!-- hamburguesas -->
-        <div *ngSwitchCase="'hamburguesas'" class="ordenes-container">
-
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6" *ngFor="let i of ordenTodosItems">
-
-                <!-- orden -->
-                <ion-card class="orden-item">
-                  <img src="{{i.imgSrc}}">
-                  <ion-card-header>
-                    <ion-card-title>{{i.desc}}</ion-card-title>
-                    <ion-card-subtitle>{{i.empresa}}</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <div class="mdm-chip mdm-mr-2">
-                      <ion-icon name="alert-circle" color="success"></ion-icon>
-                      <p>${{i.precio}}</p>
-                    </div>
-                    <div class="mdm-chip">
-                      <ion-icon name="time" color="secondary"></ion-icon>
-                      <p>{{i.tiempo}}</p>
-                    </div>
-                  </ion-card-content>
-                </ion-card><!-- orden -->
-  
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </div><!-- hamburguesas -->
+                  <!-- orden -->
+                  <ion-card class="orden-item">
+                    <ion-img [src]="producto.foto"></ion-img>
+                    <ion-card-header>
+                      <ion-card-title>{{producto.nombre}}</ion-card-title>
+                      <ion-card-subtitle>{{producto.restaurante}}</ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <div class="mdm-chip mdm-mr-2">
+                        <ion-icon name="alert-circle" color="success"></ion-icon>
+                        <p>$ {{producto.precio}}.00 MXN</p>
+                      </div>
+                      <div class="mdm-chip">
+                        <ion-icon name="time" color="secondary"></ion-icon>
+                        <p>30-60 Min</p>
+                      </div>
+                    </ion-card-content>
+                  </ion-card><!-- orden -->
+    
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div><!-- categoria switch container -->
 
       </div><!-- contenedor de segments -->
-    </div><!--Inferior-->
+
+    </div><!--Productos por categoria -->
 
   </div><!-- contenedor principal -->
 
