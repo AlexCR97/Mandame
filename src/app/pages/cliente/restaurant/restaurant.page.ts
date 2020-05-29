@@ -70,6 +70,7 @@ export class RestaurantPage implements OnInit {
         console.log('Obteniendo productos por categoria...');
         this.productosPorCategoria = this.getProductosPorCategoria(this.productos);
         console.log(this.productosPorCategoria);
+        this.select = this.productosPorCategoria[0].categoria;
       });
     }
     // No tiene conexion a internet

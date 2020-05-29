@@ -1,15 +1,19 @@
-@font-face{
-    font-family: Montserrat-Medium;
-    src: url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swa');
-}
+
 
 $color-principal: #FF6800;
 $color-secundario: #B3B1B1; 
 
 ion-content{
     position: relative;
-    top:-60px;
+    top: -60px;
+    --padding-bottom: 30px;
+    min-height: 100vh;
     --ion-background-color: #fff;
+}
+
+ion-footer{
+    position: relative;
+    top: -89px;
 }
 
 ion-segment{
@@ -25,6 +29,19 @@ ion-segment{
     padding: 0;
     color: black;
     font-family: Montserrat;
+}
+
+.enter{
+    animation: entrada 300ms;
+}
+
+@keyframes entrada{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
 
 .margin-y{
@@ -46,10 +63,11 @@ ion-segment{
 }
 
 .top-btn{
-    background: url('../../../../assets/img/Pizza-de-pepperoni.jpg');
+    position: relative;
+    width: 100%;
+    background: url('../../../../assets/img/Pizza-de-pepperoni.jpg') center;
     background-size: cover;
     height: 140px;
-    z-index: -1;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -69,9 +87,10 @@ ion-segment{
 }
 
 ion-toolbar {
-    --background: transparent;
+    --background: transparent !important;
     --ion-color-base: transparent !important;
 }
+
 .principal{
     z-index: 1;
     position: relative;
