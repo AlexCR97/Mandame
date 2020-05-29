@@ -40,7 +40,7 @@ export class DireccionesService {
     return batch.commit();
   }
 
-  actualizarDireccion(usuario: Usuario, direccionUid: string,  direccion: Direccion): Promise<void> {
+  actualizarDireccion(direccionUid: string,  direccion: Direccion): Promise<void> {
     const db = this.afs.firestore;
     const batch = db.batch();
   
@@ -54,22 +54,40 @@ export class DireccionesService {
     return this.afs.doc<Direccion>(`direcciones/${uid}`).valueChanges();
   }
 
-  //Obtencion de las direeciones de un usuario
+  //Obtener las direcciones del usuario
   getDireccionesUsuario(usuarioUid: string, resolver: (direcciones: Direccion[]) => void) {
-    //Buscamos el usuario
+    console.log('START getDireccionesUsuario...');
+
     this.reg.getUsuario(usuarioUid).subscribe(usuario => {
-      
+
+      console.log('usuario obtenido:');
+      console.log(usuario);
+
       let direccionsUids = usuario.direcciones;
-      //Creamos los Arreglos para guardar
       let direcciones = Array<Direccion>();
-      //Recorremos las direcciones esperando resultados
+
+      console.log('direcciones del usuario');
+      console.log(direccionsUids);
+
       direccionsUids.forEach(async direccionUid => {
-        let direccion = await this.getDireccion(direccionUid).toPromise();
-        //cada resultado se inserta
+        let direccionDoc = await this.afs.firestore.collection('direcciones').doc(direccionUid).get();
+
+        let direccion: Direccion = {
+          calle: direccionDoc.get('calle'),
+          numeroExterior: direccionDoc.get('numeroExterior'),
+          numeroInterior: direccionDoc.get('numeroInterior'),
+          colonia: direccionDoc.get('colonia'),
+        };
+
+        console.log('direccion obtenida:');
+        console.log(direccion);
+        
         direcciones.push(direccion);
       });
-//Ya terminado regresamos las direcciones en Arreglo
+
       resolver(direcciones);
+
+      console.log('END getDireccionesUsuario...');
     });
   }
 

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DireccionesService } from 'src/app/services/direcciones.service';
 import { LoadingController } from '@ionic/angular';
 import { CacheUsuario } from 'src/app/services/cache-usuario';
+import { Direccion } from 'src/app/dbdocs/direccion';
 
 
 @Component({
@@ -12,21 +13,37 @@ import { CacheUsuario } from 'src/app/services/cache-usuario';
 })
 export class DireccionesPage implements OnInit {
 
-  direcciones: any = [];
+  direcciones: Direccion[];
+
   constructor(
     public loadingController: LoadingController,
     public direccionesService: DireccionesService,
-
+    public router: Router,
   ) { }
 
   ngOnInit() {
     console.log("Usuario")
-    console.log(CacheUsuario.usuario) 
-    this.direccionesService.getDireccion(CacheUsuario.usuario.uid).subscribe(direccion => {
-      console.log("Obteniendo")
-      console.log(direccion)
-      this.direcciones = direccion;
-    })
-    console.log(this.direcciones)
+    let cliente = CacheUsuario.usuario;
+    console.log(cliente) 
+    let n = cliente.direcciones.length;
+    this.direccionesService.getDireccionesUsuario(cliente.uid,
+      direcciones => {
+        direcciones.forEach(direccion => this.direcciones.push(direccion));
+      }
+      
+    );
+    
+  }
+
+  actualizarDireccion(uidDireccion: string) {
+    this.router.navigate(['/actualizar-direccion'], {
+      queryParams: {
+        uidDireccion: uidDireccion,
+      }
+    });
+  }
+
+  irAgregarDireccion(){
+    this.router.navigateByUrl('agregar-direccion');
   }
 }
