@@ -98,11 +98,19 @@ const routes: Routes = [
   {
     path: 'chats-cliente',
     loadChildren: () => import('./pages/cliente/chats-cliente/chats-cliente.module').then( m => m.ChatsClientePageModule)
-  },  {
+  },
+  {
     path: 'detalles-pedido-cliente',
     loadChildren: () => import('./pages/cliente/detalles-pedido-cliente/detalles-pedido-cliente.module').then( m => m.DetallesPedidoClientePageModule)
   },
-
+  {
+    path: 'agregar-direccion',
+    loadChildren: () => import('./pages/cliente/agregar-direccion/agregar-direccion.module').then( m => m.AgregarDireccionPageModule)
+  },
+  {
+    path: 'actualizar-direccion',
+    loadChildren: () => import('./pages/cliente/actualizar-direccion/actualizar-direccion.module').then( m => m.ActualizarDireccionPageModule)
+  },
 ];
 
 @NgModule({
