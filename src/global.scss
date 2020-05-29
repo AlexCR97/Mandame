@@ -24,6 +24,7 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import url("./assets/fonts/webfonts/Montserrat.css");
 
 .ion-color-naranja {
     --ion-color-base: var(--ion-color-naranja);
@@ -33,6 +34,7 @@
     --ion-color-shade: var(--ion-color-naranja-shade);
     --ion-color-tint: var(--ion-color-naranja-tint);
 }
+
 
 .mdm-border-red {
     border: 1px solid red;
@@ -87,7 +89,7 @@
 
 .mdm-chip {
     border-radius: 10px;
-    background-color: lightgray;
+    background-color: #eaeaea;
     padding: 2px;
     display: flex;
     align-items: center;

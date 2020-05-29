@@ -108,9 +108,8 @@
       </ion-toolbar><!-- toolbar -->
     </div>
 
-    <div class="ion-padding">
-      <br><br><br><br>
-      <p class="banner-text">¡Bienvenido/a {{usuario.nombre}}!</p>
+    <div class="banner-description ion-padding">
+      <p class="banner-text">Hola {{usuario.nombre}}</p>
       <h1 class="banner-text">¿En qué te podemos ayudar?</h1>
     </div>
 
@@ -121,11 +120,60 @@
   <!-- contenedor principal -->
   <div class="contenedor-principal ion-padding">
 
+    <!-- Skeleton  -->
+    <div *ngIf="productosPorCategoria == undefined">
+      <ion-grid style="margin-bottom: 20px">
+        <ion-row>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid style="margin-bottom: 20px">
+        <ion-row>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid style="margin-bottom: 20px">
+        <ion-row>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid style="margin-bottom: 20px">
+        <ion-row>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid style="margin-bottom: 20px">
+        <ion-row>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid style="margin-bottom: 20px">
+        <ion-row>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      </div>  <!-- Fin skeleton -->
+    <div *ngIf="productosPorCategoria != undefined" class="toEnter">
+
     <!--Superior-->
     <div>
 
       <!-- segments -->
-      <ion-segment [(ngModel)]="segmentSuperior" color="dark" mode="md" scrollable>
+      
+      <ion-segment scrollable [(ngModel)]="segmentSuperior" color="dark" mode="md">
 
         <ion-segment-button value="ofertas">
           <ion-label class="ion-text-capitalize">Ofertas</ion-label>
@@ -148,7 +196,7 @@
         <div *ngSwitchCase="'ofertas'">
           <div class="mdm-scroll-horizontal">
             <div class="mdm-scroll-horizontal-item" *ngFor="let i of ofertasItems">
-              <ion-card class="segment-superior-card">
+              <ion-card mode="ios" class="segment-superior-card">
                 <img src="{{i.imgSrc}}">
               </ion-card>
             </div>
@@ -159,7 +207,7 @@
         <div *ngSwitchCase="'masVendidos'">
           <div class="mdm-scroll-horizontal">
             <div class="mdm-scroll-horizontal-item" *ngFor="let i of masVendidosItems">
-              <ion-card class="segment-superior-card">
+              <ion-card mode="ios" class="segment-superior-card">
                 <img src="{{i.imgSrc}}">
               </ion-card>
             </div>
@@ -170,7 +218,7 @@
         <div *ngSwitchCase="'proximamente'">
           <div class="mdm-scroll-horizontal">
             <div class="mdm-scroll-horizontal-item" *ngFor="let i of proximamenteItems">
-              <ion-card class="segment-superior-card">
+              <ion-card mode="ios" class="segment-superior-card">
                 <img src="{{i.imgSrc}}">
               </ion-card>
             </div>
@@ -204,10 +252,10 @@
 
               <!-- producto item -->
               <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let rest of i.restaurantes">
-                <ion-card class="mdm-center-both">
+                <ion-card mode="ios" class="mdm-center-both">
                   <ion-img [src]="rest.foto_perfil"></ion-img>
                 </ion-card>
-                <p>{{rest.nombre}}</p>
+                <p class="restaurant_name">{{rest.nombre}}</p>
               </div><!-- producto item -->
 
             </div>
@@ -223,7 +271,7 @@
     <div>
 
       <!-- segments -->
-      <ion-segment [(ngModel)]="segmentInferior" color="dark" mode="md" scrollable>
+      <ion-segment [(ngModel)]="segmentInferior" class="segmentInferior" color="dark" mode="md" scrollable>
 
         <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
           <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
@@ -239,10 +287,10 @@
           <div *ngSwitchCase="i.categoria" class="ordenes-container">
             <ion-grid>
               <ion-row>
-                <ion-col size="6" *ngFor="let producto of i.productos">
+                <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let producto of i.productos">
 
                   <!-- orden -->
-                  <ion-card class="orden-item">
+                  <ion-card mode="ios" class="orden-item">
                     <ion-img [src]="producto.foto"></ion-img>
                     <ion-card-header>
                       <ion-card-title>{{producto.nombre}}</ion-card-title>
@@ -269,6 +317,8 @@
       </div><!-- contenedor de segments -->
 
     </div><!--Productos por categoria -->
+    </div>
+
 
   </div><!-- contenedor principal -->
 

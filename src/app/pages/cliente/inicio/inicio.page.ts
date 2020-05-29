@@ -30,8 +30,8 @@ export class InicioPage implements OnInit {
   showTitle = false;
 
   private segmentSuperior = 'ofertas';
-  private segmentCentral = 'comida';
-  private segmentInferior = 'todos';
+  private segmentCentral = 'Pizzería';
+  private segmentInferior = 'especialidades';
 
   private menuPrincipal;
   private menuOpciones;
@@ -101,12 +101,14 @@ export class InicioPage implements OnInit {
         console.log('Se obtuvieron los productos por categoria! :D');
         console.log(productos);
         this.productosPorCategoria = productos;
+        console.log("segunda", this.productosPorCategoria.length);
       },
       error => {
         console.error('Error al obtener los productos por categoria :(');
         console.error(error);
       }
     )
+    
   }
 
   onScroll($event: CustomEvent<ScrollDetail>) {
