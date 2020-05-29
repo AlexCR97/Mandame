@@ -70,3 +70,26 @@
     }
 }
 
+.direccion-content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .detalles-entrega {
+        display: flex;
+        flex-direction: row;
+
+        .description{
+            color: #a5a5a5;
+        }
+
+        .title {
+            color: #555555;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #a5a5a5;
+        }
+    }
+}

@@ -5,9 +5,10 @@ import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
 import { ModalAlertPage } from 'src/app/modals/modal-alert/modal-alert.page';
 import { ModalController } from '@ionic/angular';
 import { Restaurant } from 'src/app/dbdocs/restaurant';
-import { Producto } from 'src/app/dbdocs/producto';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ActivatedRoute } from '@angular/router';
+import { Producto } from 'src/app/dbdocs/producto';
+import { getPlantilla, DocsPlantillas } from 'src/app/dbdocs/plantillas';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { CacheProductos } from 'src/app/cache/cache-productos';
@@ -30,18 +31,7 @@ export class RestaurantPage implements OnInit {
 
   //public uidRestaurant: string = 'K0WCy5wF99fdaQb1kxJ9';
   public uidRestaurant: string;
-  public restaurant: Restaurant = {
-    calificacion: 0,
-    categoria: '',
-    complementos: '',
-    estado: '',
-    foto_perfil: '',
-    foto_portada: '',
-    nombre: '',
-    productos: [],
-    tiempo_entrega: 0,
-    uid: 'K0WCy5wF99fdaQb1kxJ9',
-  };
+  public restaurant = getPlantilla(DocsPlantillas.restaurant) as Restaurant;
   public productos: Producto[];
   public productosPorCategoria: ProductosPorCategoria[];
 
@@ -53,9 +43,7 @@ export class RestaurantPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    //TODO Santana: Quitar uid estatica de restaurante
-    //this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
-    this.uidRestaurant = 'K0WCy5wF99fdaQb1kxJ9'
+    this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
     
     console.log('Uid restaurant: ' + this.uidRestaurant);
 

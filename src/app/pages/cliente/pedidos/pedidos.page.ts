@@ -81,7 +81,6 @@ export class PedidosPage implements OnInit {
     console.log('abrirDetallesPedido()')
     console.log(uid);
 
-    //this.router.navigate(['/detalles-pedido-cliente'], {
     this.router.navigate(['/preparando-pedido'], {
       queryParams: {
         uidPedido: uid,

@@ -13,6 +13,10 @@ export class ProductosService {
     private afs: AngularFirestore
   ) { }
 
+  getProductos(): Observable<Producto[]> {
+    return this.afs.collection<Producto>('productos').valueChanges();
+  }
+
   getProductosPorCategoria(): Observable<ProductosPorCategoria[]> {
     return this.afs.collection<Producto>('productos').valueChanges().pipe(
       map(productos => {

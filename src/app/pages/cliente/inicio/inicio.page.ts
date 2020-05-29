@@ -6,6 +6,8 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ProductosService } from 'src/app/services/productos.service';
 import { ProductosPorCategoria } from 'src/app/dbdocs/producto';
 import { RestaurantesPorCategoria } from 'src/app/dbdocs/restaurant';
+import { CacheService } from 'src/app/cache/cache.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -67,11 +69,16 @@ export class InicioPage implements OnInit {
   public restsPorCategoria: RestaurantesPorCategoria[];
 
   constructor(
+    public cacheService: CacheService,
     public productosService: ProductosService,
     public restaurantService: RestaurantService,
+    public router: Router,
   ) { }
 
   ngOnInit() {
+    console.log('Iniciando cache...');
+    this.cacheService.iniciarCache();
+
     console.log('Obteniendo restaurantes por categoria...');
     this.restaurantService.getRestaurantesPorCategoria().subscribe(
       rests => {
@@ -99,6 +106,16 @@ export class InicioPage implements OnInit {
       }
     )
     
+  }
+
+  abrirRestaurante(uidRestaurant: string) {
+    console.log('Abriendo restaurant con uid', uidRestaurant);
+    
+    this.router.navigate(['/restaurant'], {
+      queryParams: {
+        uidRestaurant: uidRestaurant,
+      }
+    });
   }
 
   onScroll($event: CustomEvent<ScrollDetail>) {

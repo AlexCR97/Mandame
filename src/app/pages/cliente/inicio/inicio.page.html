@@ -234,7 +234,7 @@
             <div class="mdm-scroll-horizontal">
 
               <!-- producto item -->
-              <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let rest of i.restaurantes">
+              <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let rest of i.restaurantes" (click)="abrirRestaurante(rest.uid)">
                 <ion-card mode="ios" class="mdm-center-both">
                   <ion-img [src]="rest.foto_perfil"></ion-img>
                 </ion-card>

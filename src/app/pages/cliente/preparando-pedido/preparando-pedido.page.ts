@@ -72,7 +72,7 @@ export class PreparandoPedidoPage implements OnInit {
     
         this.router.navigate(['/detalles-pedido-cliente'], {
             queryParams: {
-            uidPedido: uid,
+                uidPedido: uid,
             }
         });
     }

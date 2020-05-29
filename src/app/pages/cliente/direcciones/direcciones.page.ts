@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DireccionesService } from 'src/app/services/direcciones.service';
+import { DireccionesService, OperacionDireccion } from 'src/app/services/direcciones.service';
 import { LoadingController } from '@ionic/angular';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { Direccion } from 'src/app/dbdocs/direccion';
+import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
 
 @Component({
   selector: 'app-direcciones',
@@ -12,6 +13,8 @@ import { Direccion } from 'src/app/dbdocs/direccion';
 })
 export class DireccionesPage implements OnInit {
 
+  operacionAgregar = OperacionDireccion.agregar;
+  operacionEditar = OperacionDireccion.editar;
   direcciones: Direccion[];
 
   constructor(
@@ -21,28 +24,29 @@ export class DireccionesPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("Usuario")
-    let cliente = CacheUsuario.usuario;
-    console.log(cliente) 
-    let n = cliente.direcciones.length;
-    this.direccionesService.getDireccionesUsuario(cliente.uid,
+    console.log('Obteniendo direcciones del usuario...');
+    this.direccionesService.getDireccionesUsuario(CacheUsuario.usuario.uid,
       direcciones => {
-        direcciones.forEach(direccion => this.direcciones.push(direccion));
+        console.log('Direcciones obtenidas!', direcciones);
+        this.direcciones = direcciones;
+
+        CacheDirecciones.setAllDireccionesDeUsuario(CacheUsuario.usuario.uid, this.direcciones);
+        console.log('Direcciones guardadas en cache :D');
       }
-      
     );
-    
   }
 
-  actualizarDireccion(uidDireccion: string) {
-    this.router.navigate(['/actualizar-direccion'], {
+  agregarOCambiarDireccion(operacion: OperacionDireccion, uidDireccion?: string) {
+    console.log('agregarOCambiarDireccion()');
+    console.log('Operacion:', operacion);
+    console.log('Uid direccion:', uidDireccion);
+
+    this.router.navigate(['/agregar-direccion'], {
       queryParams: {
+        operacion: operacion,
         uidDireccion: uidDireccion,
-      }
+      },
     });
   }
 
-  irAgregarDireccion(){
-    this.router.navigateByUrl('agregar-direccion');
-  }
 }

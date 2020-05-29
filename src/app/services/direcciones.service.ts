@@ -6,6 +6,10 @@ import { Direccion } from '../dbdocs/direccion';
 import { Usuario } from '../dbdocs/usuario';
 import { Observable } from 'rxjs';
 
+export enum OperacionDireccion {
+  agregar = 'agregar',
+  editar = 'editar',
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +19,7 @@ export class DireccionesService {
   constructor(
     public afs: AngularFirestore,
     public afa: AngularFireAuth,
-    public reg :RegistroService,
+    public registroService: RegistroService,
   ) { }
 
   agregarDireccion(usuario: Usuario, direccion: Direccion): Promise<void> {
@@ -49,45 +53,32 @@ export class DireccionesService {
 
     return batch.commit();
   }
-  //Obtencion de dirrecion unica
-  getDireccion(uid): Observable<Direccion> {
+
+  getDireccion(uid: string): Observable<Direccion> {
     return this.afs.doc<Direccion>(`direcciones/${uid}`).valueChanges();
   }
 
-  //Obtener las direcciones del usuario
   getDireccionesUsuario(usuarioUid: string, resolver: (direcciones: Direccion[]) => void) {
-    console.log('START getDireccionesUsuario...');
-
-    this.reg.getUsuario(usuarioUid).subscribe(usuario => {
-
-      console.log('usuario obtenido:');
-      console.log(usuario);
-
+    this.registroService.getUsuario(usuarioUid).subscribe(usuario => {
       let direccionsUids = usuario.direcciones;
       let direcciones = Array<Direccion>();
-
-      console.log('direcciones del usuario');
-      console.log(direccionsUids);
 
       direccionsUids.forEach(async direccionUid => {
         let direccionDoc = await this.afs.firestore.collection('direcciones').doc(direccionUid).get();
 
         let direccion: Direccion = {
           calle: direccionDoc.get('calle'),
+          entreCalle1: direccionDoc.get('entreCalle1'),
+          entreCalle2: direccionDoc.get('entreCalle2'),
           numeroExterior: direccionDoc.get('numeroExterior'),
           numeroInterior: direccionDoc.get('numeroInterior'),
           colonia: direccionDoc.get('colonia'),
         };
 
-        console.log('direccion obtenida:');
-        console.log(direccion);
-        
         direcciones.push(direccion);
       });
 
       resolver(direcciones);
-
-      console.log('END getDireccionesUsuario...');
     });
   }
 
