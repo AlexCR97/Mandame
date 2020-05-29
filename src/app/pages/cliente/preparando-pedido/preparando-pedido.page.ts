@@ -43,13 +43,45 @@ export class PreparandoPedidoPage implements OnInit {
         public modalController: ModalController,
         private route: ActivatedRoute,
         private router: Router,
-        private restaurant: RestaurantService) { }
+        private restaurant: RestaurantService
+    ) { }
+
+    ngOnInit() {
+        console.log('Obteniendo chats con repartidores...');
+        console.log('Usuario: ', CacheUsuario.usuario);
+        this.chatService.getChats(CacheUsuario.usuario.uid,
+            repartidores => {
+                console.log('Repartidores obtenidos en Chats Cliente');
+                console.log(repartidores);
+
+                CacheChat.setAllChatUsuario(repartidores);
+                this.chats = CacheChat.getAllChatsUsuarios();
+            },
+            error => {
+                console.error('Error al obtener los repartidores :(');
+                console.error(error);
+            }
+        );
+
+        this.cargarPedido();
+    }
+
+    abrirDetallesPedido(uid: string) {
+        console.log('abrirDetallesPedido()')
+        console.log(uid);
+    
+        this.router.navigate(['/detalles-pedido-cliente'], {
+            queryParams: {
+            uidPedido: uid,
+            }
+        });
+    }
 
     cargarPedido() {
         console.log('CARGAR PEDIDO');
         this.route.queryParams.subscribe(params => {
             console.log('queryParams: ', params);
-            this.uid = params['uid'];
+            this.uid = params['uidPedido'];
             this.restaurant.getPedido(this.uid).subscribe(ev => {
                 let event = ev as any;
                 this.pedido.restaurante = event.restaurante,
@@ -64,11 +96,11 @@ export class PreparandoPedidoPage implements OnInit {
 
     contador = 0;
 
-    async presentCalificarRepartidorModal(uidRepartidor) {
+    async presentCalificarRepartidorModal(uidPedido: string) {
         const modal = await this.modalController.create({
             component: CalificarRepartidorPage,
             componentProps: {
-                'uid': uidRepartidor
+                'uidPedido': uidPedido,
             },
             cssClass: "dialog-modal"
         });
@@ -76,7 +108,7 @@ export class PreparandoPedidoPage implements OnInit {
     }
 
     calificarRepartidor() {
-        this.presentCalificarRepartidorModal(this.pedido.uidrepartidor);
+        this.presentCalificarRepartidorModal(this.uid);
     }
 
     contactarRepartidor() {
@@ -130,25 +162,6 @@ export class PreparandoPedidoPage implements OnInit {
             this.estado5 = 'active';
             this.entregado = true;
         }
-    }
-
-    ngOnInit() {
-        console.log('Obteniendo chats con repartidores...');
-        console.log('Usuario: ', CacheUsuario.usuario);
-        this.chatService.getChats(CacheUsuario.usuario.uid,
-            repartidores => {
-                console.log('Repartidores obtenidos en Chats Cliente');
-                console.log(repartidores);
-
-                CacheChat.setAllChatUsuario(repartidores);
-                this.chats = CacheChat.getAllChatsUsuarios();
-            },
-            error => {
-                console.error('Error al obtener los repartidores :(');
-                console.error(error);
-            }
-            );
-        this.cargarPedido();
     }
 
 }

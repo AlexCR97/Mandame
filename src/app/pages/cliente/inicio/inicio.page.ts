@@ -14,17 +14,7 @@ import { RestaurantesPorCategoria } from 'src/app/dbdocs/restaurant';
 })
 export class InicioPage implements OnInit {
 
-  //usuario = CacheUsuario.usuario;
-  usuario: Usuario = {
-    apellido: '',
-    direcciones: [''],
-    email: '',
-    foto: '',
-    nombre: '',
-    posicion: '',
-    telefono: '',
-    uid: '',
-  }
+  usuario = CacheUsuario.usuario;
 
   anchorToolbar = false;
   showTitle = false;

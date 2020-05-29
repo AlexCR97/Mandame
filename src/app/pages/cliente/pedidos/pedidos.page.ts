@@ -14,11 +14,10 @@ import { CacheUsuario } from 'src/app/cache/cache-usuario';
 })
 export class PedidosPage implements OnInit {
 
-  public Pedidos : Pedido[];
+  public Pedidos: Pedido[];
   public pedidosPendientes: Pedido[];
   public pedidosConcluidos: Pedido[];
-  //public uidCliente : string = '9TYcT3e3CrRLqa2JgGMLJSmmjPw1';
-  public uidCliente = '';
+  public uidCliente: string;
   public nombreRestaurant : string;
 
   constructor(
@@ -33,6 +32,7 @@ export class PedidosPage implements OnInit {
     
     // SI HAY CONEXION A INTERNET
     if (this.utils.tieneConexionInternet()) {
+
       console.log('Obteniendo pedidos pendientes...');
       // TODO Santana: Cambiar la espera del pedido a pendientes
       this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Todos,
@@ -81,7 +81,8 @@ export class PedidosPage implements OnInit {
     console.log('abrirDetallesPedido()')
     console.log(uid);
 
-    this.router.navigate(['/detalles-pedido-cliente'], {
+    //this.router.navigate(['/detalles-pedido-cliente'], {
+    this.router.navigate(['/preparando-pedido'], {
       queryParams: {
         uidPedido: uid,
       }

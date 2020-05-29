@@ -45,16 +45,6 @@ export class DetallesPedidoClientePage implements OnInit {
     this.total = this.getTotal(this.productos);
   }
 
-  abrirMensajes() {
-    console.log('abrirMensajes()');
-
-    this.router.navigate(['/mensajes'], {
-      queryParams: {
-        uidReceptor: this.pedido.repartidor,
-      },
-    });
-  }
-
   getProductos(pedido: Pedido): ProductoItem[] {
     let count = pedido.productos.length;
     let productosCompletos = new Array<ProductoItem>();

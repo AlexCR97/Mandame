@@ -1,9 +1,7 @@
-ion-content{
-}
-
-*{
+* {
     font-family: Montserrat;
 }
+
 .flecha {
     position: relative;
     width: 100%;
@@ -45,6 +43,10 @@ ion-content{
         color: gray;
         margin-left: 10px;
     }
+}
+
+.link-bold {
+    font-weight: bold;
 }
 
 .button-f{

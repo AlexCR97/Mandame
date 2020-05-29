@@ -7,6 +7,7 @@ import { CacheChat } from 'src/app/cache/cache-chat';
 import { Usuario } from 'src/app/dbdocs/usuario';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IonContent } from '@ionic/angular';
+import { RegistroService } from 'src/app/services/registro.service';
 
 @Component({
   selector: 'app-mensajes',
@@ -20,26 +21,60 @@ export class MensajesPage implements OnInit {
 
   uidEmisor: string;
   uidReceptor: string;
-  usuarioReceptor: Usuario;
+  usuarioReceptor: Usuario = {
+    apellido: '',
+    direcciones: [],
+    email: '',
+    foto: '',
+    nombre: '',
+    posicion: '',
+    telefono: '',
+    uid: '',
+  };
   mensajesChat = Array<Mensaje>();
   inputText: string;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public chatService: ChatService,
+    public registroService: RegistroService,
     public utils: UtilsService,
   ) { }
 
   ngOnInit() {
     this.uidEmisor = CacheUsuario.usuario.uid;
     this.uidReceptor = this.activatedRoute.snapshot.queryParamMap.get('uidReceptor');
-    this.usuarioReceptor = CacheChat.getChatUsuario(this.uidReceptor);
 
     console.log('Uid emisor:   ' + this.uidEmisor);
     console.log('Uid receptor: ' + this.uidReceptor);
-    console.log('Usuario receptor');
-    console.log(this.usuarioReceptor);
 
+    // El usuario receptor no esta en el cache, hay que obtenerlo
+    if (CacheChat.getChatUsuario(this.uidReceptor) == undefined) {
+
+      console.log('El usuario receptor no esta en cache, obteniendo...');
+      this.registroService.getUsuario(this.uidReceptor).subscribe(
+        usuario => {
+          console.log('Se encontro el usuario receptor :D');
+          console.log(usuario);
+
+          this.usuarioReceptor = usuario;
+          CacheChat.setChatUsuario(this.usuarioReceptor);
+          this.getMensajes();
+        },
+        error => {
+          console.error('Error al obtener el usuario receptor :(');
+          console.error(error);
+        }
+      );
+    }
+    // El usuario receptor si esta en cache, obtener los mensajes
+    else {
+      console.log('El usuario receptor si esta en cache :D');
+      this.getMensajes();
+    }
+  }
+
+  getMensajes() {
     console.log('Obteniendo mensajes...');
     this.chatService.getMensajes(this.uidEmisor, this.uidReceptor).subscribe(mensajes => {
       console.log('Mensajes obtenidos!');

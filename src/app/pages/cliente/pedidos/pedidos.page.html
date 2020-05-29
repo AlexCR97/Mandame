@@ -1,23 +1,22 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar color="naranja">
+
     <ion-buttons slot="start">
-      <ion-button (click)="clickedStar()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
+
     <ion-title mode="ios">
         <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
     </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
   <!-- pedidos pendientes -->
-  <div>
-    <ion-label>
-      <h5>Mis pedidos Pendientes</h5>
-    </ion-label>
+  <div class="ion-margin-bottom">
+    <h5>Mis pedidos Pendientes</h5>
   
     <ion-card *ngFor = "let i of pedidosPendientes" (click)="abrirDetallesPedido(i.uid)">
       <img src="../../../assets/img/pizzah.jpg" alt="">
@@ -36,12 +35,10 @@
   </div><!-- pedidos pendientes -->
 
   <!-- pedidos concluidos -->
-  <div>
-    <ion-label>
-      <h5>Mis pedidos Concluidos</h5>
-    </ion-label>
+  <div class="ion-margin-bottom">
+    <h5>Mis pedidos Concluidos</h5>
   
-    <ion-card *ngFor = "let i of pedidosConcluidos">
+    <ion-card *ngFor = "let i of pedidosConcluidos" (click)="abrirDetallesPedido(i.uid)">
       <img src="../../../assets/img/pizzah.jpg" alt="">
         <div class="padding">
           <ion-card-header>
@@ -56,6 +53,5 @@
         </div>
     </ion-card>
   </div><!-- pedidos concluidos -->
-
     
 </ion-content>
