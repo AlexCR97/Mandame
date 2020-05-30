@@ -73,6 +73,8 @@ export class DireccionesService {
           numeroExterior: direccionDoc.get('numeroExterior'),
           numeroInterior: direccionDoc.get('numeroInterior'),
           colonia: direccionDoc.get('colonia'),
+          uid: direccionDoc.get('uid'),
+          // TODO anadir geolocalizacion
         };
 
         direcciones.push(direccion);

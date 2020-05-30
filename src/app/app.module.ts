@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment';
 import { PrePedidoPageModule } from 'src/app/modals/pre-pedido/pre-pedido.module';
 import { ModalAlertPageModule } from 'src/app/modals/modal-alert/modal-alert.module';
 import { CalificarRepartidorPageModule } from 'src/app/modals/calificar-repartidor/calificar-repartidor.module';
+import { SeleccionarDireccionPageModule } from './modals/seleccionar-direccion/seleccionar-direccion.module';
+import { NuevaDireccionPageModule } from './modals/nueva-direccion/nueva-direccion.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +34,9 @@ import { CalificarRepartidorPageModule } from 'src/app/modals/calificar-repartid
     AngularFireStorageModule,
     PrePedidoPageModule,
     ModalAlertPageModule,
-    CalificarRepartidorPageModule
+    CalificarRepartidorPageModule,
+    SeleccionarDireccionPageModule,
+    NuevaDireccionPageModule,
   ],
   providers: [
     StatusBar,

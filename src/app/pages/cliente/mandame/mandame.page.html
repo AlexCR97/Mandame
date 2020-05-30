@@ -5,89 +5,106 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <div class="mdm-center-horizontal">
-      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
-    </div>
-
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name=""></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Mandame</ion-title>
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <h4>Mandame</h4>
-
-  <!-- origen -->
-  <div>
-    <ion-label color="success">
-      <h6>Origen</h6>
-    </ion-label>
-  
-    <ion-card class="direccion-item">
-      <ion-item lines="none">
-        <ion-icon name="location"></ion-icon>
-        <ion-text>
-          <ion-label>Nombre de casa</ion-label>
-          <ion-label class="direccion">Calle Lorem Ipsum #000 Colonia</ion-label>
-        </ion-text>
-      </ion-item>
+  <!-- direccion origen -->
+  <div class="ion-margin-bottom">
+    <ion-text color="success">
+      <h5>Origen</h5>
+    </ion-text>
+    
+    <ion-card mode="ios" (click)="seleccionarDireccionOrigen()">
+      <ion-card-content class="direccion-content">
+        <div class="detalles-entrega">
+          <div class="icon">
+            <ion-icon name="location-sharp" size="large"></ion-icon>
+          </div>
+          <div class="detalles">
+            <p class="title">
+              <b>{{direccionOrigen.calle}}</b> <span *ngIf="direccionOrigen.numeroExterior"> #{{direccionOrigen.numeroExterior}}</span>
+              <span *ngIf="direccionOrigen.numeroInterior">- {{direccionOrigen.numeroInterior}}</span>
+              <span *ngIf="direccionOrigen.entreCalle1 && direccionOrigen.entreCalle2">, entre <b>{{direccionOrigen.entreCalle1}}</b> y <b>{{direccionOrigen.entreCalle2}}</b></span>
+            </p>
+            <p class="description">{{direccionOrigen.colonia}}</p>
+          </div>
+        </div>
+      </ion-card-content>
     </ion-card>
-  </div>
 
-  <!-- destino -->
-  <div>
-    <ion-label color="success">
-      <h6>Destino</h6>
-    </ion-label>
-  
-    <ion-card class="direccion-item">
-      <ion-item lines="none">
-        <ion-icon name="location"></ion-icon>
-        <ion-text>
-          <ion-label>Nombre de casa</ion-label>
-          <ion-label class="direccion">Calle Lorem Ipsum #000 Colonia</ion-label>
-        </ion-text>
-      </ion-item>
+    <p class="link-otra-direccion">
+      O
+      <b (click)="ingresarOtraDireccionOrigen()">haz clic aquí</b>
+      para ingresar otra dirección
+    </p>
+  </div><!-- direccion origen -->
+
+  <!-- direccion destino -->
+  <div class="ion-margin-bottom">
+    <ion-text color="success">
+      <h5>Destino</h5>
+    </ion-text>
+    
+    <ion-card mode="ios" (click)="seleccionarDireccionDestino()">
+      <ion-card-content class="direccion-content">
+        <div class="detalles-entrega">
+          <div class="icon">
+            <ion-icon name="location-sharp" size="large"></ion-icon>
+          </div>
+          <div class="detalles">
+            <p class="title">
+              <b>{{direccionDestino.calle}}</b> <span *ngIf="direccionDestino.numeroExterior"> #{{direccionDestino.numeroExterior}}</span>
+              <span *ngIf="direccionDestino.numeroInterior">- {{direccionDestino.numeroInterior}}</span>
+              <span *ngIf="direccionDestino.entreCalle1 && direccionDestino.entreCalle2">, entre <b>{{direccionDestino.entreCalle1}}</b> y <b>{{direccionDestino.entreCalle2}}</b></span>
+            </p>
+            <p class="description">{{direccionDestino.colonia}}</p>
+          </div>
+        </div>
+      </ion-card-content>
     </ion-card>
-  </div>
+
+    <p class="link-otra-direccion">
+      O
+      <b (click)="ingresarOtraDireccionDestino()">haz clic aquí</b>
+      para ingresar otra dirección
+    </p>
+  </div><!-- direccion destino -->
 
   <!-- indicaciones -->
-  <div>
-    <ion-label color="danger">
-      <h6>Indicaciones</h6>
-    </ion-label>
+  <div class="ion-margin-bottom">
+    <ion-text color="danger">
+      <h5>Indicaciones</h5>
+    </ion-text>
 
-    <ion-card class="indicaciones-item">
+    <ion-card mode="ios" (click)="ingresarIndicaciones()">
       <ion-card-content>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta iure dolores, distinctio officia porro modi consequuntur.
+        <ion-text>
+          <span *ngIf="!indicaciones">Haz clic aquí para escribir las indicaciones</span>
+          <span *ngIf="indicaciones">{{indicaciones}}</span>
+        </ion-text>
       </ion-card-content>
     </ion-card>
   </div>
   
   <!-- total -->
   <div>
-    <ion-label>
-      <h6><b>Total</b></h6>
-    </ion-label>
+    <ion-text>
+      <h5><b>Total</b></h5>
+    </ion-text>
 
-    <ion-card class="total-item">
+    <ion-card class="total-item" mode="ios">
       <ion-card-content>
-        <ion-text>
-          <ion-label>Total de los productos</ion-label>
-          <ion-label class="total">$200</ion-label>
-        </ion-text>
         <ion-text>
           <ion-label>Costo del envío</ion-label>
           <ion-label class="total">$35</ion-label>
         </ion-text>
         <ion-text>
           <ion-label>Total</ion-label>
-          <ion-label class="total">$235</ion-label>
+          <ion-label class="total">$35</ion-label>
         </ion-text>
       </ion-card-content>
     </ion-card>
@@ -96,5 +113,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button class="ion-text-capitalize" color="naranja" expand="block">Realizar Pedido</ion-button>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block" (click)="realizarMandado()">Realizar Mandado</ion-button>
 </ion-footer>

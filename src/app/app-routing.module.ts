@@ -110,7 +110,15 @@ const routes: Routes = [
   {
     path: 'actualizar-direccion',
     loadChildren: () => import('./pages/cliente/actualizar-direccion/actualizar-direccion.module').then( m => m.ActualizarDireccionPageModule)
+  },  {
+    path: 'seleccionar-direccion',
+    loadChildren: () => import('./modals/seleccionar-direccion/seleccionar-direccion.module').then( m => m.SeleccionarDireccionPageModule)
   },
+  {
+    path: 'nueva-direccion',
+    loadChildren: () => import('./modals/nueva-direccion/nueva-direccion.module').then( m => m.NuevaDireccionPageModule)
+  },
+
 ];
 
 @NgModule({

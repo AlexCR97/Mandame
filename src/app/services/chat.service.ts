@@ -117,50 +117,54 @@ export class ChatService {
   }
 
   getRepartidorLibre(resolver: (repartidores: Repartidor) => void, manejarError: (error: any) => void) {
-    this.afs.collection<any>('usuarios').snapshotChanges()
-    // Filtrar por usuarios con posicion de repartidor
-    .pipe(map(usuariosSnapshots => {
-      return usuariosSnapshots.filter(snapshot => {
-        let posicion = snapshot.payload.doc.get('posicion');
-        return posicion == 'repartidor';
-      });
-    }))
-    // Convertir snapshots a usuarios repartidores
-    .pipe(map(usuariosSnapshots => {
-      return usuariosSnapshots.map(async snapshot => {
-        let usuarioDoc = snapshot.payload.doc
-        let repartidorDoc = await this.afs.firestore.collection('repartidores').doc(usuarioDoc.id).get();
+    console.log('Obteniendo un repartidor libre 2...');
 
+    this.afs.collection<Usuario>('usuarios').valueChanges()
+    // Filtrar usuarios con posicion de repartidor
+    .pipe(map(usuarios => {
+      return usuarios.filter(u => u.posicion == 'repartidor');
+    }))
+    // Convertir usuarios a repartidores
+    .pipe(map(usuarios => {
+      return usuarios.map(async u => {
+        let repartidorDoc = await this.afs.firestore.collection('repartidores').doc(u.uid).get();
         let repartidor: Repartidor = {
-          apellido: usuarioDoc.get('apellido'),
+          apellido: u.apellido,
           calificacion: repartidorDoc.get('calificacion'),
-          email: usuarioDoc.get('email'),
+          email: u.email,
           estado: repartidorDoc.get('estado'),
-          foto: usuarioDoc.get('foto'),
-          nombre: usuarioDoc.get('nombre'),
-          telefono: usuarioDoc.get('telefono'),
-          uid: usuarioDoc.get('uid'),
+          foto: u.foto,
+          nombre: u.nombre,
+          telefono: u.telefono,
+          uid: u.uid,
         };
-        
         return repartidor;
       });
     }))
     // Obtener asincronamente los repartidores
     .subscribe(promises => {
-      Promise.all(promises).then(usuarios => {
+      Promise.all(promises)
+      .then(usuariosRepartidores => {
 
         // Filtrar repartidores que esten libres
-        let repartidoresLibres = usuarios.filter(i => i.estado == "Libre");
+        let repartidoresLibres = usuariosRepartidores.filter(i => i.estado == 'Libre');
 
         // Obtener un repartidor al azar
         let index = this.randomInt(0, repartidoresLibres.length - 1);
         let repartidor = repartidoresLibres[index];
 
-        resolver(repartidor);
+        console.log('Los repartidores sin filtrar son:', usuariosRepartidores);
+        console.log('Los repartidores filtrados son:', repartidoresLibres);
+        console.log('El index es:', index);
+        console.log('El repartidor encontrado es:', repartidor);
+
+        if (repartidor == null) {
+          manejarError('No se encontro ningun repartidor :(');
+        } else {
+          resolver(repartidor);
+        }
       })
-      .catch(error => {
-        manejarError(error);
-      });
+      .catch(error => manejarError(error));
     });
   }
 
