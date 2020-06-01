@@ -18,13 +18,6 @@ import { CacheMandados } from './cache-mandados';
 })
 export class CacheService {
 
-  // pedidoCompleto = {
-  //   producto: { },
-  //   adicionales: [],
-  //   cantidad: 0,
-  //   total: 0.0
-  // }  
-
   // Temporalmente el carrito tiene datos estaticos, hasta que esten conectadas algunas otras pantallas
   // que manden los valores a las demas, se mantendra asi
   public static carrito: any[] = [
@@ -68,6 +61,11 @@ export class CacheService {
 
   public static restaurante = 'restaurante ejemplo';
 
+  private onRestaurantesListener: () => void;
+  private onRestaurantesError: (error: any) => void;
+  private onProductosListener: () => void;
+  private onProductosError: (error: any) => void;
+
   constructor(
     public chatsService: ChatService,
     public direccionesService: DireccionesService,
@@ -75,14 +73,13 @@ export class CacheService {
     public pedidosService: PedidosService,
     public productoService: ProductosService,
     public restaurantService: RestaurantService,
-
   ) { }
 
   /**
    * Antes de llamar este metodo, asegurese de que CacheUsuario este iniciado
    */
   public iniciarCache() {
-    this.inciarCacheRestaurantes();
+    this.iniciarCacheRestaurantes();
     this.iniciarCacheProductos();
     this.iniciarCacheDirecciones();
     this.iniciarCachePedidos();
@@ -90,37 +87,49 @@ export class CacheService {
     this.iniciarCacheChats();
   }
 
-  private inciarCacheRestaurantes() {
+  public iniciarCacheRestaurantes() {
     console.log('inciarCacheRestaurantes()');
 
     this.restaurantService.getRestaurantes().subscribe(
       restaurantes => {
         CacheRestaurantes.setAllRestaurantes(restaurantes);
-        console.log('CacheRestaurantes iniciado!');
+        console.log('CacheRestaurantes SUCCESS');
+        if (this.onRestaurantesListener) {
+          this.onRestaurantesListener();
+        }
       },
       error => {
         console.error('CacheRestaurantes ERROR');
         console.error(error);
+        if (this.onRestaurantesError) {
+          this.onRestaurantesError(error);
+        }
       }
     );
   }
 
-  private iniciarCacheProductos() {
+  iniciarCacheProductos() {
     console.log('iniciarCacheProductos');
 
     this.productoService.getProductos().subscribe(
       productos => {
+        console.log('CacheProductos SUCCESS');
         CacheProductos.setAllProductos(productos);
-        console.log('iniciarCacheProductos');
+        if (this.onProductosListener) {
+          this.onProductosListener();
+        }
       },
       error => {
         console.error('CacheProductos ERROR');
         console.error(error);
+        if (this.onRestaurantesError) {
+          this.onProductosError(error);
+        }
       }
     );
   }
 
-  private iniciarCacheDirecciones() {
+  iniciarCacheDirecciones() {
     console.log('iniciarCacheDirecciones()');
 
     this.direccionesService.getDireccionesUsuario(CacheUsuario.usuario.uid,
@@ -131,7 +140,7 @@ export class CacheService {
     );
   }
 
-  private iniciarCachePedidos() {
+  iniciarCachePedidos() {
     console.log('iniciarCachePedidos()');
 
     this.pedidosService.getPedidosCompletosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Todos,
@@ -146,7 +155,7 @@ export class CacheService {
     );
   }
 
-  private iniciarCacheMandados() {
+  iniciarCacheMandados() {
     console.log('iniciarCacheMandados()');
 
     this.mandadsService.getMandadosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Todos).subscribe(
@@ -161,7 +170,7 @@ export class CacheService {
     );
   }
 
-  private iniciarCacheChats() {
+  iniciarCacheChats() {
     console.log('iniciarCacheChats()');
 
     this.chatsService.getChats(CacheUsuario.usuario.uid,
@@ -180,7 +189,7 @@ export class CacheService {
     );
   }
 
-  private iniciarCacheChatMensajes(uidEmisor: string, uidReceptor: string) {
+  iniciarCacheChatMensajes(uidEmisor: string, uidReceptor: string) {
     console.log(`iniciarCacheMensajes(${uidEmisor}, ${uidReceptor})`);
 
     this.chatsService.getMensajes(uidEmisor, uidReceptor).subscribe(
@@ -193,5 +202,15 @@ export class CacheService {
         console.error(error);
       }
     );
+  }
+
+  setOnRestaurantesIniciado(resolver: () => void, manejarError: (error: any) => void) {
+    this.onRestaurantesListener = resolver;
+    this.onRestaurantesError = manejarError;
+  }
+
+  setOnProductosIniciado(resolver: () => void, manejarError: (error: any) => void) {
+    this.onProductosListener = resolver;
+    this.onProductosError = manejarError;
   }
 }

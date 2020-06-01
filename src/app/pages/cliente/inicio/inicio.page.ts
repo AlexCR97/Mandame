@@ -8,6 +8,9 @@ import { ProductosPorCategoria } from 'src/app/dbdocs/producto';
 import { RestaurantesPorCategoria } from 'src/app/dbdocs/restaurant';
 import { CacheService } from 'src/app/cache/cache.service';
 import { Router } from '@angular/router';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
+import { CacheProductos } from 'src/app/cache/cache-productos';
+import { DocsPlantillas, getPlantilla } from 'src/app/dbdocs/plantillas';
 
 @Component({
   selector: 'app-inicio',
@@ -16,96 +19,57 @@ import { Router } from '@angular/router';
 })
 export class InicioPage implements OnInit {
 
-  usuario = CacheUsuario.usuario;
-
   anchorToolbar = false;
   showTitle = false;
 
-  private segmentSuperior = 'ofertas';
-  private segmentCentral = 'Pizzería';
-  private segmentInferior = 'especialidades';
+  usuario = CacheUsuario.usuario;
+  //usuario = getPlantilla(DocsPlantillas.usuario) as Usuario;
 
-  private menuPrincipal;
-  private menuOpciones;
-  private menuCuenta;
+  segmentSuperior = '';
+  segmentCentral = '';
+  segmentInferior = '';
 
-  public ofertasItems = [
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-  ];
+  menuPrincipal;
+  menuOpciones;
+  menuCuenta;
 
-  public masVendidosItems = [
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-  ];
-
-  public proximamenteItems = [
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-  ];
-
-  public productosPorCategoria: ProductosPorCategoria[];
-  public restsPorCategoria: RestaurantesPorCategoria[];
+  productosPorCategoria: ProductosPorCategoria[];
+  restsPorCategoria: RestaurantesPorCategoria[];
 
   constructor(
-    public cacheService: CacheService,
-    public productosService: ProductosService,
-    public restaurantService: RestaurantService,
-    public router: Router,
+    private cacheService: CacheService,
+    private productosService: ProductosService,
+    private restaurantService: RestaurantService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     console.log('Iniciando cache...');
     this.cacheService.iniciarCache();
 
-    console.log('Obteniendo restaurantes por categoria...');
-    this.restaurantService.getRestaurantesPorCategoria().subscribe(
-      rests => {
-        console.log('Se obtuvieron los restaurantes por categoria! :D');
-        console.log(rests);
-        this.restsPorCategoria = rests;
+    this.cacheService.setOnRestaurantesIniciado(
+      () => {
+        console.log('setOnCacheRestaurantesIniciado SUCCESS');
+        this.restsPorCategoria = CacheRestaurantes.getRestaurantesAllPorCategoria();
+        this.segmentCentral = this.restsPorCategoria[0].categoria;
       },
       error => {
-        console.error('Error al obtener los restaurantes por categoria :(');
+        console.error('setOnCacheRestaurantesIniciado FAILURE');
         console.error(error);
       }
     );
 
-    console.log('Obteniendo productos por categoria...');
-    this.productosService.getProductosPorCategoria().subscribe(
-      productos => {
-        console.log('Se obtuvieron los productos por categoria! :D');
-        console.log(productos);
-        this.productosPorCategoria = productos;
-        console.log("segunda", this.productosPorCategoria.length);
+    this.cacheService.setOnProductosIniciado(
+      () => {
+        console.log('setOnProductosIniciado SUCCESS');
+        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+        this.segmentInferior = this.productosPorCategoria[0].categoria;
       },
       error => {
-        console.error('Error al obtener los productos por categoria :(');
+        console.error('setOnProductosIniciado FAILURE');
         console.error(error);
       }
-    )
-    
+    );
   }
 
   abrirRestaurante(uidRestaurant: string) {

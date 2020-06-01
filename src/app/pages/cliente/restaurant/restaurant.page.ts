@@ -12,6 +12,7 @@ import { getPlantilla, DocsPlantillas } from 'src/app/dbdocs/plantillas';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CacheProductos } from 'src/app/cache/cache-productos';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { CacheService } from 'src/app/cache/cache.service';
 
 interface ProductosPorCategoria {
   categoria: string;
@@ -33,14 +34,13 @@ export class RestaurantPage implements OnInit {
   public uidRestaurant: string;
   public fotoPortada: SafeStyle;
   public restaurant = getPlantilla(DocsPlantillas.restaurant) as Restaurant;
-  public productos: Producto[];
   public productosPorCategoria: ProductosPorCategoria[];
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    private cacheService: CacheService,
     public domSanitizer: DomSanitizer,
     public modalController: ModalController,
-    public restaurantservice: RestaurantService,
     public utils: UtilsService,
   ) { }
 
@@ -51,54 +51,65 @@ export class RestaurantPage implements OnInit {
 
     // Si tiene conexion a internet
     if (this.utils.tieneConexionInternet()) {
-      console.log('Buscando restaurant...');
-      this.restaurantservice.getRestaurant(this.uidRestaurant).subscribe(restaurant => {
-        console.log('Restaurant encontrado! :D');
-        console.log(restaurant);
-  
-        this.restaurant = restaurant;
-        this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${restaurant.foto_portada})`);
-        CacheRestaurantes.setRestaurante(this.restaurant);
-      });
-  
-      console.log('Buscando productos de restaurnt...');
-      this.restaurantservice.getProductos(this.uidRestaurant).subscribe(productos => {
-        console.log('Productos encontrados!');
-        console.table(productos);
-  
-        this.productos = productos;
+      console.log('Si hay conexion a Internet');
 
-        CacheProductos.setAllProductos(this.productos);
-  
-        console.log('Obteniendo productos por categoria...');
-        this.productosPorCategoria = this.getProductosPorCategoria(this.productos);
-        console.log(this.productosPorCategoria);
+      // Si no hay restaurantes en cache, cargarlos desde la bd
+      if (CacheRestaurantes.isEmpty()) {
+        console.log('Cargando restaurantes desde la bd...');
+
+        this.cacheService.iniciarCacheRestaurantes();
+        this.cacheService.setOnRestaurantesIniciado(
+          () => {
+            this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
+            this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      }
+      // Si hay cache, cargar el restaurant desde el cache
+      else {
+        console.log('Cargando restaurantes desde el cache...');
+
+        this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
+        this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
+      }
+
+      // Si no hay productos en cache, cargarlos desde la bd
+      if (CacheProductos.isEmpty()) {
+        console.log('Cargando productos desde la bd...');
+
+        this.cacheService.iniciarCacheProductos();
+        this.cacheService.setOnProductosIniciado(
+          () => {
+            console.log('');
+            this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+            this.select = this.productosPorCategoria[0].categoria;
+          },
+          error => {
+            console.error('');
+          }
+        );
+      }
+      // Si hay cache, cargar los productos desde el cache
+      else {
+        console.log('Cargando productos desde el cache...');
+
+        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
         this.select = this.productosPorCategoria[0].categoria;
-      });
+      }
     }
-    // No tiene conexion a internet
+    // No tiene conexion a internet, cargar datos desde el cache
     else {
+      console.log('No hay conexion a internet. Cargando restaurantes y productos desde el cache...');
+
       this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
-      this.productos = CacheProductos.getAllProductosRestaurante(this.uidRestaurant);
+      this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+      this.select = this.productosPorCategoria[0].categoria;
+      // TODO Cambiar foto de portada por otra por defecto si no hay internet
+      //this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
     }
-  }
-
-  getProductosPorCategoria(productos: Producto[]): ProductosPorCategoria[] {
-    let productosPorCategoria = new Array<ProductosPorCategoria>();
-
-    let categoriasRepetidas = productos.map(producto => producto.categoria);
-    let categoriasUnicas = new Set<string>(categoriasRepetidas);
-
-    categoriasUnicas.forEach(categ =>{
-      let prods = productos.filter(prod => prod.categoria == categ);
-
-      productosPorCategoria.push({
-        categoria: categ,
-        productos: prods,
-      });
-    });
-
-    return productosPorCategoria;
   }
 
   segmentChanged(ev: any) { }

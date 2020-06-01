@@ -14,7 +14,42 @@ export class ProductosService {
   ) { }
 
   getProductos(): Observable<Producto[]> {
+    // Simplify the way productos are caught from the database
+
     return this.afs.collection<Producto>('productos').valueChanges();
+
+    return this.afs.collection<Producto>('productos').snapshotChanges()
+    // Snapshots de productos a productos
+    .pipe(map(productosSnapshot => {
+      return productosSnapshot.map(async snapshot => {
+        let productoDoc = snapshot.payload.doc;
+        let producto: Producto = {
+          categoria: productoDoc.get('categoria'),
+          contenido: productoDoc.get('contenido'),
+          foto: productoDoc.get('foto'),
+          ingredientes: productoDoc.get('ingredientes'),
+          nombre: productoDoc.get('nombre'),
+          precio: productoDoc.get('precio'),
+          restaurante: productoDoc.get('restaurante'),
+          uid: productoDoc.get('uid'),
+        };
+
+        producto.nombreRestaurant = (await this.afs.firestore.collection('restaurantes').doc(producto.restaurante).get()).get('nombre');
+
+        return producto;
+      });
+    }))
+    // Obtener asincronamente los productos
+    .pipe(map(promises => {
+      let productos = new Array<Producto>();
+
+      promises.forEach(async promise => {
+        let producto = await promise;
+        productos.push(producto);
+      })
+
+      return productos;
+    }));
   }
 
   getProductosPorCategoria(): Observable<ProductosPorCategoria[]> {

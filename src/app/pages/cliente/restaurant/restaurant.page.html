@@ -24,7 +24,7 @@
 <!-- content -->
 <ion-content (ionScroll)="onScroll($event)" [scrollEvents]="true">
 
-  <div *ngIf="productos == undefined"> <!-- Cargando Restaurant-->
+  <div *ngIf="productosPorCategoria == undefined"> <!-- Cargando Restaurant-->
     <ion-skeleton-text animated style="width: 100%; height: 20vh;"></ion-skeleton-text>
     <div style="padding: 10px;">
       <div style="display: flex;">
@@ -45,7 +45,7 @@
     </div>
   </div> <!-- Cierre Cargando Restaurant-->
 
-  <div class="enter" *ngIf="productos != undefined"> <!-- Restaurant Cargado -->
+  <div class="enter" *ngIf="productosPorCategoria != undefined"> <!-- Restaurant Cargado -->
     <!-- restaurant header -->
     <!--background: url('../../../../assets/img/Pizza-de-pepperoni.jpg') center;-->
     <div class="top-btn"
