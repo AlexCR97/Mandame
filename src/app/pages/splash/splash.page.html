@@ -1,5 +1,8 @@
-<ion-content class="mdm-border-blue ion-padding">
-  <div class="center" style="height: 100%;">
-    <img [ngClass]="imgClass" src="assets/img/logo.png">
+<ion-content>
+  <div class="center">
+    <img *ngIf="show" class="imclass" src="assets/img/logo.png">
+    <img *ngIf="!show" class="byebye" src="assets/img/logo.png">
+      <!-- <img class="imclass" [ngClass]="imgClass" src="assets/img/logo.png"> -->
   </div>
 </ion-content>
+ 

@@ -73,7 +73,7 @@ export class LoginPage implements OnInit {
   async intentarLogin() {
     console.log('Iniciando sesion...');
 
-    this.cargandoDialog = await this.guiUtils.mostrarCargando('Iniciando sesión...');
+    this.cargandoDialog = await this.guiUtils.mostrarCargando('');
 
     this.registroService.iniciarSesion(this.correo, this.contrasena,
     usuario => {
@@ -131,7 +131,7 @@ export class LoginPage implements OnInit {
   }
 
   async registrarUsuario() {
-    this.cargandoDialog = await this.guiUtils.mostrarCargando('Registrando...');
+    this.cargandoDialog = await this.guiUtils.mostrarCargando('');
 
     let usuario: Usuario = {
       apellido: '',

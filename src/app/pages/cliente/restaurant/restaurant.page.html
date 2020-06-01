@@ -2,118 +2,145 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar>
 
-    <ion-buttons slot="start">
-      <ion-button color="light">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
+    <ion-buttons mode="ios" slot="start">
+      <ion-back-button text="" color="light" defaultHref="inicio">
+      </ion-back-button>
     </ion-buttons>
 
     <ion-title mode="ios">
-        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+      <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
     </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="clickedStar()">
-        <ion-icon name="heart-outline"></ion-icon>
+        <ion-icon slot="icon-only" color="light" name="heart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
-  
+
 </ion-header><!-- header -->
 
 <!-- content -->
 <ion-content (ionScroll)="onScroll($event)" [scrollEvents]="true">
 
-  <!-- restaurant header -->
-  <div class="top-btn">
-  </div><!-- restaurant header -->
-
-  <!-- main container -->
-  <section class="principal">
-
-    <!-- detalles del restaurant -->
-    <div class="top-shop">
-
-      <ion-avatar class="img-avatar">
-        <img src="{{restaurant.foto_perfil}}">
-      </ion-avatar>
-
-      <div class="description">
-        <p class="title">
-          <span class="name" id="title">{{restaurant.nombre}}</span>
-          <ion-badge class="status">{{restaurant.estado}}</ion-badge>
-        </p>
-
-        <p class="subtitle">
-          <span class="name">{{restaurant.categoria}}</span>
-          <ion-icon name="star"></ion-icon>
-          <span class="star">{{restaurant.calificacion}}</span>
-        </p>
+  <div *ngIf="productos == undefined"> <!-- Cargando Restaurant-->
+    <ion-skeleton-text animated style="width: 100%; height: 20vh;"></ion-skeleton-text>
+    <div style="padding: 10px;">
+      <div style="display: flex;">
+        <div style="flex: 20%;">
+          <ion-skeleton-text animated style="   width: 70px; height: 70px;"></ion-skeleton-text>
+        </div>
+        <div style="flex: 80%; padding-left: 10px;">
+          <ion-skeleton-text animated style="width: 80%; height: 20px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="margin-top: 5px; width: 60%; height: 20px;"></ion-skeleton-text>
+        </div>
       </div>
-    </div><!-- detalles del restaurant -->
+      <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 20px;"></ion-skeleton-text>
+      <ion-grid style="margin-top: 25px;">
+        <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1]">
+            <ion-skeleton-text  animated style="width: 25%; height: 50px; display: inline-block; margin: 10px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-grid>
+    </div>
+  </div> <!-- Cierre Cargando Restaurant-->
 
-    <!-- descripcion restaurant -->
-    <div class="description-shop">
+  <div class="enter" *ngIf="productos != undefined"> <!-- Restaurant Cargado -->
+    <!-- restaurant header -->
+    <div class="top-btn">
+    </div><!-- restaurant header -->
+
+    <!-- main container -->
+    <section class="principal">
+
+      <!-- detalles del restaurant -->
+      <div class="top-shop">
+
+        <ion-avatar class="img-avatar">
+          <!-- <ion-skeleton-text animated style="opacity: 1; width: 100%; height: 100%;"></ion-skeleton-text> -->
+          <img src="{{restaurant.foto_perfil}}">
+        </ion-avatar>
+
+        <!-- <ion-skeleton-text animated style="margin-left: 20px; margin-top: 15px; width: 200px; height: 15px;"></ion-skeleton-text> -->
+        <div class="description">
+          <p class="title">
+            <!-- <ion-skeleton-text style="width: 100%;"></ion-skeleton-text>  -->
+            <span class="name" id="title">{{restaurant.nombre}}</span>
+            <ion-badge class="status">{{restaurant.estado}}</ion-badge>
+          </p>
+
+          <p class="subtitle">
+            <span class="name">{{restaurant.categoria}}</span>
+            <ion-icon name="star"></ion-icon>
+            <span class="star">{{restaurant.calificacion}}</span>
+          </p>
+        </div>
+      </div><!-- detalles del restaurant -->
+
+      <!-- descripcion restaurant -->
+      <div class="description-shop">
       <p>
         Entrega aproximada: <span>{{restaurant.tiempo_entrega}} minutos</span>
-        <ion-icon name="information-circle-outline"></ion-icon>
+        <!-- <ion-icon name="information-circle-outline"></ion-icon> -->
       </p>  
-    </div><!-- descripcion restaurant -->
+    </div>
+      <!-- descripcion restaurant -->
+      <!-- categorias y productos container -->
+      <div class="articles">
 
-    <!-- categorias y productos container -->
-    <div class="articles">
+        <!-- categorias tabs -->
+        <ion-segment class="margin-y" [(ngModel)]="select" (ionChange)="segmentChanged($event)" scrollable mode="md"
+          color="dark">
 
-      <!-- categorias tabs -->
-      <ion-segment class="margin-y" [(ngModel)]="select" (ionChange)="segmentChanged($event)" scrollable mode="md" color="dark">
+          <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
+            <ion-label><span class="ion-text-capitalize">{{i.categoria}}</span></ion-label>
+          </ion-segment-button>
 
-        <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
-          <ion-label>{{i.categoria}}</ion-label>
-        </ion-segment-button>
+        </ion-segment><!-- categorias tabs -->
 
-      </ion-segment><!-- categorias tabs -->
+        <!-- productos container (tab switch) -->
+        <div [ngSwitch]="select">
 
-      <!-- productos container (tab switch) -->
-      <div [ngSwitch]="select">
+          <!-- categoria switch container -->
+          <div *ngFor="let i of productosPorCategoria">
+            <ion-grid *ngSwitchCase="i.categoria">
+              <ion-row>
+                <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let producto of i.productos">
+                  <ion-card mode="ios">
+                    <img src="{{producto.foto}}" alt="">
+                    <div class="padding">
+                      <ion-card-header>
+                        <ion-card-title>
+                          <p>{{producto.nombre}}</p>
+                        </ion-card-title>
+                        <ion-card-subtitle>
+                          <p>{{producto.ingredientes.join(", ")}}</p>
+                        </ion-card-subtitle>
+                      </ion-card-header>
+                      <ion-card-content>
+                        <ion-badge class="status">
+                          <ion-icon name="card"></ion-icon>
+                          $ {{producto.precio}}.00 MXN
+                        </ion-badge>
+                        <ion-badge class="status">
+                          <ion-icon name="time"></ion-icon>
+                          30-60 Min
+                        </ion-badge>
+                      </ion-card-content>
+                    </div>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div><!-- categoria switch container -->
 
-        <!-- categoria switch container -->
-        <div *ngFor="let i of productosPorCategoria">
-          <ion-grid *ngSwitchCase="i.categoria">
-            <ion-row>
-              <ion-col size="6" *ngFor="let producto of i.productos">
-                <ion-card>
-                  <img src="{{producto.foto}}" alt="">
-                  <div class="padding">
-                    <ion-card-header>
-                      <ion-card-title>
-                        <p>{{producto.nombre}}</p>
-                      </ion-card-title>
-                      <ion-card-subtitle>
-                        <p>{{producto.ingredientes.join(", ")}}</p>
-                      </ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                      <ion-badge class="status">
-                        <ion-icon name="card"></ion-icon>
-                        $ {{producto.precio}}.00 MXN
-                      </ion-badge>
-                      <ion-badge class="status">
-                        <ion-icon name="time"></ion-icon>
-                        30-60 Min
-                      </ion-badge>
-                    </ion-card-content>
-                  </div>
-                </ion-card>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div><!-- categoria switch container -->
+        </div><!-- productos container (tab switch) -->
 
-      </div><!-- productos container (tab switch) -->
+      </div><!-- categorias y productos container -->
 
-    </div><!-- categorias y productos container -->
+    </section><!-- main container -->
+  </div> <!-- Ciere Restaruant Cargado -->
 
-  </section><!-- main container -->
 
 </ion-content><!-- content -->
 

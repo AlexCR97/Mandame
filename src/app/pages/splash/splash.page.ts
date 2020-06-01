@@ -7,32 +7,24 @@ import { Router } from '@angular/router';
   templateUrl: './splash.page.html',
   styleUrls: ['./splash.page.scss'],
 })
-export class SplashPage implements OnInit {
+export class SplashPage implements OnInit { 
 
-  imgClassQueue = ['img-left', 'img-center', 'img-right', 'img-left', 'img-center', 'img-right', 'img-left', 'img-center', 'img-right', 'img-left', 'img-center', 'img-invisible'];
-  imgClass = 'img-invisible';
-
-  timerTick: Subscription;
+  show:boolean = true;
 
   constructor(
     public router: Router,
   ) { }
 
   ngOnInit() {
-    let index = 0;
-    this.imgClass = this.imgClassQueue[index];
+    setTimeout(() => {
+      console.log("Ya estoy");
+      this.show = false;
+    }, 4000);
 
-    this.timerTick = timer(0, 500).subscribe(second => {
+    setTimeout(() => {
+      this.router.navigateByUrl('/login');
+    }, 5000);
 
-      this.imgClass = this.imgClassQueue[index];
-
-      if (index >= this.imgClassQueue.length) {
-        this.timerTick.unsubscribe();
-        this.router.navigateByUrl('/login');
-      }
-
-      index++;
-    });
   }
 
 }
