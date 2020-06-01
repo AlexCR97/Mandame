@@ -3,7 +3,7 @@
   <ion-toolbar>
 
     <ion-buttons mode="ios" slot="start">
-      <ion-back-button text="" color="light" defaultHref="inicio">
+      <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
 
@@ -13,7 +13,7 @@
 
     <ion-buttons slot="end">
       <ion-button (click)="clickedStar()">
-        <ion-icon slot="icon-only" color="light" name="heart-outline"></ion-icon>
+        <ion-icon slot="icon-only" name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
 
@@ -47,7 +47,9 @@
 
   <div class="enter" *ngIf="productos != undefined"> <!-- Restaurant Cargado -->
     <!-- restaurant header -->
-    <div class="top-btn">
+    <!--background: url('../../../../assets/img/Pizza-de-pepperoni.jpg') center;-->
+    <div class="top-btn"
+      [style.background]="fotoPortada">
     </div><!-- restaurant header -->
 
     <!-- main container -->

@@ -1,0 +1,64 @@
+.searchbar {
+    display: flex;
+    align-items: center;
+
+    ion-icon {
+        color: gray;
+        font-size: 26px;
+        margin-left: 10px;
+    }
+}
+
+.restaurant-item {
+    .content {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+    }
+
+    ion-avatar {
+        background-color: white;
+        border: 2px solid orange;
+        margin-right: 10px;
+        width: 70px;
+        height: 70px;
+    }
+
+    .details {
+        flex-grow: 1;
+
+        .title-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0px;
+        }
+
+        .score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            ion-icon {
+                margin-right: 4px;
+            }
+        }
+
+        .category {
+            color: gray;
+            margin: 0px;
+        }
+    }
+}
+
+/*
+foto
+nombre
+categoria
+puntaje
+*/

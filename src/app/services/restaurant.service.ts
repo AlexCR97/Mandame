@@ -16,10 +16,6 @@ export class RestaurantService {
     private afs: AngularFirestore
   ) { }
 
-  /*getRestaurant() {
-    return this.afs.collection('restaurantes').valueChanges();
-  }*/
-
   getAdicionalesFromRestaurant(idRestaurant) {
     return this.afs.collection('complementos', ref => ref.where('id_restaurant', '==', idRestaurant)).snapshotChanges();
   }

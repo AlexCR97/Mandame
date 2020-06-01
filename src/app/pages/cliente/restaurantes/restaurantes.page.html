@@ -1,0 +1,47 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Restaurantes</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="heart" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="searchbar">
+    <ion-searchbar></ion-searchbar>
+    <ion-icon name="filter" slot="icon-only"></ion-icon>
+  </div>
+
+  <ion-card mode="ios" class="restaurant-item" *ngFor="let i of restaurantes" (click)="abrirRestaurante(i.uid)">
+    <ion-img [src]="i.foto_portada"></ion-img>
+    <ion-card-content>
+      <div class="content">
+        <ion-avatar>
+          <ion-img [src]="i.foto_perfil"></ion-img>
+        </ion-avatar>
+        <div class="details">
+          <div class="title-score">
+            <p class="title">{{i.nombre}}</p>
+            <div class="score">
+              <ion-icon name="star"></ion-icon>
+              <ion-label>{{i.calificacion}}</ion-label>
+            </div>
+          </div>
+          <p class="category">{{i.categoria}}</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

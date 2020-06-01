@@ -10,8 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Producto } from 'src/app/dbdocs/producto';
 import { getPlantilla, DocsPlantillas } from 'src/app/dbdocs/plantillas';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
-import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { CacheProductos } from 'src/app/cache/cache-productos';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 interface ProductosPorCategoria {
   categoria: string;
@@ -31,12 +31,14 @@ export class RestaurantPage implements OnInit {
 
   //public uidRestaurant: string = 'K0WCy5wF99fdaQb1kxJ9';
   public uidRestaurant: string;
+  public fotoPortada: SafeStyle;
   public restaurant = getPlantilla(DocsPlantillas.restaurant) as Restaurant;
   public productos: Producto[];
   public productosPorCategoria: ProductosPorCategoria[];
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    public domSanitizer: DomSanitizer,
     public modalController: ModalController,
     public restaurantservice: RestaurantService,
     public utils: UtilsService,
@@ -55,6 +57,7 @@ export class RestaurantPage implements OnInit {
         console.log(restaurant);
   
         this.restaurant = restaurant;
+        this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${restaurant.foto_portada})`);
         CacheRestaurantes.setRestaurante(this.restaurant);
       });
   

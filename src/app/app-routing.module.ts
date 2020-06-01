@@ -108,9 +108,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/cliente/agregar-direccion/agregar-direccion.module').then( m => m.AgregarDireccionPageModule)
   },
   {
-    path: 'actualizar-direccion',
-    loadChildren: () => import('./pages/cliente/actualizar-direccion/actualizar-direccion.module').then( m => m.ActualizarDireccionPageModule)
-  },  {
     path: 'seleccionar-direccion',
     loadChildren: () => import('./modals/seleccionar-direccion/seleccionar-direccion.module').then( m => m.SeleccionarDireccionPageModule)
   },
@@ -121,7 +118,11 @@ const routes: Routes = [
   {
     path: 'mandados',
     loadChildren: () => import('./pages/cliente/mandados/mandados.module').then( m => m.MandadosPageModule)
+  },  {
+    path: 'restaurantes',
+    loadChildren: () => import('./pages/cliente/restaurantes/restaurantes.module').then( m => m.RestaurantesPageModule)
   },
+
 
 ];
 
