@@ -1,12 +1,11 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar color="naranja">
-
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-title>¡Ya casi esta tu pedido!</ion-title> 
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-
-    <ion-title>Ya casi esta tu pedido...</ion-title>
-
   </ion-toolbar>
 </ion-header>
 
