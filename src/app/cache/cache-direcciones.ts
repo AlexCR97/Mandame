@@ -6,6 +6,10 @@ export class CacheDirecciones {
      * Las direcciones se guardan con el uid del usuario al que pertenecen dichas direcciones
      */
     public static direcciones = new Map<string, Direccion[]>();
+
+    public static clear() {
+        this.direcciones.clear();
+    }
     
     public static getDireccion(uidDireccion: string): Direccion {
         return this.getAllDirecciones()

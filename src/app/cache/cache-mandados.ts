@@ -5,6 +5,10 @@ export class CacheMandados {
 
     public static mandados = new Map<string, Mandado>();
     
+    public static clear() {
+        this.mandados.clear();
+    }
+
     public static getMandado(uidMandado: string): Mandado {
         return this.mandados.get(uidMandado);
     }

@@ -65,6 +65,10 @@ export class CacheService {
   private onRestaurantesError: (error: any) => void;
   private onProductosListener: () => void;
   private onProductosError: (error: any) => void;
+  private onChatsListener: () => void;
+  private onChatsError: (error: any) => void;
+  private onMensajesListener: () => void;
+  private onMensajesError: (error: any) => void;
 
   constructor(
     public chatsService: ChatService,
@@ -74,6 +78,46 @@ export class CacheService {
     public productoService: ProductosService,
     public restaurantService: RestaurantService,
   ) { }
+
+  borrarCache() {
+    CacheUsuario.usuario = undefined;
+    this.borrarCacheRestaurantes();
+    this.borrarCacheProductos();
+    this.borrarCacheDirecciones();
+    this.borrarCachePedidos();
+    this.borrarCacheMandados();
+    this.borrarCacheChats();
+  }
+
+  borrarCacheRestaurantes() {
+    console.log('borrarCacheRestaurantes()');
+    CacheRestaurantes.clear();
+  }
+
+  borrarCacheProductos() {
+    console.log('borrarCacheProductos()');
+    CacheProductos.clear();
+  }
+
+  borrarCacheDirecciones() {
+    console.log('borrarCacheDirecciones()');
+    CacheDirecciones.clear();
+  }
+
+  borrarCachePedidos() {
+    console.log('borrarCachePedidos()');
+    CachePedidos.clear();
+  }
+
+  borrarCacheMandados() {
+    console.log('borrarCacheMandados()');
+    CacheMandados.clear();
+  }
+
+  borrarCacheChats() {
+    console.log('borrarCacheChats()');
+    CacheChat.clear();
+  }
 
   /**
    * Antes de llamar este metodo, asegurese de que CacheUsuario este iniciado
@@ -87,7 +131,7 @@ export class CacheService {
     this.iniciarCacheChats();
   }
 
-  public iniciarCacheRestaurantes() {
+  iniciarCacheRestaurantes() {
     console.log('inciarCacheRestaurantes()');
 
     this.restaurantService.getRestaurantes().subscribe(
@@ -170,6 +214,9 @@ export class CacheService {
     );
   }
 
+  /**
+   * Antes de llamar este metodo, asegurese de que CacheUsuario este iniciado
+   */
   iniciarCacheChats() {
     console.log('iniciarCacheChats()');
 
@@ -178,6 +225,10 @@ export class CacheService {
         CacheChat.setAllChatUsuario(usuarios);
         console.log('CacheChat iniciado!');
 
+        if (this.onChatsListener) {
+          this.onChatsListener();
+        }
+
         CacheChat.getAllChatsUsuarios().forEach(usuario => {
           this.iniciarCacheChatMensajes(CacheUsuario.usuario.uid, usuario.uid);
         });
@@ -185,6 +236,10 @@ export class CacheService {
       error => {
         console.error('CacheChat ERROR');
         console.error(error);
+
+        if (this.onChatsError) {
+          this.onChatsError(error);
+        }
       }
     );
   }
@@ -194,16 +249,24 @@ export class CacheService {
 
     this.chatsService.getMensajes(uidEmisor, uidReceptor).subscribe(
       mensajes => {
-        CacheChat.setMensajes(uidEmisor, mensajes);
+        CacheChat.setMensajes(uidReceptor, mensajes);
         console.log(`CacheChatMensajes iniciado (${uidEmisor}, ${uidReceptor})`);
+
+        if (this.onMensajesListener) {
+          this.onMensajesListener();
+        }
       },
       error => {
         console.error(`CacheChatMensajes ERROR (${uidEmisor}, ${uidReceptor})`);
         console.error(error);
+
+        if (this.onMensajesError) {
+          this.onMensajesError(error);
+        }
       }
     );
   }
-
+  
   setOnRestaurantesIniciado(resolver: () => void, manejarError: (error: any) => void) {
     this.onRestaurantesListener = resolver;
     this.onRestaurantesError = manejarError;
@@ -213,4 +276,15 @@ export class CacheService {
     this.onProductosListener = resolver;
     this.onProductosError = manejarError;
   }
+
+  setOnChatsIniciado(resolver: () => void, manejarError: (error: any) => void) {
+    this.onChatsListener = resolver;
+    this.onChatsError = manejarError;
+  }
+
+  setOnMensajesIniciado(resolver: () => void, manejarError: (error: any) => void) {
+    this.onMensajesListener = resolver;
+    this.onMensajesError = manejarError;
+  }
+
 }

@@ -4,6 +4,10 @@ export class CacheProductos{
 
     private static productos = new Map<string, Producto>();
 
+    public static clear() {
+        this.productos.clear();
+    }
+
     public static containsProducto(uidProducto: string): boolean {
         return this.productos.get(uidProducto) != null;
     }

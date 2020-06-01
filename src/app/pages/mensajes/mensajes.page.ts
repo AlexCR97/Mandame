@@ -8,6 +8,7 @@ import { Usuario } from 'src/app/dbdocs/usuario';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IonContent } from '@ionic/angular';
 import { RegistroService } from 'src/app/services/registro.service';
+import { CacheService } from 'src/app/cache/cache.service';
 
 @Component({
   selector: 'app-mensajes',
@@ -36,6 +37,7 @@ export class MensajesPage implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    private cacheService: CacheService,
     public chatService: ChatService,
     public registroService: RegistroService,
     public utils: UtilsService,
@@ -44,52 +46,47 @@ export class MensajesPage implements OnInit {
   ngOnInit() {
     this.uidEmisor = CacheUsuario.usuario.uid;
     this.uidReceptor = this.activatedRoute.snapshot.queryParamMap.get('uidReceptor');
+    this.usuarioReceptor = CacheChat.getChatUsuario(this.uidReceptor);
 
     console.log('Uid emisor:   ' + this.uidEmisor);
     console.log('Uid receptor: ' + this.uidReceptor);
+    console.log('Usuario receptor:', this.usuarioReceptor);
 
-    // El usuario receptor no esta en el cache, hay que obtenerlo
-    if (CacheChat.getChatUsuario(this.uidReceptor) == undefined) {
-
-      console.log('El usuario receptor no esta en cache, obteniendo...');
-      this.registroService.getUsuario(this.uidReceptor).subscribe(
-        usuario => {
-          console.log('Se encontro el usuario receptor :D');
-          console.log(usuario);
-
-          this.usuarioReceptor = usuario;
-          CacheChat.setChatUsuario(this.usuarioReceptor);
-          this.getMensajes();
-        },
-        error => {
-          console.error('Error al obtener el usuario receptor :(');
-          console.error(error);
-        }
-      );
+    // Si tiene conexion a internet
+    if (this.utils.tieneConexionInternet()) {
+      console.log('Si hay conexion a internet');
+      this.cargarMensajesDesdeBd();
     }
-    // El usuario receptor si esta en cache, obtener los mensajes
+    // No tiene conexion a internet
     else {
-      console.log('El usuario receptor si esta en cache :D');
-      this.getMensajes();
+      console.log('No hay conexion a internet');
+      this.cargarMensajesDesdeCache();
     }
   }
 
-  getMensajes() {
-    console.log('Obteniendo mensajes...');
-    this.chatService.getMensajes(this.uidEmisor, this.uidReceptor).subscribe(mensajes => {
-      console.log('Mensajes obtenidos!');
+  cargarMensajesDesdeBd() {
+    console.log('Obteniendo mensajes de la bd');
+    this.cacheService.iniciarCacheChatMensajes(this.uidEmisor, this.uidReceptor);
+    this.cacheService.setOnMensajesIniciado(
+      () => {
+        this.mensajesChat = CacheChat.getMensajes(this.uidReceptor);
+        this.scrollToBottom();
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
 
-      CacheChat.setMensajes(this.uidReceptor, mensajes);
-      this.mensajesChat = CacheChat.getMensajes(this.uidReceptor);
-      this.scrollToBottom();
-
-      console.table(this.mensajesChat);
-    });
+  cargarMensajesDesdeCache() {
+    console.log('Obteniendo mensajes desde el cache');
+    this.mensajesChat = CacheChat.getMensajes(this.uidReceptor);
+    this.scrollToBottom();
   }
 
   onBtnEnviarClick() {
+    console.log('Texto ingresado:', this.inputText);
     console.log('Enviando mensaje...');
-    console.log(this.inputText);
 
     let mensaje: Mensaje = {
       contenido: this.inputText,
@@ -99,10 +96,12 @@ export class MensajesPage implements OnInit {
       receptor: this.uidReceptor,
     };
 
+    this.cargarMensajesDesdeCache();
+    this.inputText = '';
+
     this.chatService.enviarMensaje(mensaje)
     .then(() => {
       console.log('Mensaje enviado con exito! :D');
-      this.inputText = '';
     })
     .catch(error => {
       console.error('Error el enviar mensaje :(');
