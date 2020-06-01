@@ -10,6 +10,8 @@ import { RestaurantService } from '../services/restaurant.service';
 import { ProductosService } from '../services/productos.service';
 import { CacheRestaurantes } from './cache-restaurantes';
 import { CacheProductos } from './cache-productos';
+import { MandadoService } from '../services/mandado.service';
+import { CacheMandados } from './cache-mandados';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +71,7 @@ export class CacheService {
   constructor(
     public chatsService: ChatService,
     public direccionesService: DireccionesService,
+    public mandadsService: MandadoService,
     public pedidosService: PedidosService,
     public productoService: ProductosService,
     public restaurantService: RestaurantService,
@@ -83,6 +86,7 @@ export class CacheService {
     this.iniciarCacheProductos();
     this.iniciarCacheDirecciones();
     this.iniciarCachePedidos();
+    this.iniciarCacheMandados();
     this.iniciarCacheChats();
   }
 
@@ -137,6 +141,21 @@ export class CacheService {
       },
       error => {
         console.error('CachePedidos ERROR');
+        console.error(error);
+      }
+    );
+  }
+
+  private iniciarCacheMandados() {
+    console.log('iniciarCacheMandados()');
+
+    this.mandadsService.getMandadosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Todos).subscribe(
+      mandados => {
+        CacheMandados.setAllMandados(mandados);
+        console.log('CacheMandados inciado!');
+      },
+      error => {
+        console.error('CacheMandados ERROR');
         console.error(error);
       }
     );

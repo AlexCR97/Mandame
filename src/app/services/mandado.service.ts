@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Direccion } from '../dbdocs/direccion';
 import { ChatService } from './chat.service';
 import { Usuario } from '../dbdocs/usuario';
+import { map } from 'rxjs/operators';
+import { EsperaPedido } from './pedidos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +100,33 @@ export class MandadoService {
         .catch(error => manejarError(error));
       },
       error => manejarError(error)
+    );
+  }
+
+  getMandados() {
+    return this.afs.collection<Mandado>('mandados').valueChanges();
+  }
+
+  getMandadosDeUsuario(uidUsuario: string, espera: EsperaPedido) {
+    return this.getMandados().pipe(
+      map(mandados => {
+        // Filtrar mandados por usuario
+        let mandadosPorUsuario = mandados.filter(m => m.uidCliente == uidUsuario);
+
+        // Filtrar mandados por espera
+        if (espera != EsperaPedido.Todos) {
+          mandadosPorUsuario = mandadosPorUsuario.filter(m => m.espera == espera.toString());
+        }
+
+        // Ordenar mandados por fecha
+        let mandadosPorFecha = mandadosPorUsuario.sort((m1, m2) => {
+          let fechaHoraMandado1 = new Date(m1.fechaHora);
+          let fechaHoraMandado2 = new Date(m2.fechaHora);
+          return fechaHoraMandado2.getTime() - fechaHoraMandado1.getTime();
+        });
+
+        return mandadosPorFecha;
+      })
     );
   }
 }

@@ -9,6 +9,9 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { Mandado } from 'src/app/dbdocs/mandado';
 import { MandadoService } from 'src/app/services/mandado.service';
+import { ActivatedRoute } from '@angular/router';
+import { CacheMandados } from 'src/app/cache/cache-mandados';
+import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
 
 @Component({
   selector: 'app-mandame',
@@ -16,6 +19,9 @@ import { MandadoService } from 'src/app/services/mandado.service';
   styleUrls: ['./mandame.page.scss'],
 })
 export class MandamePage implements OnInit {
+
+  uidMandadoSeleccionado: string;
+  mandadoSeleccionado: Mandado;
 
   direccionOrigen: Direccion = {
     calle: 'Haz clic aquí para seleccionar una dirección',
@@ -35,6 +41,7 @@ export class MandamePage implements OnInit {
   nuevaDireccionDestinoIngresada = false;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private guiUtils: GuiUtilsService,
     private mandadoService: MandadoService,
@@ -43,7 +50,30 @@ export class MandamePage implements OnInit {
     private utils: UtilsService,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log('Verificando si se abrio un mandado...');
+    this.uidMandadoSeleccionado = this.activatedRoute.snapshot.queryParamMap.get('uidMandado');
+
+    if (this.uidMandadoSeleccionado != null) {
+      this.mandadoSeleccionado = CacheMandados.getMandado(this.uidMandadoSeleccionado);
+
+      console.log('El mandado seleccionado fue ', this.uidMandadoSeleccionado);
+      console.log(this.mandadoSeleccionado);
+
+      console.log('Obteniendo las direcciones del mandado seleccionado...');
+      this.direccionOrigen = CacheDirecciones.getDireccion(this.mandadoSeleccionado.uidDireccionOrigen);
+      this.direccionDestino = CacheDirecciones.getDireccion(this.mandadoSeleccionado.uidDireccionDestino);
+
+      console.log('Las direcciones son:');
+      console.log(this.direccionOrigen);
+      console.log(this.direccionDestino);
+
+      this.indicaciones = this.mandadoSeleccionado.indicaciones;
+    }
+    else {
+      console.log('No se selecciono ningun mandado!');
+    }
+  }
 
   async abrirModalSeleccionarDireccion(onModalResult: (result: any) => void, onModalError: (error: any) => void) {
     const modal = await this.modalController.create({
@@ -98,6 +128,10 @@ export class MandamePage implements OnInit {
   }
 
   ingresarIndicaciones() {
+    if (this.mandadoSeleccionado) {
+      return;
+    }
+
     console.log('ingresarIndicaciones()');
 
     this.abrirAlertIngresarIndicaciones(input => {
@@ -108,6 +142,10 @@ export class MandamePage implements OnInit {
   }
 
   ingresarOtraDireccionDestino() {
+    if (this.mandadoSeleccionado) {
+      return;
+    }
+
     console.log('ingresarOtraDireccionDestino()');
 
     this.abrirModalIngresarNuevaDireccion(
@@ -131,6 +169,10 @@ export class MandamePage implements OnInit {
   }
 
   ingresarOtraDireccionOrigen() {
+    if (this.mandadoSeleccionado) {
+      return;
+    }
+
     console.log('ingresarOtraDireccionOrigen()');
 
     this.abrirModalIngresarNuevaDireccion(
@@ -154,6 +196,10 @@ export class MandamePage implements OnInit {
   }
 
   seleccionarDireccionOrigen() {
+    if (this.mandadoSeleccionado) {
+      return;
+    }
+
     console.log('seleccionarDireccionOrigen()');
 
     this.abrirModalSeleccionarDireccion(
@@ -177,6 +223,10 @@ export class MandamePage implements OnInit {
   }
     
   seleccionarDireccionDestino() {
+    if (this.mandadoSeleccionado) {
+      return;
+    }
+
     console.log('seleccionarDireccionDestino()');
       
     this.abrirModalSeleccionarDireccion(
@@ -200,6 +250,10 @@ export class MandamePage implements OnInit {
   }
 
   realizarMandado() {
+    if (this.mandadoSeleccionado) {
+      return;
+    }
+    
     console.log('realizarMandado()');
 
     // Primero, validamos los datos

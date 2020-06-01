@@ -1,0 +1,79 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+        Mis Mandados
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- mandados pendientes -->
+  <div class="ion-margin-bottom">
+
+    <h4>Pendientes</h4>
+
+    <!-- mandado item -->
+    <ion-card mode="ios" class="mandado-item" *ngFor="let i of mandadosPendientes" (click)="abrirDetallesMandado(i.uid)">
+      <ion-card-content>
+        <div class="header">
+          <div class="detalle-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-label>{{i.fechaHora}}</ion-label>
+          </div>
+          <ion-badge color="danger">{{i.espera}}</ion-badge>
+        </div>
+
+        <div class="detalle-item">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{i.nombreRepartidor}} {{i.apellidoRepartidor}}</ion-label>
+        </div>
+
+        <div class="separador"></div>
+
+        <div class="indicaciones">
+          {{i.indicaciones}}
+        </div>
+      </ion-card-content>
+    </ion-card><!-- mandado item -->
+
+  </div><!-- mandados pendientes -->
+
+  <!-- mandados concluidos -->
+  <div class="ion-margin-bottom">
+
+    <h4>Concluidos</h4>
+
+    <!-- mandado item -->
+    <ion-card mode="ios" class="mandado-item" *ngFor="let i of mandadosConcluidos" (click)="abrirDetallesMandado(i.uid)">
+      <ion-card-content>
+        <div class="header">
+          <div class="detalle-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-label>{{i.fechaHora}}</ion-label>
+          </div>
+          <ion-badge color="success">{{i.espera}}</ion-badge>
+        </div>
+
+        <div class="detalle-item">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{i.nombreRepartidor}} {{i.apellidoRepartidor}}</ion-label>
+        </div>
+
+        <div class="separador"></div>
+
+        <div class="indicaciones">
+          {{i.indicaciones}}
+        </div>
+      </ion-card-content>
+    </ion-card><!-- mandado item -->
+
+  </div><!-- mandados concluidos -->
+
+</ion-content>

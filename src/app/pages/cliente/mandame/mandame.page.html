@@ -36,7 +36,7 @@
       </ion-card-content>
     </ion-card>
 
-    <p class="link-otra-direccion">
+    <p *ngIf="uidMandadoSeleccionado == null" class="link-otra-direccion">
       O
       <b (click)="ingresarOtraDireccionOrigen()">haz clic aquí</b>
       para ingresar otra dirección
@@ -67,7 +67,7 @@
       </ion-card-content>
     </ion-card>
 
-    <p class="link-otra-direccion">
+    <p *ngIf="uidMandadoSeleccionado == null" class="link-otra-direccion">
       O
       <b (click)="ingresarOtraDireccionDestino()">haz clic aquí</b>
       para ingresar otra dirección
@@ -112,6 +112,6 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="uidMandadoSeleccionado == null">
   <ion-button class="ion-text-capitalize" color="naranja" expand="block" (click)="realizarMandado()">Realizar Mandado</ion-button>
 </ion-footer>

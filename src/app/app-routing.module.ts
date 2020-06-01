@@ -118,6 +118,10 @@ const routes: Routes = [
     path: 'nueva-direccion',
     loadChildren: () => import('./modals/nueva-direccion/nueva-direccion.module').then( m => m.NuevaDireccionPageModule)
   },
+  {
+    path: 'mandados',
+    loadChildren: () => import('./pages/cliente/mandados/mandados.module').then( m => m.MandadosPageModule)
+  },
 
 ];
 
