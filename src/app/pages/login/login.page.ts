@@ -80,7 +80,7 @@ export class LoginPage implements OnInit {
     } else {
       this.cargandoDialog = await this.guiUtils.mostrarCargando('Iniciando sesión...');
 
-      this.registroService.iniciarSesion(this.email, this.password,
+      this.registroService.iniciarSesion(this.correo, this.contrasena,
         usuario => {
           console.log('Exito al iniciar sesion :D');
           this.guiUtils.cerrarCargando(this.cargandoDialog);
@@ -127,14 +127,14 @@ export class LoginPage implements OnInit {
   }
 
   async validarCredenciales(): Promise<boolean> {
-    console.log('correo: ' + this.email);
-    console.log('contrasena: ' + this.password);
-    if (this.email.trim().toString() === '') {
+    console.log('correo: ' + this.correo);
+    console.log('contrasena: ' + this.contrasena);
+    if (this.correo.trim().toString() === '') {
       this.guiUtils.cerrarCargando(this.cargandoDialog);
       this.guiUtils.mostrarToast('Correo vacío', 3000, 'danger');
       return false;
     }
-    if (this.password.toString() === '') {
+    if (this.contrasena.toString() === '') {
       this.guiUtils.cerrarCargando(this.cargandoDialog);
       this.guiUtils.mostrarToast('contraseña vacía', 3000, 'danger');
       return false;
