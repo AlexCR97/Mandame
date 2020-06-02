@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DireccionesService } from 'src/app/services/direcciones.service';
+import { DireccionesService, OperacionDireccion } from 'src/app/services/direcciones.service';
 import { LoadingController } from '@ionic/angular';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { Direccion } from 'src/app/dbdocs/direccion';
+import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
 
 @Component({
   selector: 'app-direcciones',
@@ -11,21 +13,40 @@ import { CacheUsuario } from 'src/app/cache/cache-usuario';
 })
 export class DireccionesPage implements OnInit {
 
-  direcciones: any = [];
+  operacionAgregar = OperacionDireccion.agregar;
+  operacionEditar = OperacionDireccion.editar;
+  direcciones: Direccion[];
+
   constructor(
     public loadingController: LoadingController,
     public direccionesService: DireccionesService,
-
+    public router: Router,
   ) { }
 
   ngOnInit() {
-    console.log("Usuario")
-    console.log(CacheUsuario.usuario) 
-    this.direccionesService.getDireccion(CacheUsuario.usuario.uid).subscribe(direccion => {
-      console.log("Obteniendo")
-      console.log(direccion)
-      this.direcciones = direccion;
-    })
-    console.log(this.direcciones)
+    console.log('Obteniendo direcciones del usuario...');
+    this.direccionesService.getDireccionesUsuario(CacheUsuario.usuario.uid,
+      direcciones => {
+        console.log('Direcciones obtenidas!', direcciones);
+        this.direcciones = direcciones;
+
+        CacheDirecciones.setAllDireccionesDeUsuario(CacheUsuario.usuario.uid, this.direcciones);
+        console.log('Direcciones guardadas en cache :D');
+      }
+    );
   }
+
+  agregarOCambiarDireccion(operacion: OperacionDireccion, uidDireccion?: string) {
+    console.log('agregarOCambiarDireccion()');
+    console.log('Operacion:', operacion);
+    console.log('Uid direccion:', uidDireccion);
+
+    this.router.navigate(['/agregar-direccion'], {
+      queryParams: {
+        operacion: operacion,
+        uidDireccion: uidDireccion,
+      },
+    });
+  }
+
 }

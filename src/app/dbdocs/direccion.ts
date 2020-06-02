@@ -1,5 +1,7 @@
 export interface Direccion {
     calle: string;
+    entreCalle1?: string;
+    entreCalle2?: string;
     numeroExterior: number;
     numeroInterior?: number;
     colonia: string;
@@ -7,5 +9,5 @@ export interface Direccion {
         latitud: number,
         longitud: number,
     };
+    uid?: string;
 }
-

@@ -21,12 +21,11 @@
 <ion-content class="ion-padding">
 
   <!-- pedidos en transito -->
-  <ion-card class="detalles-pedido-item">
+  <ion-card class="detalles-pedido-item" (click)="abrirRestaurante(pedido.restaurante)">
     <ion-item lines="none">
       <ion-img [src]="pedido.foto_perfil"></ion-img>
       <ion-text>
         <ion-label class="restaurant">{{pedido.nombreRestaurante}}</ion-label>
-        <ion-label class="tiempo">Tiempo Transcurrido: <span>11:37 min</span></ion-label>
       </ion-text>
       <ion-icon color="naranja" name="location" slot="end"></ion-icon>
     </ion-item>
@@ -72,21 +71,23 @@
 
   <!-- direccion de entrega -->
   <h4 class="ion-padding-horizontal">Direccion de entrega</h4>
-  
-  <ion-card class="direccion-item">
-    <ion-item lines="none">
-      <ion-icon name="location"></ion-icon>
-      <ion-text>
-        <ion-label class="repartidor">Nombre del repartidor</ion-label>
-        <ion-label class="direccion">Canales #1100, Zona Centro</ion-label>
-      </ion-text>
-    </ion-item>
+
+  <ion-card mode="ios">
+    <ion-card-content class="direccion-content">
+      <div class="detalles-entrega">
+        <div class="icon">
+          <ion-icon name="location-sharp" size="large"></ion-icon>
+        </div>
+        <div class="detalles">
+          <p class="title">
+            <b>{{direccion.calle}}</b> #{{direccion.numeroExterior}}
+            <span *ngIf="direccion.numeroInterior">- {{direccion.numeroInterior}}</span>
+            <span *ngIf="direccion.entreCalle1 && direccion.entreCalle2">, entre <b>{{direccion.entreCalle1}}</b> y <b>{{direccion.entreCalle2}}</b></span>
+          </p>
+          <p class="description">{{direccion.colonia}}</p>
+        </div>
+      </div>
+    </ion-card-content>
   </ion-card>
 
 </ion-content>
-
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="abrirMensajes()">
-    <ion-icon name="chatbox"></ion-icon>
-  </ion-fab-button>
-</ion-fab>

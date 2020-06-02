@@ -3,6 +3,7 @@ import { CalificarRepartidoService } from 'src/app/services/calificar-repartido.
 import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { ActivatedRoute } from '@angular/router';
 import { format } from 'url';
+import { Pedido } from 'src/app/dbdocs/pedido';
 
 
 
@@ -12,40 +13,55 @@ import { format } from 'url';
   styleUrls: ['./calificar-repartidor.page.scss'],
 })
 export class CalificarRepartidorPage implements OnInit {
-  nombre:string;
-  foto:string;
-  comentario:string;
+
+  nombre: string;
+  foto: string;
+  comentario: string;
   calificacion = 1;
-  iconName:boolean[] = [true,true,true,false,false];
-  uidPedido:string;
+  iconName: boolean[] = [true, true, true, false, false];
+  uidPedido: string;
+  pedido: Pedido;
 
   constructor(
-    public activatedRoute:ActivatedRoute ,
-    public calificarRepartidoService:CalificarRepartidoService,
+    public activatedRoute: ActivatedRoute ,
+    public calificarRepartidoService: CalificarRepartidoService,
   ) { }
 
   ngOnInit() {
-    //TODO Descomentar esta chingadera cuando me envien el puto parametro!!!
-    //this.uidPedido = this.activatedRoute.snapshot.queryParamMap.get("uidPedido");
-    this.nombre = "Edgar";
-    this.foto = "../../../assets/img/fotodegary.jpg";
+    this.uidPedido = this.activatedRoute.snapshot.queryParamMap.get("uidPedido");
+
+    console.log('Uid Pedido:', this.uidPedido);
+
+    this.pedido = CachePedidos.pedidos.get(this.uidPedido);
+
+    console.log('Pedido:', this.pedido);
+
+    this.nombre = this.pedido.nombreRepartidor;
+    this.foto = this.pedido.foto_perfil;
   }
-  iconChanged(value:number){
-    for(let i = 0; i < 5; i++){
+
+  iconChanged(value: number) {
+    for (let i = 0; i < 5; i++) {
       this.iconName[i] = false;
     }
-    for(let i = 0; i < value; i++){
+
+    for (let i = 0; i < value; i++) {
       this.iconName[i] = true;
     }
+
     this.calificacion = value;
   }
   
   calificar() {
-    let pedido = CachePedidos.pedidos.get(this.uidPedido);
-    this.calificarRepartidoService.calificarYComentar(
-      pedido.repartidor,this.calificacion,
-      this.uidPedido,this.comentario
-    )
+    console.log('Calificando pedido...');
+    this.calificarRepartidoService.calificarYComentar(this.pedido.repartidor, this.calificacion, this.pedido.uid, this.comentario)
+    .then(result => {
+      console.log('Repartidor calificado y comentado! :D');
+    })
+    .catch(error => {
+      console.error('Error al calificar y comentar repartidor :(');
+      console.error(error);
+    });
   }
 
 }

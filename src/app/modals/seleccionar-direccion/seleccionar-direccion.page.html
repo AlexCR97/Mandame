@@ -1,0 +1,29 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="naranja">
+
+    <ion-title>Selecciona una dirección</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <ion-card mode="ios" *ngFor="let direccion of direcciones" (click)="seleccionarDireccion(direccion)">
+      <ion-card-content class="direccion-content">
+        <div class="detalles-entrega">
+          <div class="icon">
+            <ion-icon name="location-sharp" size="large"></ion-icon>
+          </div>
+          <div class="detalles">
+            <p class="title">
+              <b>{{direccion.calle}}</b> #{{direccion.numeroExterior}}
+              <span *ngIf="direccion.numeroInterior">- {{direccion.numeroInterior}}</span>
+              <span *ngIf="direccion.entreCalle1 && direccion.entreCalle2">, entre <b>{{direccion.entreCalle1}}</b> y <b>{{direccion.entreCalle2}}</b></span>
+            </p>
+            <p class="description">{{direccion.colonia}}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+</ion-content>

@@ -4,6 +4,11 @@ import { Pedido } from 'src/app/dbdocs/pedido';
 import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { EsperaPedido, PedidosService, EstadoPedido } from 'src/app/services/pedidos.service';
 import { AlertController } from '@ionic/angular';
+import { Direccion } from 'src/app/dbdocs/direccion';
+import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
+import { DocsPlantillas, getPlantilla } from 'src/app/dbdocs/plantillas';
+import { DireccionesService } from 'src/app/services/direcciones.service';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
 
 interface ProductoItem {
   desc: string;
@@ -22,11 +27,13 @@ export class DetallesPedidoClientePage implements OnInit {
   pedido: Pedido;
   productos: ProductoItem[];
   total: number;
+  direccion = getPlantilla(DocsPlantillas.direccion) as Direccion;
   uidPedido: string;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public alertController: AlertController,
+    public direccioService: DireccionesService,
     public pedidoService: PedidosService,
     public router: Router,
   ) { }
@@ -43,16 +50,25 @@ export class DetallesPedidoClientePage implements OnInit {
 
     this.productos = this.getProductos(this.pedido);
     this.total = this.getTotal(this.productos);
-  }
 
-  abrirMensajes() {
-    console.log('abrirMensajes()');
+    console.log('Buscando la direccion del pedido...');
+    if (!CacheDirecciones.getDireccion(this.pedido.direccion)) {
+      this.direccioService.getDireccion(this.pedido.direccion).subscribe(
+        direccion => {
+          console.log('Direccion del pedido encontrada! :D', direccion);
+          this.direccion = direccion;
 
-    this.router.navigate(['/mensajes'], {
-      queryParams: {
-        uidReceptor: this.pedido.repartidor,
-      },
-    });
+          CacheDirecciones.addDireccion(CacheUsuario.usuario.uid, direccion);
+        },
+        error => {
+          console.error('Error al buscar direccion del pedido :(');
+          console.error(error);
+        }
+      );
+    }
+    else {
+      this.direccion = CacheDirecciones.getDireccion(this.pedido.direccion);
+    }
   }
 
   getProductos(pedido: Pedido): ProductoItem[] {
@@ -72,6 +88,16 @@ export class DetallesPedidoClientePage implements OnInit {
 
   getTotal(productos: ProductoItem[]): number {
     return productos.map(producto => producto.precio).reduce((a, b) => a + b, 0);
+  }
+
+  abrirRestaurante(uidRestaurant: string) {
+    console.log('Abriendo restaurant con uid', uidRestaurant);
+    
+    this.router.navigate(['/restaurant'], {
+      queryParams: {
+        uidRestaurant: uidRestaurant,
+      }
+    });
   }
 
 }

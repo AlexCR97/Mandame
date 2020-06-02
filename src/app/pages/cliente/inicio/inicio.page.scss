@@ -1,3 +1,44 @@
+*{
+    font-family: Montserrat;
+}
+
+ion-grid {
+    --ion-grid-padding: 0px;
+}
+
+ion-segment{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+ion-segment-button{
+    min-width: 135px !important;
+}
+
+.in-segment-color{
+    color: #B1AFB0;
+    font-weight: 700;
+}
+
+ion-card{
+    margin: 5px 0;
+}
+
+ion-card-subtitle{
+    margin: 5px 0;
+    font-weight: 300;
+    font-size: 8px !important;
+}
+
+.toEnter{
+    animation: opacidad 500ms ease;
+}
+
+@keyframes opacidad{
+    from{ opacity: 0;}
+    to{ opacity: 1;}
+}
+
 .toolbar-wrapper {
     position: fixed;
     left: 0;
@@ -12,6 +53,7 @@ ion-toolbar {
 
 .toolbarAnchor {
     background: var(--ion-color-naranja);
+    box-shadow: 0px 2px 3px rgba(50, 50, 50, 0.30);
     transition: all 300ms ease;
 }
 
@@ -41,21 +83,41 @@ ion-toolbar {
 }
 
 .banner {
-    background-image: url('src/assets/img/banner-inicio.png');
+    background: url('src/assets/img/banner-inicio.png') no-repeat center center;
     background-size: cover;
 }
 
+.banner-description{
+    z-index: 999;
+    padding-top: 110px;
+    padding-bottom: 60px;
+
+    p{
+        font-weight: 200;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    h1{
+        
+        font-size: 30px;
+        font-weight: 700;
+    }
+}
+
 .banner-text {
-    color: whitesmoke;
-    text-shadow: 2px 2px 4px black;
+    margin: 0;
+    color: white;
 }
 
 .contenedor-principal {
+    position: relative;
     background-color: white;
-    border-radius: 15px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.40);
-    margin-top: -15px;
-    margin-bottom: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    bottom: 15px;
+    // box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.40);
+    // margin-top: -15px;
+    // margin-bottom: 15px;
 }
 
 .segment-superior-card {
@@ -70,12 +132,12 @@ ion-toolbar {
 
 .producto-item {
     ion-card {
-        width: 70px;
-        height: 70px;
+        width: 100px;
+        height: 100px;
 
-        img {
-            width: 50px;
-            height: 50px;
+        ion-img {
+            width: 75px;
+            height: 75px;
         }
     }
 
@@ -85,16 +147,24 @@ ion-toolbar {
     }
 }
 
-.ordenes-container {
-    ion-grid {
-        --ion-grid-column-padding: 0px;
-    }
+.segmentInferior{
+    margin-bottom: 20px;
 }
 
-.orden-item {    
-    img {
+.ordenes-container {
+    
+}
+
+.restaurant_name{
+    color: #8b8b8b;
+    font-size: 8px !important;
+}
+
+.orden-item {
+    ion-img {
         width: 100%;
-        height: 100px;
+        height: 150px;
+        object-fit: cover;
     }
 
     ion-card-header {

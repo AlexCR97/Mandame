@@ -1,40 +1,65 @@
-
 <ion-header class="ion-no-border">
   <ion-toolbar color="naranja">
+
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title mode="ios">
-        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
-    </ion-title>
+
+    <ion-title>Mis Direcciones</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-
-    <ion-label class="bold">
-      Direcciones
-    </ion-label>
-    <div *ngFor="let direccion of direcciones">
-      <ion-card mode="ios">
+  <div *ngIf="direcciones == undefined">
+    <ion-skeleton-text animated style="width: 100% "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin: 20px 0; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100% "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin: 20px 0; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100% "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin: 20px 0; width: 100%; height: 50px; "></ion-skeleton-text>
+  </div>
+  <div *ngIf="direcciones != undefined">
+    <div *ngIf="direcciones.length > 0">
+      <ion-card mode="ios" *ngFor="let direccion of direcciones"  (click)="agregarOCambiarDireccion(operacionEditar, direccion.uid)">
         <ion-card-content class="direccion-content">
           <div class="detalles-entrega">
             <div class="icon">
               <ion-icon name="location-sharp" size="large"></ion-icon>
             </div>
             <div class="detalles">
-              <p class="title">Nombre Casa</p>
-              <p class="description">Calle #No, Colonia</p>
+              <p class="title">
+                <b>{{direccion.calle}}</b> #{{direccion.numeroExterior}}
+                <span *ngIf="direccion.numeroInterior">- {{direccion.numeroInterior}}</span>
+                <span *ngIf="direccion.entreCalle1 && direccion.entreCalle2">, entre <b>{{direccion.entreCalle1}}</b> y <b>{{direccion.entreCalle2}}</b></span>
+              </p>
+              <p class="description">{{direccion.colonia}}</p>
             </div>
+            <!-- <ion-badge class="badge">
+              Cambiar
+            </ion-badge> -->
           </div>
-          <ion-badge class="badge">
-            Cambiar
-          </ion-badge>
+          
         </ion-card-content>
       </ion-card>
     </div>
+      <div *ngIf="direcciones.length == 0" style="position: fixed; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important;">
+        <img src="../../../assets/img/logogray.jpg" alt="">
+        <h6 style="text-align: center; color: #8b8b8b; margin: 20px 0 10px;">No tienes direcciones</h6>
+        <p style="text-align: center; color: #8b8b8b;">¡Registra una!</p>
+      </div>
+      
+    
+  </div>
+    
+
 </ion-content>
 
 <ion-footer class="no">
-  <ion-button color="naranja" expand="full">Nueva dirrección</ion-button>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="full" (click)="agregarOCambiarDireccion(operacionAgregar)">
+    Nueva dirrección
+  </ion-button>
 </ion-footer>

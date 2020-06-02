@@ -98,10 +98,31 @@ const routes: Routes = [
   {
     path: 'chats-cliente',
     loadChildren: () => import('./pages/cliente/chats-cliente/chats-cliente.module').then( m => m.ChatsClientePageModule)
-  },  {
+  },
+  {
     path: 'detalles-pedido-cliente',
     loadChildren: () => import('./pages/cliente/detalles-pedido-cliente/detalles-pedido-cliente.module').then( m => m.DetallesPedidoClientePageModule)
   },
+  {
+    path: 'agregar-direccion',
+    loadChildren: () => import('./pages/cliente/agregar-direccion/agregar-direccion.module').then( m => m.AgregarDireccionPageModule)
+  },
+  {
+    path: 'seleccionar-direccion',
+    loadChildren: () => import('./modals/seleccionar-direccion/seleccionar-direccion.module').then( m => m.SeleccionarDireccionPageModule)
+  },
+  {
+    path: 'nueva-direccion',
+    loadChildren: () => import('./modals/nueva-direccion/nueva-direccion.module').then( m => m.NuevaDireccionPageModule)
+  },
+  {
+    path: 'mandados',
+    loadChildren: () => import('./pages/cliente/mandados/mandados.module').then( m => m.MandadosPageModule)
+  },  {
+    path: 'restaurantes',
+    loadChildren: () => import('./pages/cliente/restaurantes/restaurantes.module').then( m => m.RestaurantesPageModule)
+  },
+
 
 ];
 

@@ -8,4 +8,10 @@ export interface Producto {
     restaurante: string;
 
     uid?: string;
+    nombreRestaurant?: string;
+}
+
+export interface ProductosPorCategoria {
+    categoria: string;
+    productos: Producto[];
 }

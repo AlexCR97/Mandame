@@ -2,6 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/core';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { Usuario } from 'src/app/dbdocs/usuario';
+import { RestaurantService } from 'src/app/services/restaurant.service';
+import { ProductosService } from 'src/app/services/productos.service';
+import { ProductosPorCategoria } from 'src/app/dbdocs/producto';
+import { RestaurantesPorCategoria } from 'src/app/dbdocs/restaurant';
+import { CacheService } from 'src/app/cache/cache.service';
+import { Router } from '@angular/router';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
+import { CacheProductos } from 'src/app/cache/cache-productos';
+import { DocsPlantillas, getPlantilla } from 'src/app/dbdocs/plantillas';
 
 @Component({
   selector: 'app-inicio',
@@ -10,129 +19,68 @@ import { Usuario } from 'src/app/dbdocs/usuario';
 })
 export class InicioPage implements OnInit {
 
-  //usuario = CacheUsuario.usuario;
-  usuario: Usuario = {
-    apellido: '',
-    direcciones: [''],
-    email: '',
-    foto: '',
-    nombre: '',
-    posicion: '',
-    telefono: '',
-    uid: '',
-  }
-
   anchorToolbar = false;
   showTitle = false;
 
-  private segmentSuperior = 'ofertas';
-  private segmentCentral = 'comida';
-  private segmentInferior = 'todos';
+  usuario = CacheUsuario.usuario;
+  //usuario = getPlantilla(DocsPlantillas.usuario) as Usuario;
 
-  private menuPrincipal;
-  private menuOpciones;
-  private menuCuenta;
+  segmentSuperior = '';
+  segmentCentral = '';
+  segmentInferior = '';
 
-  private ofertasItems = [
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-  ];
+  menuPrincipal;
+  menuOpciones;
+  menuCuenta;
 
-  private masVendidosItems = [
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-  ];
+  productosPorCategoria: ProductosPorCategoria[];
+  restsPorCategoria: RestaurantesPorCategoria[];
 
-  private proximamenteItems = [
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-    {
-      imgSrc: '../../../assets/img/banner-inicio.png',
-    },
-  ];
+  constructor(
+    private cacheService: CacheService,
+    private productosService: ProductosService,
+    private restaurantService: RestaurantService,
+    private router: Router,
+    ) { }
 
-  comidaItems = [
-    {
-      imgSrc: '../../../assets/img/burger_king.png',
-      desc: 'Burger King',
-    },
-    {
-      imgSrc: '../../../assets/img/burger_king.png',
-      desc: 'Burger King',
-    },
-    {
-      imgSrc: '../../../assets/img/burger_king.png',
-      desc: 'Burger King',
-    },
-    {
-      imgSrc: '../../../assets/img/burger_king.png',
-      desc: 'Burger King',
-    },
-    {
-      imgSrc: '../../../assets/img/burger_king.png',
-      desc: 'Burger King',
-    },
-  ];
+  ngOnInit() {
+    console.log('Iniciando cache...');
+    this.cacheService.iniciarCache();
 
-  ordenTodosItems = [
-    {
-      imgSrc: '../../../assets/img/pizzah.jpg',
-      desc: 'Pizza de pepperoni',
-      empresa: "Domino's",
-      precio: 125.00,
-      tiempo: '30 - 60 min.',
-    },
-    {
-      imgSrc: '../../../assets/img/pizzah.jpg',
-      desc: 'Hamburguesa con papas',
-      empresa: "La Palapa",
-      precio: 100.00,
-      tiempo: '30 - 60 min.',
-    },
-    {
-      imgSrc: '../../../assets/img/pizzah.jpg',
-      desc: 'Pizza de pepperoni',
-      empresa: "Domino's",
-      precio: 125.00,
-      tiempo: '30 - 60 min.',
-    },
-    {
-      imgSrc: '../../../assets/img/pizzah.jpg',
-      desc: 'Hamburguesa con papas',
-      empresa: "La Palapa",
-      precio: 100.00,
-      tiempo: '30 - 60 min.',
-    },
-    {
-      imgSrc: '../../../assets/img/pizzah.jpg',
-      desc: 'Hamburguesa con papas',
-      empresa: "La Palapa",
-      precio: 100.00,
-      tiempo: '30 - 60 min.',
-    },
-  ];
+    this.cacheService.setOnRestaurantesIniciado(
+      () => {
+        console.log('setOnCacheRestaurantesIniciado SUCCESS');
+        this.restsPorCategoria = CacheRestaurantes.getRestaurantesAllPorCategoria();
+        this.segmentCentral = this.restsPorCategoria[0].categoria;
+      },
+      error => {
+        console.error('setOnCacheRestaurantesIniciado FAILURE');
+        console.error(error);
+      }
+      );
 
-  constructor() { }
+    this.cacheService.setOnProductosIniciado(
+      () => {
+        console.log('setOnProductosIniciado SUCCESS');
+        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+        this.segmentInferior = this.productosPorCategoria[0].categoria;
+      },
+      error => {
+        console.error('setOnProductosIniciado FAILURE');
+        console.error(error);
+      }
+      );
+  }
 
-  ngOnInit() { }
+  abrirRestaurante(uidRestaurant: string) {
+    console.log('Abriendo restaurant con uid', uidRestaurant);
+    
+    this.router.navigate(['/restaurant'], {
+      queryParams: {
+        uidRestaurant: uidRestaurant
+      }
+    });
+  }
 
   onScroll($event: CustomEvent<ScrollDetail>) {
     if ($event && $event.detail && $event.detail.scrollTop) {

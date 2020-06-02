@@ -6,6 +6,10 @@ import { Direccion } from '../dbdocs/direccion';
 import { Usuario } from '../dbdocs/usuario';
 import { Observable } from 'rxjs';
 
+export enum OperacionDireccion {
+  agregar = 'agregar',
+  editar = 'editar',
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +19,7 @@ export class DireccionesService {
   constructor(
     public afs: AngularFirestore,
     public afa: AngularFireAuth,
-    public reg :RegistroService,
+    public registroService: RegistroService,
   ) { }
 
   agregarDireccion(usuario: Usuario, direccion: Direccion): Promise<void> {
@@ -40,7 +44,7 @@ export class DireccionesService {
     return batch.commit();
   }
 
-  actualizarDireccion(usuario: Usuario, direccionUid: string,  direccion: Direccion): Promise<void> {
+  actualizarDireccion(direccionUid: string,  direccion: Direccion): Promise<void> {
     const db = this.afs.firestore;
     const batch = db.batch();
   
@@ -49,26 +53,33 @@ export class DireccionesService {
 
     return batch.commit();
   }
-  //Obtencion de dirrecion unica
-  getDireccion(uid): Observable<Direccion> {
+
+  getDireccion(uid: string): Observable<Direccion> {
     return this.afs.doc<Direccion>(`direcciones/${uid}`).valueChanges();
   }
 
-  //Obtencion de las direeciones de un usuario
   getDireccionesUsuario(usuarioUid: string, resolver: (direcciones: Direccion[]) => void) {
-    //Buscamos el usuario
-    this.reg.getUsuario(usuarioUid).subscribe(usuario => {
-      
+    this.registroService.getUsuario(usuarioUid).subscribe(usuario => {
       let direccionsUids = usuario.direcciones;
-      //Creamos los Arreglos para guardar
       let direcciones = Array<Direccion>();
-      //Recorremos las direcciones esperando resultados
+
       direccionsUids.forEach(async direccionUid => {
-        let direccion = await this.getDireccion(direccionUid).toPromise();
-        //cada resultado se inserta
+        let direccionDoc = await this.afs.firestore.collection('direcciones').doc(direccionUid).get();
+
+        let direccion: Direccion = {
+          calle: direccionDoc.get('calle'),
+          entreCalle1: direccionDoc.get('entreCalle1'),
+          entreCalle2: direccionDoc.get('entreCalle2'),
+          numeroExterior: direccionDoc.get('numeroExterior'),
+          numeroInterior: direccionDoc.get('numeroInterior'),
+          colonia: direccionDoc.get('colonia'),
+          uid: direccionDoc.get('uid'),
+          // TODO anadir geolocalizacion
+        };
+
         direcciones.push(direccion);
       });
-//Ya terminado regresamos las direcciones en Arreglo
+
       resolver(direcciones);
     });
   }

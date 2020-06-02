@@ -1,15 +1,10 @@
 <ion-content>
-  <!-- <div class="top-btn">
-      <ion-avatar class="logo">
-        <img [src]="foto">
-      </ion-avatar>
-  </div> -->
 
   <div class="background"></div>
+
   <div class="centro">
-    <img class="foto" src="../../../assets/img/fotodegary.jpg" alt="">
+    <ion-img [src]="foto" class="foto"></ion-img>
   </div>
-  
     <div class="contenedor">
       <p class="cnombre">¡Califica a {{nombre}}!</p>
       <div class="contenedor-iconos-center">
@@ -24,7 +19,7 @@
           <ion-label class="bold">Comentario opcional</ion-label>
         </ion-list-header>
         <div class="textarea">
-          <ion-textarea rows="2" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
+          <ion-textarea rows="4" cols="4"></ion-textarea>
         </div>
           
       </ion-list>
@@ -33,5 +28,5 @@
 
 </ion-content>
 <ion-footer fullscreen>
-  <ion-button color="naranja" expand="full">Calificar</ion-button>
+  <ion-button color="naranja" expand="full" (click)="calificar()">Calificar</ion-button>
 </ion-footer>

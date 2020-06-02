@@ -25,6 +25,7 @@ export class CachePedidos {
     }
 
     public static setAllPedidos(pedidos: Pedido[]) {
+        this.pedidos.clear();
         pedidos.forEach(pedido => this.setPedido(pedido.uid, pedido));
     }
 

@@ -9,4 +9,10 @@ export interface Restaurant {
     productos: string[];
     tiempo_entrega : number;
     uid: string;
+    adicionales: string[];
+}
+
+export interface RestaurantesPorCategoria {
+    categoria: string;
+    restaurantes: Restaurant[];
 }

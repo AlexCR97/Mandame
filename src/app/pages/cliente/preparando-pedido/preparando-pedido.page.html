@@ -1,13 +1,20 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="naranja">
+
     <ion-buttons slot="start">
-      <ion-button  (click)="clickedStar()">
-        <ion-icon class="white" name="chevron-back-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title mode="ios">
+      <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+    </ion-title>
+    
+    <ion-buttons slot="end">
+      <ion-button (click)="abrirDetallesPedido(uid)">
+        <ion-icon slot="icon-only" color="light" name="information-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title mode="ios">
-        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
-    </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
@@ -54,8 +61,8 @@
   <ion-button class="margin-top ion-text-capitalize" [disabled]="!entregado" color="naranja"  expand="block" (click)="calificarRepartidor()" >Calificar Repartidor </ion-button>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="contactarRepartidor()">
-      <ion-icon name="mail-outline"></ion-icon>
+    <ion-fab-button color="naranja" (click)="contactarRepartidor()">
+      <ion-icon name="chatbox"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 

@@ -45,22 +45,21 @@
     justify-content: space-between;
 
     .detalles-entrega {
-      display: flex;
-      flex-direction: row;
+        display: flex;
+        flex-direction: row;
 
         .description{
-            font-size: 10px;
             color: #a5a5a5;
         }
 
         .title {
-          color: #555555;
+            color: #555555;
         }
 
-      .icon {
-        margin-right: 10px;
-        color: #a5a5a5;
-      }
+        .icon {
+            margin-right: 10px;
+            color: #a5a5a5;
+        }
     }
 
     .badge {
@@ -69,8 +68,7 @@
 
       @include badges(green, #eaeaea);
     }
-  }
-
+}
 
 ion-card {
     border-radius: 5px;

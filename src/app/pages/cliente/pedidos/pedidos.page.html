@@ -1,61 +1,94 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar color="naranja">
+
     <ion-buttons slot="start">
-      <ion-button (click)="clickedStar()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button text="" defaultHref="inicio"></ion-back-button>
     </ion-buttons>
+
     <ion-title mode="ios">
-        <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+      <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
     </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <!-- pedidos pendientes -->
+  <div *ngIf="pedidosPendientes == undefined && pedidosConcluidos == undefined">
+    <!--Por si no hay pedidos-->
+    <ion-skeleton-text animated style="width: 100% "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin: 20px 0; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100% "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin: 20px 0; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100% "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin-top: 20px; width: 100%; height: 50px; "></ion-skeleton-text>
+    <ion-skeleton-text animated style="margin: 20px 0; width: 100%; height: 50px; "></ion-skeleton-text>
+  </div>
   <div>
-    <ion-label>
-      <h5>Mis pedidos Pendientes</h5>
-    </ion-label>
-  
-    <ion-card *ngFor = "let i of pedidosPendientes" (click)="abrirDetallesPedido(i.uid)">
-      <img src="../../../assets/img/pizzah.jpg" alt="">
-        <div class="padding">
-          <ion-card-header>
-            <ion-card-title>
-              <p class="bold" >{{i.productos.join(", ")}} <ion-badge class="ion-margin-start status">{{i.estado}}</ion-badge></p>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <p class="light margin"><ion-icon name="cart"></ion-icon>{{i.nombreRestaurante}}</p>
-            <p class="light"><ion-icon name="person"></ion-icon> {{i.nombreRepartidor}}</p>
-          </ion-card-content>
-        </div>
-    </ion-card>
-  </div><!-- pedidos pendientes -->
+    <!--Por si hay pedidos-->
+    <div *ngIf="pedidosPendientes && pedidosConcluidos"> <!-- Pedidos-->
 
-  <!-- pedidos concluidos -->
-  <div>
-    <ion-label>
-      <h5>Mis pedidos Concluidos</h5>
-    </ion-label>
-  
-    <ion-card *ngFor = "let i of pedidosConcluidos">
-      <img src="../../../assets/img/pizzah.jpg" alt="">
-        <div class="padding">
-          <ion-card-header>
-            <ion-card-title>
-              <p class="bold" >{{i.productos.join(", ")}} <ion-badge class="ion-margin-start status">{{i.estado}}</ion-badge></p>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <p class="light margin"><ion-icon name="cart"></ion-icon>{{i.nombreRestaurante}}</p>
-            <p class="light"><ion-icon name="person"></ion-icon> {{i.nombre}}</p>
-          </ion-card-content>
-        </div>
-    </ion-card>
-  </div><!-- pedidos concluidos -->
+      <!-- Sin pedidos -->
+      <div *ngIf="pedidosPendientes.length == 0 && pedidosConcluidos.length == 0" style="position: fixed; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important;">
+        <img src="../../../assets/img/logogray.jpg" alt="">
+        <h6 style="text-align: center; color: #8b8b8b; margin: 20px 0 10px;">Aun no haz realizado pedidos :(</h6>
+        <p style="text-align: center; color: #8b8b8b;">¡Realiza uno!</p>
+      </div>
+      <!-- pedidos pendientes -->
+      <div class="ion-margin-bottom" *ngIf="pedidosPendientes.length > 0">
+        <h5>Mis pedidos Pendientes</h5>
+        <ion-card *ngFor="let i of pedidosPendientes" (click)="abrirDetallesPedido(i.uid)">
+          <img src="../../../assets/img/pizzah.jpg" alt="">
+          <div class="padding">
+            <ion-card-header>
+              <ion-card-title>
+                <p class="bold">{{i.productos.join(", ")}} <ion-badge class="ion-margin-start status">{{i.estado}}
+                  </ion-badge>
+                </p>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p class="light margin">
+                <ion-icon name="cart"></ion-icon>{{i.nombreRestaurante}}
+              </p>
+              <p class="light">
+                <ion-icon name="person"></ion-icon> {{i.nombreRepartidor}}
+              </p>
+            </ion-card-content>
+          </div>
+        </ion-card>
+      </div><!-- pedidos pendientes -->
 
-    
+      <!-- pedidos concluidos -->
+      <div class="ion-margin-bottom" *ngIf="pedidosConcluidos.length > 0">
+        <h5>Mis pedidos Concluidos</h5>
+
+        <ion-card *ngFor="let i of pedidosConcluidos" (click)="abrirDetallesPedido(i.uid)">
+          <img src="../../../assets/img/pizzah.jpg" alt="">
+          <div class="padding">
+            <ion-card-header>
+              <ion-card-title>
+                <p class="bold">{{i.productos.join(", ")}} <ion-badge class="ion-margin-start status">{{i.estado}}
+                  </ion-badge>
+                </p>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p class="light margin">
+                <ion-icon name="cart"></ion-icon>{{i.nombreRestaurante}}
+              </p>
+              <p class="light">
+                <ion-icon name="person"></ion-icon> {{i.nombre}}
+              </p>
+            </ion-card-content>
+          </div>
+        </ion-card>
+      </div><!-- pedidos concluidos -->
+    </div>
+
+  </div>
+
+
 </ion-content>

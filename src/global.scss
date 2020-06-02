@@ -24,6 +24,7 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import url("./assets/fonts/webfonts/Montserrat.css");
 
 .ion-color-naranja {
     --ion-color-base: var(--ion-color-naranja);
@@ -87,7 +88,7 @@
 
 .mdm-chip {
     border-radius: 10px;
-    background-color: lightgray;
+    background-color: #eaeaea;
     padding: 2px;
     display: flex;
     align-items: center;
@@ -180,10 +181,79 @@
 }
 
 .dialog-modal {
-    // width: 70%;
-    // height: 50%;
-    // margin: auto;
-    padding: 60px;   
-
+    padding: 130px 30px;
     background: rgba(0,0,0,0.5);
+}
+
+.direccion-content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .detalles-entrega {
+        display: flex;
+        flex-direction: row;
+
+        .description{
+            color: #a5a5a5;
+        }
+
+        .title {
+            color: #555555;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #a5a5a5;
+        }
+    }
+
+    .badge {
+      display: flex;
+      align-self: center;
+    }
+}
+
+.alert-indicaciones {
+    .alert-input {
+        border: none;
+        box-shadow: 2px 2px 5px #cacaca;
+        color: gray;
+        font-size: 16px;
+        margin: 10px 0px;
+        padding: 15px;
+        transition: linear 0.2s;
+        height: 200px;
+    }
+
+    .alert-input:hover {
+        box-shadow: 2px 2px 5px gray;
+    }
+}
+
+.mandado-item {
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .detalle-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+
+        ion-icon {
+            margin-right: 5px;
+        }
+    }
+
+    .separador {
+        background-color: lightgray;
+        border-radius: 50%;
+        width: 100%;
+        height: 1px;
+        margin: 10px 0px;
+    }
 }
