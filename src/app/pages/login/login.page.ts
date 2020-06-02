@@ -73,51 +73,73 @@ export class LoginPage implements OnInit {
   async intentarLogin() {
     console.log('Iniciando sesion...');
 
-    this.cargandoDialog = await this.guiUtils.mostrarCargando('');
+    let credencialesValidas = await this.validarCredenciales();
 
-    this.registroService.iniciarSesion(this.correo, this.contrasena,
-    usuario => {
-      console.log('Exito al iniciar sesion :D');
+    if (!credencialesValidas) {
+      return;
+    } else {
+      this.cargandoDialog = await this.guiUtils.mostrarCargando('Iniciando sesión...');
+
+      this.registroService.iniciarSesion(this.email, this.password,
+        usuario => {
+          console.log('Exito al iniciar sesion :D');
+          this.guiUtils.cerrarCargando(this.cargandoDialog);
+
+          CacheUsuario.usuario = usuario;
+
+          console.log('Usuario obtenido:');
+          console.log(usuario);
+
+          switch (usuario.posicion) {
+
+            case 'cliente': {
+              console.log('Cuenta de cliente detectada. Iniciando sesion...');
+              this.router.navigateByUrl('/inicio');
+              break;
+            }
+
+            case 'repartidor': {
+              console.log('Cuenta de repartidor detectada. Iniciando sesion...');
+              this.router.navigateByUrl('/inicio-repartidor/tab-pedidos-repartidor');
+              break;
+            }
+
+            case 'admin': {
+              console.log('Cuenta de admin detectada. Iniciando sesion...');
+              this.router.navigateByUrl('/inicio-admin');
+              break;
+            }
+
+            default: {
+              console.log('Ninguna cuenta detectada :(');
+              this.guiUtils.mostrarToast('Este correo no parece estar vinculado con ninguna cuenta', 3000, 'danger');
+              break;
+            }
+          }
+        },
+        error => {
+          console.error('Error al iniciar sesion :(');
+          console.error(error);
+          this.guiUtils.cerrarCargando(this.cargandoDialog);
+          this.guiUtils.mostrarToast('Verifica tu correo y contraseña', 3000, 'danger');
+        });
+    }
+  }
+
+  async validarCredenciales(): Promise<boolean> {
+    console.log('correo: ' + this.email);
+    console.log('contrasena: ' + this.password);
+    if (this.email.trim().toString() === '') {
       this.guiUtils.cerrarCargando(this.cargandoDialog);
-
-      CacheUsuario.usuario = usuario;
-
-      console.log('Usuario obtenido:');
-      console.log(usuario);
-
-      switch (usuario.posicion) {
-        
-        case 'cliente': {
-          console.log('Cuenta de cliente detectada. Iniciando sesion...');
-          this.router.navigateByUrl('/inicio');
-          break;
-        }
-        
-        case 'repartidor': {
-          console.log('Cuenta de repartidor detectada. Iniciando sesion...');
-          this.router.navigateByUrl('/inicio-repartidor/tab-pedidos-repartidor');
-          break;
-        }
-
-        case 'admin': {
-          console.log('Cuenta de admin detectada. Iniciando sesion...');
-          this.router.navigateByUrl('/inicio-admin');
-          break;
-        }
-
-        default: {
-          console.log('Ninguna cuenta detectada :(');
-          this.guiUtils.mostrarToast('Este correo no parece estar vinculado con ninguna cuenta', 3000, 'danger');
-          break;
-        }
-      }
-    },
-    error => {
-      console.error('Error al iniciar sesion :(');
-      console.error(error);
+      this.guiUtils.mostrarToast('Correo vacío', 3000, 'danger');
+      return false;
+    }
+    if (this.password.toString() === '') {
       this.guiUtils.cerrarCargando(this.cargandoDialog);
-      this.guiUtils.mostrarToast('Verifica tu correo y contraseña', 3000, 'danger');
-    });
+      this.guiUtils.mostrarToast('contraseña vacía', 3000, 'danger');
+      return false;
+    }
+    return true;
   }
 
   async intentarRegistro() {

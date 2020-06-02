@@ -15,7 +15,7 @@ export class PostRegistroPage implements OnInit {
 
   private segments = {
     segment1: 'Tu perfil',
-    segment2: 'Numero de telefono',
+    segment2: 'Número de teléfono',
     segment3: 'Domicilio',
   };
 
