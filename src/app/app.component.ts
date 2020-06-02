@@ -20,7 +20,8 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      // CHANGE THIS IF WANT TO REMOVE OR MODIFY THE BLACK STATUS BAR AT THE TOP OF THE APP.
+      this.statusBar.styleBlackTranslucent();
       this.splashScreen.hide();
     });
   }

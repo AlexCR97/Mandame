@@ -20,6 +20,8 @@ import { ModalAlertPageModule } from 'src/app/modals/modal-alert/modal-alert.mod
 import { CalificarRepartidorPageModule } from 'src/app/modals/calificar-repartidor/calificar-repartidor.module';
 import { SeleccionarDireccionPageModule } from './modals/seleccionar-direccion/seleccionar-direccion.module';
 import { NuevaDireccionPageModule } from './modals/nueva-direccion/nueva-direccion.module';
+// CHECK THIS, CHANGE TO MODALS FOLDER
+import { DetallesComidaSeleccionadaPageModule } from 'src/app/pages/cliente/detalles-comida-seleccionada/detalles-comida-seleccionada.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +39,7 @@ import { NuevaDireccionPageModule } from './modals/nueva-direccion/nueva-direcci
     CalificarRepartidorPageModule,
     SeleccionarDireccionPageModule,
     NuevaDireccionPageModule,
+    DetallesComidaSeleccionadaPageModule
   ],
   providers: [
     StatusBar,

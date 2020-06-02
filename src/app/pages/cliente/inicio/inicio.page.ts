@@ -41,7 +41,7 @@ export class InicioPage implements OnInit {
     private productosService: ProductosService,
     private restaurantService: RestaurantService,
     private router: Router,
-  ) { }
+    ) { }
 
   ngOnInit() {
     console.log('Iniciando cache...');
@@ -57,7 +57,7 @@ export class InicioPage implements OnInit {
         console.error('setOnCacheRestaurantesIniciado FAILURE');
         console.error(error);
       }
-    );
+      );
 
     this.cacheService.setOnProductosIniciado(
       () => {
@@ -69,7 +69,7 @@ export class InicioPage implements OnInit {
         console.error('setOnProductosIniciado FAILURE');
         console.error(error);
       }
-    );
+      );
   }
 
   abrirRestaurante(uidRestaurant: string) {
@@ -77,7 +77,7 @@ export class InicioPage implements OnInit {
     
     this.router.navigate(['/restaurant'], {
       queryParams: {
-        uidRestaurant: uidRestaurant,
+        uidRestaurant: uidRestaurant
       }
     });
   }

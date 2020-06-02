@@ -12,6 +12,14 @@ export class CacheRestaurantes {
         return this.restaurantes.get(uidRestaurante);
     }
 
+    public static getAdicionalesDeRestaurante(uidRestaurante: string): string[] {
+        return this.restaurantes.get(uidRestaurante).adicionales;
+    }
+
+    public static getComplementosDeRestaurante(uidRestaurante: string) {
+        return this.restaurantes.get(uidRestaurante).complementos;
+    }
+
     public static getAllRestaurantes(): Restaurant[]{
         return Array.from(this.restaurantes.values());
     }
@@ -40,7 +48,8 @@ export class CacheRestaurantes {
     }
 
     public static setAllRestaurantes(restaurantes: Restaurant[]){
-        restaurantes.forEach(restaurante => this.setRestaurante(restaurante))
+        restaurantes.forEach(restaurante => this.setRestaurante(restaurante));
+        console.log('All restaurantes: ', this.restaurantes);
     }
 
     public static setRestaurante(restaurant: Restaurant){

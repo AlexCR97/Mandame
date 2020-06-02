@@ -8,7 +8,7 @@ export class CacheProductos{
         return this.productos.get(uidProducto) != null;
     }
 
-    public static getProducto(uidProducto: string): Producto{
+    public static getProducto(uidProducto: string): Producto {
         return this.productos.get(uidProducto);
     }
 
@@ -24,12 +24,12 @@ export class CacheProductos{
         let categoriasUnicas = new Set<string>(categoriasRepetidas);
 
         categoriasUnicas.forEach(categ =>{
-          let prods = productos.filter(prod => prod.categoria == categ);
+            let prods = productos.filter(prod => prod.categoria == categ);
 
-          productosPorCategoria.push({
-            categoria: categ,
-            productos: prods,
-          });
+            productosPorCategoria.push({
+                categoria: categ,
+                productos: prods,
+            });
         });
 
         return productosPorCategoria;
@@ -37,7 +37,16 @@ export class CacheProductos{
 
     public static getAllProductosRestaurante(uidRestaurante: string): Producto[]{
         return this.getAllProductos()
-            .filter(p => p.restaurante == uidRestaurante);
+        .filter(p => p.restaurante == uidRestaurante);
+    }
+
+    public static getAdicionalesRestaurante(uidRestaurante: string): Producto[] {
+        return this.getAllProductos()
+        .filter(p => p.restaurante == uidRestaurante && p.categoria == 'adicionales');   
+    }
+
+    public static getProductoPorNombre(nombreProducto: string): Producto {
+        return this.productos.get(nombreProducto);
     }
 
     public static isEmpty(): boolean {

@@ -6,7 +6,7 @@ import { ModalAlertPage } from 'src/app/modals/modal-alert/modal-alert.page';
 import { ModalController } from '@ionic/angular';
 import { Restaurant } from 'src/app/dbdocs/restaurant';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from 'src/app/dbdocs/producto';
 import { getPlantilla, DocsPlantillas } from 'src/app/dbdocs/plantillas';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
@@ -26,9 +26,12 @@ interface ProductosPorCategoria {
 })
 export class RestaurantPage implements OnInit {
 
+  // TODO: ADD PROPERTY TO SHOW/HIDE FOOTER WHEN NEEDED  
+
   showToolbar = false;
   select: string;
   nombreRestaurant: string;
+  estado: string = '';
 
   //public uidRestaurant: string = 'K0WCy5wF99fdaQb1kxJ9';
   public uidRestaurant: string;
@@ -38,15 +41,16 @@ export class RestaurantPage implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    public router: Router,
     private cacheService: CacheService,
     public domSanitizer: DomSanitizer,
     public modalController: ModalController,
     public utils: UtilsService,
-  ) { }
+    ) { }
 
   ngOnInit() {
     this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
-    
+
     console.log('Uid restaurant: ' + this.uidRestaurant);
 
     // Si tiene conexion a internet
@@ -66,7 +70,7 @@ export class RestaurantPage implements OnInit {
           error => {
             console.error(error);
           }
-        );
+          );
       }
       // Si hay cache, cargar el restaurant desde el cache
       else {
@@ -90,7 +94,7 @@ export class RestaurantPage implements OnInit {
           error => {
             console.error('');
           }
-        );
+          );
       }
       // Si hay cache, cargar los productos desde el cache
       else {
@@ -127,6 +131,21 @@ export class RestaurantPage implements OnInit {
     this.presentPrePedidoModal();
   }
 
+  detallarProducto(producto) {
+    console.log('producto: ', producto);
+    // let adicionales = this.productosPorCategoria.filter(i => i.categoria == 'adicionales')[0].productos;
+    this.abrirDetallesProducto(producto.nombre);
+  }
+
+  abrirDetallesProducto(producto) {
+    this.router.navigate(['/detalles-comida-seleccionada'], {
+      queryParams: {
+        producto: producto,
+        uidRestaurante: this.uidRestaurant
+      }
+    });
+  }
+
   async presentSeguirPedidoModal(uidpedido) {
     const modal = await this.modalController.create({
       component: ModalAlertPage,
@@ -135,6 +154,13 @@ export class RestaurantPage implements OnInit {
       },
       cssClass: "dialog-modal"
     });
+
+    modal.onDidDismiss()
+    .then(data => {
+      console.log('modal dismissed data: ', data);
+      // this.seguirPedido = data['data'];
+    });
+
     return await modal.present();
   }
 

@@ -65,11 +65,12 @@ export class PrePedidoPage implements OnInit {
       console.log('Usuario: ', CacheUsuario.usuario);
       this.direccionEntrega.nombreCasa = CacheUsuario.usuario.nombre;
       this.direccionEntrega.direccion = CacheUsuario.usuario.direcciones.toString();
+      // TODO: PROCESS DIRECTION TO SHOW THE DIRECTION INSTEAD OF THE UID
     }
   }
 
   cargarOrdenes() {
-    this.ordenItems = CacheService.carrito;
+    this.ordenItems = CacheService.getCarrito();
     console.log('ordenes: ', this.ordenItems);
   }
 
