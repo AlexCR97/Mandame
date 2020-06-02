@@ -26,16 +26,14 @@ export class CacheService {
         cliente: 'uidcliente',
         comentarios: [],  // arr of numbers
         direccion: 'dirusuario',
-        espera: 'espera',
-        estado: 'enespera',
+        estado: 'confirmado',
         fechaHora: 'fecha',
         precios: [], // arr of numbers
         productos: [], // arr of strings
         adicionales: [],
         complementos: [],
         repartidor: 'uidrepartidor',
-        restaurante: 'uidrestaurante',
-        uid: 'uidpedido',
+        restaurante: 'uidrestaurante'
         // nombreRepartidor?: string,
         // nombreRestaurante?: string,
         // foto_perfil?: string,
@@ -64,11 +62,56 @@ export class CacheService {
         this.carrito.comentarios.push(pedido.comentario);
         this.carrito.precios.push(pedido.total);
         this.carrito.productos.push(pedido.producto.nombre);
-        this.carrito.adicionales.push(pedido.adicionales);
+
+        pedido.adicionales.forEach(adicional => {
+            this.carrito.adicionales.push({
+                uid: adicional.uid,
+                nombre: adicional.nombre,
+                precio: adicional.precio
+            });
+        });
+
+        this.carrito.restaurante = pedido.uidRestaurante;
     }
 
     public static getCarrito() {
         return this.carrito;
+    }
+
+    public static getProductosSimplificados() {
+        let productos = [];
+
+        for (let i = 0; i < this.carrito.productos.length; i++) {
+            let producto = {
+                'nombre': this.carrito.productos[i],
+                'precio': this.carrito.precios[i],
+                'cantidad': this.carrito.cantidad[i]
+            };
+
+            productos.push(producto);
+        }
+
+        return productos;
+    }
+
+    public static agregarUsuario(uidUsuario) {
+        this.carrito.cliente = uidUsuario;
+    }
+
+    public static agregarRepartidor(uidRepartidor) {
+        this.carrito.repartidor = uidRepartidor;
+    }
+
+    public static agregarRestaurante(uidRestaurante) {
+        this.carrito.restaurante = uidRestaurante;
+    }
+
+    public static agregarDireccion(uidDireccion) {
+        this.carrito.direccion = uidDireccion;
+    }
+
+    public static agregarFechaHora(fechaHora) {
+        this.carrito.fechaHora = fechaHora;
     }
 
     public static isCarritoEmpty(): boolean {

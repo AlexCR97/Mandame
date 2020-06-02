@@ -148,8 +148,8 @@
 
 <!-- footer -->
 <ion-footer [ngSwitch]="estado">
-  <ion-button *ngSwitchCase="'seguir-pedido'" color="success" expand="full" (click)="btnClick()">Seguir pedido</ion-button>
-  <ion-button *ngSwitchCase="'ver-carrito'" color="success" expand="full" (click)="btnClick()">Seguir pedido</ion-button>
+  <ion-button *ngSwitchCase="'seguir-pedido'" color="success" expand="full" (click)="seguirPedido()">Seguir pedido</ion-button>
+  <ion-button *ngSwitchCase="'ver-carrito'" color="danger" expand="full" (click)="verCarrito()">Ver Carrito</ion-button>
   <div *ngSwitchDefault> </div>
 </ion-footer>
 <!-- footer -->
