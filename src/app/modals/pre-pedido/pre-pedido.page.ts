@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RestaurantService } from 'src/app/services/restaurant.service';
-import { CacheService } from 'src/app/cache/cache.service';
+import { CacheCarrito } from 'src/app/cache/cache-carrito';
 import { ChatService } from 'src/app/services/chat.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
@@ -71,7 +71,7 @@ export class PrePedidoPage implements OnInit {
     }
 
     cargarOrdenes() {
-        this.ordenItems = CacheService.getProductosSimplificados();
+        this.ordenItems = CacheCarrito.getProductosSimplificados();
         console.log('ordenes: ', this.ordenItems);
     }
 
@@ -145,19 +145,19 @@ export class PrePedidoPage implements OnInit {
     realizarPedido() {
         console.log('Realizando pedido!');
 
-        CacheService.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
-        CacheService.agregarUsuario(CacheUsuario.usuario.uid);
+        CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
+        CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
 
         this.chatService.getRepartidorLibre(
             repartidor => {
                 console.log('Repartidor libre obtenido!');
                 console.log(repartidor);
 
-                CacheService.agregarRepartidor(repartidor.uid);
+                CacheCarrito.agregarRepartidor(repartidor.uid);
 
-                console.log('pedido listo para insertar: ', CacheService.getCarrito());
+                console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
 
-                this.restaurantService.agregarPedido(CacheService.getCarrito())
+                this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
                 .then(ref => {
                     this.uidPedido = ref.id;
                     console.log('THEN uidPedido: ', this.uidPedido);

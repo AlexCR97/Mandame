@@ -41,15 +41,19 @@ export class RestaurantService {
   }*/
 
   getAdicionalesPorUid(uidAdicionales: string[]): Observable<Adicional[]> {
+    console.log('lista uid adicionales pedidos: ', uidAdicionales);
     return this.afs.collection<Adicional>('complementos').valueChanges()
     .pipe(map(adicionales => {
+      console.log('from getAdicionalesPorUid(): ');
+      console.log('adicionales: ', adicionales);
       let adicionalesEncontrados = new Array<Adicional>();
 
       uidAdicionales.forEach(uid => {
         let adicional = adicionales.find(a => a.uid == uid);
         adicionalesEncontrados.push(adicional);
       });
-      
+       
+      console.log('adicionales encontrados: ', adicionalesEncontrados);
       return adicionalesEncontrados;
     }));
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CacheService } from 'src/app/cache/cache.service';
+import { CacheCarrito } from 'src/app/cache/cache-carrito';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CacheProductos } from 'src/app/cache/cache-productos';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -79,14 +79,17 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
         let uidAdicionales = CacheRestaurantes.getAdicionalesDeRestaurante(this.uidRestaurante);
         this.afs.getAdicionalesPorUid(uidAdicionales).subscribe(adicionales => {
             this.adicionales = adicionales;
-            console.log('adicionales obtenidos: ', this.adicionales);
+            console.log('adicionales obtenidos: ', adicionales);
+            console.log('this.adicionales: ', this.adicionales);
 
             this.adicionales.forEach(adicional => {
-                this.adicionalesChecks.push(
-                {
-                    valor: adicional, 
-                    isChecked: false
-                });
+                if(adicional != undefined) {
+                    this.adicionalesChecks.push(
+                    {
+                        valor: adicional, 
+                        isChecked: false
+                    });
+                }
 
                 console.log('adicionales checks: ', this.adicionalesChecks);
             });
@@ -95,8 +98,8 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
 
     agregar() {
         this.prepararPedido();
-        CacheService.agregarAlCarrito(this.pedido);
-        console.log('Carrito actual: ', CacheService.getCarrito());
+        CacheCarrito.agregarAlCarrito(this.pedido);
+        console.log('Carrito actual: ', CacheCarrito.getCarrito());
         this.dismissModal();
     }
 
