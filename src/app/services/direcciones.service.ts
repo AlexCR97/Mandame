@@ -84,4 +84,8 @@ export class DireccionesService {
     });
   }
 
+  agregarFavoritos(){
+    
+  }
+
 }

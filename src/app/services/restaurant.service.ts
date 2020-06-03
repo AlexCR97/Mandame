@@ -73,4 +73,27 @@ export class RestaurantService {
     console.log('res: ', res);
     return res;
   }
+
+  async agregarRestauranteFavoritos(uidUsuario: string, uidRestaurant: string){
+    const db = this.afs.firestore;
+    const batch = db.batch();
+
+    //obtenemos la referencia al documento con el uid del usuario (cliente)
+    let restauranteFavoritoDoc = await db.collection('restaurantesFavoritos').doc(uidUsuario).get();
+    let restauranteFavoritoDocRef = restauranteFavoritoDoc.ref; 
+
+    //Si no existe, hay que insertarlo
+    if(!restauranteFavoritoDoc.exists){
+      let uidsRestaurantes = [uidRestaurant];
+      batch.set(restauranteFavoritoDocRef, {restaurantes: uidsRestaurantes});
+    }
+    // Si ya existe, hay que actualizar el array
+    else{
+      let uidsRestaurantes = (await restauranteFavoritoDocRef.get()).get('restaurantes') as string[];
+      uidsRestaurantes.push(uidRestaurant);
+      batch.update(restauranteFavoritoDocRef, {restaurantes: uidsRestaurantes});
+    }
+
+    return batch.commit(); 
+  }
 }

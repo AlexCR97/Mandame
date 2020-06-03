@@ -13,6 +13,7 @@ import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CacheProductos } from 'src/app/cache/cache-productos';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CacheService } from 'src/app/cache/cache.service';
+import { CacheUsuario } from "src/app/cache/cache-usuario";
 
 interface ProductosPorCategoria {
   categoria: string;
@@ -35,6 +36,7 @@ export class RestaurantPage implements OnInit {
   public fotoPortada: SafeStyle;
   public restaurant = getPlantilla(DocsPlantillas.restaurant) as Restaurant;
   public productosPorCategoria: ProductosPorCategoria[];
+  public uidCliente: string;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -42,9 +44,12 @@ export class RestaurantPage implements OnInit {
     public domSanitizer: DomSanitizer,
     public modalController: ModalController,
     public utils: UtilsService,
+    public restaurantService: RestaurantService,
   ) { }
 
   ngOnInit() {
+    this.uidCliente = CacheUsuario.usuario.uid;
+
     this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
     
     console.log('Uid restaurant: ' + this.uidRestaurant);
@@ -149,5 +154,12 @@ export class RestaurantPage implements OnInit {
       // TODO: CHANGE COLOR ANV ALUES OF DOWN BUTTON
     });
     return await modal.present();
+  }
+
+  agregarFavoritos(){
+    this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
+    this.uidCliente = CacheUsuario.usuario.uid;
+    console.log("agregarFavoritos()");
+    this.restaurantService.agregarRestauranteFavoritos(this.uidCliente, this.uidRestaurant);
   }
 }
