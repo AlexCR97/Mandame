@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Restaurant, RestaurantesPorCategoria } from '../dbdocs/restaurant';
 import { map } from 'rxjs/operators';
 import { Producto } from '../dbdocs/producto';
+import { Adicional } from '../dbdocs/adicional';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class RestaurantService {
 
   constructor(
     private afs: AngularFirestore
-  ) { }
-
+    ) { }
+  
   /*async agregarRestaurantFavorito(uidUsuario: string, uidRestaurant: string) {
     const db = this.afs.firestore;
     const batch = db.batch();
@@ -39,14 +40,24 @@ export class RestaurantService {
     return batch.commit();
   }*/
 
-  getAdicionalesFromRestaurant(idRestaurant) {
-    return this.afs.collection('complementos', ref => ref.where('id_restaurant', '==', idRestaurant)).snapshotChanges();
+  getAdicionalesPorUid(uidAdicionales: string[]): Observable<Adicional[]> {
+    return this.afs.collection<Adicional>('complementos').valueChanges()
+    .pipe(map(adicionales => {
+      let adicionalesEncontrados = new Array<Adicional>();
+
+      uidAdicionales.forEach(uid => {
+        let adicional = adicionales.find(a => a.uid == uid);
+        adicionalesEncontrados.push(adicional);
+      });
+      
+      return adicionalesEncontrados;
+    }));
   }
-  
+
   getRestaurant(uidRestaurant: string) {
     return this.afs.collection<Restaurant>('restaurantes').valueChanges().pipe(
       map(restaurants => restaurants.find(r => r.uid == uidRestaurant))
-    );
+      );
   }
 
   getRestaurantes(): Observable<Restaurant[]> {
@@ -72,13 +83,13 @@ export class RestaurantService {
 
         return restsPorCategoria;
       })
-    );
+      );
   }
 
   getProductos(uidRestaurant: string): Observable<Producto[]> {
     return this.afs.collection<Producto>('productos').valueChanges().pipe(
       map(productos => productos.filter(producto => producto.restaurante == uidRestaurant))
-    );
+      );
   }
 
   getComplementos() {

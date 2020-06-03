@@ -12,6 +12,7 @@ let restaurant: Restaurant = {
     calificacion: 0,
     categoria: '',
     complementos: '',
+    adicionales: [],
     estado: '',
     foto_perfil: '',
     foto_portada: '',

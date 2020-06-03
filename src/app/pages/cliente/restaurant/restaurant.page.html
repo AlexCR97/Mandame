@@ -108,7 +108,7 @@
             <ion-grid *ngSwitchCase="i.categoria">
               <ion-row>
                 <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let producto of i.productos">
-                  <ion-card mode="ios">
+                  <ion-card mode="ios" (click)="detallarProducto(producto)">
                     <img src="{{producto.foto}}" alt="">
                     <div class="padding">
                       <ion-card-header>
@@ -147,6 +147,9 @@
 </ion-content><!-- content -->
 
 <!-- footer -->
-<ion-footer>
-  <ion-button color="success" expand="full" (click)="btnClick()">Seguir pedido</ion-button>
-</ion-footer><!-- footer -->
+<ion-footer [ngSwitch]="estado">
+  <ion-button *ngSwitchCase="'seguir-pedido'" color="success" expand="full" (click)="seguirPedido()">Seguir pedido</ion-button>
+  <ion-button *ngSwitchCase="'ver-carrito'" color="danger" expand="full" (click)="verCarrito()">Ver Carrito</ion-button>
+  <div *ngSwitchDefault> </div>
+</ion-footer>
+<!-- footer -->

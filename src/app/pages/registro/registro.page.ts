@@ -40,9 +40,8 @@ export class RegistroPage implements OnInit {
     let credencialesValidas = await this.validarCredenciales();
 
     if (!credencialesValidas) {
-      return;
-    }
-    
+        return;
+    }  
     this.registrarUsuario();
   }
 
@@ -94,6 +93,17 @@ export class RegistroPage implements OnInit {
     if (this.contrasena != this.confirmarContrasena) {
       console.log('Las contrasenas no coinciden');
       this.guiUtils.mostrarToast('Las contrasenas no coinciden', 3000, 'danger');
+      return false;
+    }
+    if (this.correo.toString() === '' ){
+      console.log('El correo está vacío')
+      this.guiUtils.mostrarToast('el correo está vacío', 3000, 'danger');
+      return false;
+    }
+
+    if (this.contrasena.toString() === '' ){
+      console.log('La contrasena está vacío')
+      this.guiUtils.mostrarToast('La contrasena está vacía', 3000, 'danger');
       return false;
     }
 

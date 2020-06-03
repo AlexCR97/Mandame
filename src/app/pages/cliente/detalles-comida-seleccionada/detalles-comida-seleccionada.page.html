@@ -18,12 +18,12 @@
     </div>
     <ion-item lines="none">
         <ion-label class="bold">
-            Pizza Hawaiiana
+            {{producto.nombre}}
         </ion-label>
     </ion-item>
     <ion-item lines="none">
         <ion-text class="item-adicional descripcion">
-            Pizza Hawaiiana que incluye pina, jamon, tocino, rellena de queso en el pan.
+            {{producto.nombre}} que incluye {{producto.ingredientes.join(', ')}}.
         </ion-text>
     </ion-item>
     <ion-list>
@@ -58,7 +58,7 @@
                     </ion-button>
                     <div class="f-50">
                         <ion-label>
-                            {{itemCount}}
+                            {{cantidad}}
                         </ion-label>
                     </div>
                     <ion-button (click)='add()' size="default" class="f-25">

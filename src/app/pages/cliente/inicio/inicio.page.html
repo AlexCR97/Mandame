@@ -6,54 +6,58 @@
   <ion-header>
     <ion-toolbar>
       <img src="../../../assets/img/logo.png" class="logo-menu">
-    </ion-toolbar>
-  </ion-header>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content>
+<ion-content>
 
     <!-- principal -->
     <ion-list>
 
       <ion-list-header>
         <h4><b>Principal</b></h4>
-      </ion-list-header>
+    </ion-list-header>
 
-      <ion-item routerLink="/restaurantes">
+    <ion-item routerLink="/restaurantes">
         <ion-label>Restaurantes</ion-label>
-      </ion-item>
+    </ion-item>
 
-      <ion-item routerLink="/mandados">
+    <ion-item routerLink="/mandados">
         <ion-label>Mandados</ion-label>
-      </ion-item>
+    </ion-item>
 
-      <ion-item routerLink="/pedidos">
+    <ion-item routerLink="/pedidos">
         <ion-label>Pedidos</ion-label>
-      </ion-item>
+    </ion-item>
 
-    </ion-list>
+    <!-- <ion-item routerLink="/pre-pedido">
+        <ion-label>Carrito</ion-label>
+    </ion-item> -->
 
-    <!-- cuenta -->
-    <ion-list>
+</ion-list>
 
-      <ion-list-header>
-        <h4><b>Cuenta</b></h4>
-      </ion-list-header>
-      
-      <ion-item routerLink="/direcciones">
-        <ion-label>Direcciones</ion-label>
-      </ion-item>
+<!-- cuenta -->
+<ion-list>
 
-      <ion-item routerLink="/configuraciones">
-        <ion-label>Configuración</ion-label>
-      </ion-item>
+  <ion-list-header>
+    <h4><b>Cuenta</b></h4>
+</ion-list-header>
 
-      <ion-item>
-        <ion-label>Cerrar sesión</ion-label>
-      </ion-item>
+<ion-item routerLink="/direcciones">
+    <ion-label>Direcciones</ion-label>
+</ion-item>
 
-    </ion-list>
+<ion-item routerLink="/configuraciones">
+    <ion-label>Configuración</ion-label>
+</ion-item>
 
-  </ion-content>
+<ion-item>
+    <ion-label>Cerrar sesión</ion-label>
+</ion-item>
+
+</ion-list>
+
+</ion-content>
 
 </ion-menu>
 
@@ -68,32 +72,32 @@
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button color="light"></ion-menu-button>
-        </ion-buttons>
+      </ion-buttons>
 
-        <ion-title mode="ios">
+      <ion-title mode="ios">
           <img src="../../../assets/img/logo-blanco.png" [ngClass]="showTitle ? 'logoVisible' : 'logoInvisible'">
-        </ion-title>
-    
-        <ion-buttons slot="end">
+      </ion-title>
+      
+      <ion-buttons slot="end">
           <ion-button (click)="modalTest()">
             <ion-icon color="light" name="notifications" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+        </ion-button>
+    </ion-buttons>
 
-      </ion-toolbar><!-- toolbar -->
-    </div>
+</ion-toolbar><!-- toolbar -->
+</div>
 
-    <div class="banner-description ion-padding">
-      <p class="banner-text">Hola {{usuario.nombre}}</p>
-      <h1 class="banner-text">¿En qué te podemos ayudar?</h1>
-    </div>
+<div class="banner-description ion-padding">
+  <p class="banner-text">Hola {{usuario.nombre}}</p>
+  <h1 class="banner-text">¿En qué te podemos ayudar?</h1>
+</div>
 
-    <br>
+<br>
 
-  </div><!-- banner -->
+</div><!-- banner -->
 
-  <!-- contenedor principal -->
-  <div class="contenedor-principal ion-padding">
+<!-- contenedor principal -->
+<div class="contenedor-principal ion-padding">
 
     <!-- Skeleton  -->
     <div *ngIf="productosPorCategoria == undefined">
@@ -102,207 +106,207 @@
           <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
           <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
           <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid style="margin-bottom: 20px">
-        <ion-row>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid style="margin-bottom: 20px">
-        <ion-row>
-          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid style="margin-bottom: 20px">
-        <ion-row>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid style="margin-bottom: 20px">
-        <ion-row>
-          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-          <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid style="margin-bottom: 20px">
-        <ion-row>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-          <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
-        </ion-row>
-      </ion-grid>
+      </ion-row>
+  </ion-grid>
+  <ion-grid style="margin-bottom: 20px">
+    <ion-row>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid style="margin-bottom: 20px">
+    <ion-row>
+      <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+      <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+      <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid style="margin-bottom: 20px">
+    <ion-row>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid style="margin-bottom: 20px">
+    <ion-row>
+      <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+      <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+      <ion-col size="4"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid style="margin-bottom: 20px">
+    <ion-row>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+      <ion-col><ion-skeleton-text animated style="width:100px; height: 100px;"></ion-skeleton-text></ion-col>
+  </ion-row>
+</ion-grid>
 
-      </div>  <!-- Fin skeleton -->
-    <div *ngIf="productosPorCategoria != undefined" class="toEnter">
+</div>  <!-- Fin skeleton -->
+<div *ngIf="productosPorCategoria != undefined" class="toEnter">
 
-    <!--Superior-->
-    <div>
+  <!--Superior-->
+  <div>
 
-      <!-- segments -->
-      
-      <ion-segment scrollable [(ngModel)]="segmentSuperior" color="dark" mode="md">
-
-        <ion-segment-button value="ofertas">
-          <ion-label class="ion-text-capitalize">Ofertas</ion-label>
-        </ion-segment-button>
-  
-        <ion-segment-button value="masVendidos">
-          <ion-label class="ion-text-capitalize">Más vendidos</ion-label>
-        </ion-segment-button>
-  
-        <ion-segment-button value="proximamente">
-          <ion-label class="ion-text-capitalize">Próximamente</ion-label>
-        </ion-segment-button>
-  
-      </ion-segment><!-- segments -->
-  
-      <!-- contenedor de segments -->
-      <div [ngSwitch]="segmentSuperior">
-  
-        <!-- ofertas -->
-        <div *ngSwitchCase="'ofertas'">
-          <div class="mdm-scroll-horizontal">
-            <div class="mdm-scroll-horizontal-item" *ngFor="let i of ofertasItems">
-              <ion-card mode="ios" class="segment-superior-card">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-            </div>
-          </div>
-        </div><!-- ofertas -->
-  
-        <!-- mas vendidos -->
-        <div *ngSwitchCase="'masVendidos'">
-          <div class="mdm-scroll-horizontal">
-            <div class="mdm-scroll-horizontal-item" *ngFor="let i of masVendidosItems">
-              <ion-card mode="ios" class="segment-superior-card">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-            </div>
-          </div>
-        </div><!-- mas vendidos -->
-  
-        <!-- proximamente -->
-        <div *ngSwitchCase="'proximamente'">
-          <div class="mdm-scroll-horizontal">
-            <div class="mdm-scroll-horizontal-item" *ngFor="let i of proximamenteItems">
-              <ion-card mode="ios" class="segment-superior-card">
-                <img src="{{i.imgSrc}}">
-              </ion-card>
-            </div>
-          </div>
-        </div><!-- proximamente -->
-  
-      </div><!-- contenedor de segments -->
-
-    </div><!--Superior-->
-
-    <!-- Restaurantes por categoria -->
-    <div>
-
-      <!-- segments -->
-      <ion-segment [(ngModel)]="segmentCentral" color="dark" mode="md" scrollable>
-
-        <ion-segment-button *ngFor="let i of restsPorCategoria" [(value)]="i.categoria">
-          <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
-        </ion-segment-button>
-  
-      </ion-segment><!-- segments -->
-
-      <!-- contenedor de segments -->
-      <div [ngSwitch]="segmentCentral">
-
-        <!-- categoria switch container -->
-        <div *ngFor="let i of restsPorCategoria">
-
-          <div *ngSwitchCase="i.categoria">
-            <div class="mdm-scroll-horizontal">
-
-              <!-- producto item -->
-              <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let rest of i.restaurantes" (click)="abrirRestaurante(rest.uid)">
-                <ion-card mode="ios" class="mdm-center-both">
-                  <ion-img [src]="rest.foto_perfil"></ion-img>
-                </ion-card>
-                <p class="restaurant_name">{{rest.nombre}}</p>
-              </div><!-- producto item -->
-
-            </div>
-          </div><!-- comida -->
-
-        </div><!-- categoria switch container -->
-  
-      </div><!-- contenedor de segments -->
-
-    </div><!-- Restaurantes por categoria -->
-
-    <!--Productos por categoria -->
-    <div>
-
-      <!-- segments -->
-      <ion-segment [(ngModel)]="segmentInferior" class="segmentInferior" color="dark" mode="md" scrollable>
-
-        <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
-          <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
-        </ion-segment-button>
-
-      </ion-segment><!-- segments -->
-
-      <!-- contenedor de segments -->
-      <div [ngSwitch]="segmentInferior">
-
-        <!-- categoria switch container -->
-        <div *ngFor="let i of productosPorCategoria">
-          <div *ngSwitchCase="i.categoria" class="ordenes-container">
-            <ion-grid>
-              <ion-row>
-                <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let producto of i.productos">
-
-                  <!-- orden -->
-                  <ion-card mode="ios" class="orden-item">
-                    <ion-img [src]="producto.foto"></ion-img>
-                    <ion-card-header>
-                      <ion-card-title>{{producto.nombre}}</ion-card-title>
-                      <ion-card-subtitle>{{producto.nombreRestaurant}}</ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                      <div class="mdm-chip mdm-mr-2">
-                        <ion-icon name="alert-circle" color="success"></ion-icon>
-                        <p>$ {{producto.precio}}.00 MXN</p>
-                      </div>
-                      <div class="mdm-chip">
-                        <ion-icon name="time" color="secondary"></ion-icon>
-                        <p>30-60 Min</p>
-                      </div>
-                    </ion-card-content>
-                  </ion-card><!-- orden -->
+    <!-- segments -->
     
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-        </div><!-- categoria switch container -->
+    <ion-segment scrollable [(ngModel)]="segmentSuperior" color="dark" mode="md">
 
-      </div><!-- contenedor de segments -->
+      <ion-segment-button value="ofertas">
+        <ion-label class="ion-text-capitalize">Ofertas</ion-label>
+    </ion-segment-button>
+    
+    <ion-segment-button value="masVendidos">
+        <ion-label class="ion-text-capitalize">Más vendidos</ion-label>
+    </ion-segment-button>
+    
+    <ion-segment-button value="proximamente">
+        <ion-label class="ion-text-capitalize">Próximamente</ion-label>
+    </ion-segment-button>
+    
+</ion-segment><!-- segments -->
 
-    </div><!--Productos por categoria -->
-    </div>
+<!-- contenedor de segments -->
+<div [ngSwitch]="segmentSuperior">
+  
+  <!-- ofertas -->
+  <div *ngSwitchCase="'ofertas'">
+    <div class="mdm-scroll-horizontal">
+      <div class="mdm-scroll-horizontal-item" *ngFor="let i of ofertasItems">
+        <ion-card mode="ios" class="segment-superior-card">
+          <img src="{{i.imgSrc}}">
+      </ion-card>
+  </div>
+</div>
+</div><!-- ofertas -->
+
+<!-- mas vendidos -->
+<div *ngSwitchCase="'masVendidos'">
+    <div class="mdm-scroll-horizontal">
+      <div class="mdm-scroll-horizontal-item" *ngFor="let i of masVendidosItems">
+        <ion-card mode="ios" class="segment-superior-card">
+          <img src="{{i.imgSrc}}">
+      </ion-card>
+  </div>
+</div>
+</div><!-- mas vendidos -->
+
+<!-- proximamente -->
+<div *ngSwitchCase="'proximamente'">
+    <div class="mdm-scroll-horizontal">
+      <div class="mdm-scroll-horizontal-item" *ngFor="let i of proximamenteItems">
+        <ion-card mode="ios" class="segment-superior-card">
+          <img src="{{i.imgSrc}}">
+      </ion-card>
+  </div>
+</div>
+</div><!-- proximamente -->
+
+</div><!-- contenedor de segments -->
+
+</div><!--Superior-->
+
+<!-- Restaurantes por categoria -->
+<div>
+
+    <!-- segments -->
+    <ion-segment [(ngModel)]="segmentCentral" color="dark" mode="md" scrollable>
+
+      <ion-segment-button *ngFor="let i of restsPorCategoria" [(value)]="i.categoria">
+        <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
+    </ion-segment-button>
+    
+</ion-segment><!-- segments -->
+
+<!-- contenedor de segments -->
+<div [ngSwitch]="segmentCentral">
+
+  <!-- categoria switch container -->
+  <div *ngFor="let i of restsPorCategoria">
+
+    <div *ngSwitchCase="i.categoria">
+      <div class="mdm-scroll-horizontal">
+
+        <!-- producto item -->
+        <div class="mdm-scroll-horizontal-item producto-item" *ngFor="let rest of i.restaurantes" (click)="abrirRestaurante(rest.uid)">
+          <ion-card mode="ios" class="mdm-center-both">
+            <ion-img [src]="rest.foto_perfil"></ion-img>
+        </ion-card>
+        <p class="restaurant_name">{{rest.nombre}}</p>
+    </div><!-- producto item -->
+
+</div>
+</div><!-- comida -->
+
+</div><!-- categoria switch container -->
+
+</div><!-- contenedor de segments -->
+
+</div><!-- Restaurantes por categoria -->
+
+<!--Productos por categoria -->
+<div>
+
+    <!-- segments -->
+    <ion-segment [(ngModel)]="segmentInferior" class="segmentInferior" color="dark" mode="md" scrollable>
+
+      <ion-segment-button *ngFor="let i of productosPorCategoria" [(value)]="i.categoria">
+        <ion-label class="ion-text-capitalize">{{i.categoria}}</ion-label>
+    </ion-segment-button>
+
+</ion-segment><!-- segments -->
+
+<!-- contenedor de segments -->
+<div [ngSwitch]="segmentInferior">
+
+  <!-- categoria switch container -->
+  <div *ngFor="let i of productosPorCategoria">
+    <div *ngSwitchCase="i.categoria" class="ordenes-container">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let producto of i.productos">
+
+            <!-- orden -->
+            <ion-card mode="ios" class="orden-item">
+              <ion-img [src]="producto.foto"></ion-img>
+              <ion-card-header>
+                <ion-card-title>{{producto.nombre}}</ion-card-title>
+                <ion-card-subtitle>{{producto.nombreRestaurant}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="mdm-chip mdm-mr-2">
+                  <ion-icon name="alert-circle" color="success"></ion-icon>
+                  <p>$ {{producto.precio}}.00 MXN</p>
+              </div>
+              <div class="mdm-chip">
+                  <ion-icon name="time" color="secondary"></ion-icon>
+                  <p>30-60 Min</p>
+              </div>
+          </ion-card-content>
+      </ion-card><!-- orden -->
+      
+  </ion-col>
+</ion-row>
+</ion-grid>
+</div>
+</div><!-- categoria switch container -->
+
+</div><!-- contenedor de segments -->
+
+</div><!--Productos por categoria -->
+</div>
 
 
-  </div><!-- contenedor principal -->
+</div><!-- contenedor principal -->
 
-  <!-- fab placed to the bottom end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+<!-- fab placed to the bottom end -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="arrow-forward-circle"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  </ion-fab-button>
+</ion-fab>
 
 </ion-content>
 
@@ -311,18 +315,18 @@
 
   <ion-fab-button color="naranja">
     <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
+</ion-fab-button>
 
-  <ion-fab-list side="top">
+<ion-fab-list side="top">
 
     <ion-fab-button color="naranja" routerLink="/mandame" data-desc="Mandame">
       <ion-icon name="arrow-redo"></ion-icon>
-    </ion-fab-button>
+  </ion-fab-button>
 
-    <ion-fab-button color="naranja" routerLink="/chats-cliente" data-desc="Enviar mensaje">
+  <ion-fab-button color="naranja" routerLink="/chats-cliente" data-desc="Enviar mensaje">
       <ion-icon name="chatbubble"></ion-icon>
-    </ion-fab-button>
+  </ion-fab-button>
 
-  </ion-fab-list>
+</ion-fab-list>
 
 </ion-fab><!-- fab -->

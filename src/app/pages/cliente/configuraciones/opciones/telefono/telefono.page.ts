@@ -37,7 +37,7 @@ export class TelefonoPage implements OnInit {
       this.guiUtils.mostrarToast('Telefono invalido', 3000, 'danger');
     }
     // telefono valido
-    else {
+    else if(this.nuevoTelefono.length === 10) {
       this.cargandoDialog = await this.guiUtils.mostrarCargando('Cambiando telefono...');
       
       this.configService.actualizarTelefono(CacheUsuario.usuario.uid, this.nuevoTelefono)
