@@ -5,6 +5,7 @@ import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RegistroService } from 'src/app/services/registro.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { Router } from '@angular/router';
+import { ImagenesService } from 'src/app/services/imagenes.service';
 
 @Component({
   selector: 'app-post-registro',
@@ -24,18 +25,23 @@ export class PostRegistroPage implements OnInit {
 
   direccion: Direccion = {
     calle: '',
-    numeroExterior: 0,
+    entreCalle1: '',
+    entreCalle2: '',
+    numeroExterior: undefined as number,
+    numeroInterior: undefined as number,
     colonia: '',
   };
 
+  fotoPorDefecto = '../../../../assets/img/perfil_prueba.JPG';
   usuario: Usuario = CacheUsuario.usuario;
 
   cargandoDialog;
 
   constructor(
-    public guiUtils: GuiUtilsService,
-    public registroService: RegistroService,
-    public router: Router,
+    private guiUtils: GuiUtilsService,
+    private imagenService: ImagenesService,
+    private registroService: RegistroService,
+    private router: Router,
   ) { }
 
   ngOnInit() { }
@@ -82,5 +88,57 @@ export class PostRegistroPage implements OnInit {
       this.guiUtils.cerrarCargando(this.cargandoDialog);
       this.guiUtils.mostrarToast('No se pudo actualizar tu perfil', 3000, 'danger');
     });
+  }
+
+  onCambiarImagenClick() {
+    console.log('onCambiarImagenClick()');
+    document.getElementById('inputCambiarImagen').click();
+  }
+
+  async onInputCambiarImagen(archivos: FileList) {
+    console.log('onInputCambiarImagen()');
+
+    if (archivos.length == 0) {
+      console.log('Ningun archivo seleccionado :(');
+      return;
+    }
+
+    console.log('El archivo seleccionado es:');
+    console.log(archivos.item(0));
+
+    this.cargandoDialog = await this.guiUtils.mostrarCargando('Eligiendo imagen...');
+    this.imagenService.subirImagen(archivos.item(0), `perfil-usuarios/${this.usuario.uid}`,
+      porcentaje => {
+        console.log('Porcentaje: ' + porcentaje);
+      },
+      url => {
+        console.log('Url: ' + url);
+        console.log('Actualizando foto del usuario en la base de datos...');
+
+        this.imagenService.actualizarImagenUsuario(this.usuario.uid, url)
+        .then(() => {
+          console.log('Foto actualizada! :D');
+
+          CacheUsuario.usuario.foto = url;
+          this.usuario = CacheUsuario.usuario;
+
+          this.guiUtils.cerrarCargando(this.cargandoDialog);
+        })
+        .catch(error => {
+          console.error('Error al actualizar la foto del usuario :(');
+          console.error(error);
+
+          this.guiUtils.cerrarCargando(this.cargandoDialog);
+          this.guiUtils.mostrarToast('Error al actualizar la foto del usuario :(', 3000, 'danger');
+        });
+      },
+      error => {
+        console.error('Error al subir la imagen :(');
+        console.error(error);
+
+        this.guiUtils.cerrarCargando(this.cargandoDialog);
+        this.guiUtils.mostrarToast('No se pudo actualizar to foto :(', 3000, 'danger');
+      }
+    );
   }
 }

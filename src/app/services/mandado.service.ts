@@ -55,9 +55,8 @@ export class MandadoService {
     }
 
     // Ahora, agregamos el mandado
-    // TODO Implementar el nuevo metodo para obtener un repartidor libre
-    /*this.chatService.getRepartidorLibre(
-      repartidor => {
+    this.chatService.getRepartidorLibre().subscribe(
+      promise => promise.then(repartidor => {
         let mandadoUid = this.afs.createId();
         let mandadoDocRef = db.collection('mandados').doc(mandadoUid);
 
@@ -71,9 +70,9 @@ export class MandadoService {
         batch.commit()
         .then(() => resolver(mandado))
         .catch(error => manejarError(error));
-      },
+      }),
       error => manejarError(error)
-    );*/
+    );
   }
 
   agregarMandado(
@@ -84,9 +83,8 @@ export class MandadoService {
     const db = this.afs.firestore;
     const batch = db.batch();
 
-    // TODO Implementar el nuevo metodo para obtener un repartidor libre
-    /*this.chatService.getRepartidorLibre(
-      repartidor => {
+    this.chatService.getRepartidorLibre().subscribe(
+      promise => promise.then(repartidor => {
         let mandadoUid = this.afs.createId();
         let mandadoDocRef = db.collection('mandados').doc(mandadoUid);
 
@@ -100,9 +98,9 @@ export class MandadoService {
         batch.commit()
         .then(() => resolver(mandado))
         .catch(error => manejarError(error));
-      },
+      }),
       error => manejarError(error)
-    );*/
+    );
   }
 
   getMandados() {

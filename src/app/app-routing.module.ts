@@ -122,6 +122,10 @@ const routes: Routes = [
     path: 'restaurantes',
     loadChildren: () => import('./pages/cliente/restaurantes/restaurantes.module').then( m => m.RestaurantesPageModule)
   },
+  {
+    path: 'recuperar-contrasena',
+    loadChildren: () => import('./pages/recuperar-contrasena/recuperar-contrasena.module').then( m => m.RecuperarContrasenaPageModule)
+  },
 
 
 ];

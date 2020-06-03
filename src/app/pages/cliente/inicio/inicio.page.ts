@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CacheProductos } from 'src/app/cache/cache-productos';
 import { DocsPlantillas, getPlantilla } from 'src/app/dbdocs/plantillas';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio',
@@ -40,6 +41,7 @@ export class InicioPage implements OnInit {
     private cacheService: CacheService,
     private productosService: ProductosService,
     private restaurantService: RestaurantService,
+    private navController: NavController,
     private router: Router,
     ) { }
 
@@ -80,6 +82,15 @@ export class InicioPage implements OnInit {
         uidRestaurant: uidRestaurant
       }
     });
+  }
+
+  cerrarSesion() {
+    this.cacheService.setOnBorrarCacheListener(() => {
+      console.log('Cache de la app borrado!');
+      this.navController.navigateBack('/login');
+    });
+
+    this.cacheService.borrarCache();
   }
 
   onScroll($event: CustomEvent<ScrollDetail>) {

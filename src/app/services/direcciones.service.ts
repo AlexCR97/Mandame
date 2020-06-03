@@ -30,6 +30,8 @@ export class DireccionesService {
     let direccionUid = this.afs.createId();
     let direccionDocRef = db.collection('direcciones').doc(direccionUid);
 
+    direccion.uid = direccionUid;
+
     batch.set(direccionDocRef, direccion);
 
     // agregar uid de la nueva direccion al array de direcciones del usuario
@@ -44,7 +46,7 @@ export class DireccionesService {
     return batch.commit();
   }
 
-  actualizarDireccion(direccionUid: string,  direccion: Direccion): Promise<void> {
+  actualizarDireccion(direccionUid: string, direccion: Direccion): Promise<void> {
     const db = this.afs.firestore;
     const batch = db.batch();
   

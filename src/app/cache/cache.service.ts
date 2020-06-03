@@ -22,6 +22,7 @@ export class CacheService {
 
   public static restaurante = 'restaurante ejemplo';
 
+  private onBorrarCacheListener: () => void;
   private onRestaurantesListener: () => void;
   private onRestaurantesError: (error: any) => void;
   private onProductosListener: () => void;
@@ -42,12 +43,17 @@ export class CacheService {
 
   borrarCache() {
     CacheUsuario.usuario = undefined;
-    this.borrarCacheRestaurantes();
-    this.borrarCacheProductos();
+
+    //this.borrarCacheRestaurantes();
+    //this.borrarCacheProductos();
     this.borrarCacheDirecciones();
     this.borrarCachePedidos();
     this.borrarCacheMandados();
     this.borrarCacheChats();
+
+    if (this.onBorrarCacheListener != null) {
+      this.onBorrarCacheListener();
+    }
   }
 
   borrarCacheRestaurantes() {
@@ -225,7 +231,11 @@ export class CacheService {
            this.onMensajesError(error);
          }
        }
-       );
+    );
+   }
+
+   setOnBorrarCacheListener(resolver: () => void) {
+     this.onBorrarCacheListener = resolver;
    }
 
    setOnRestaurantesIniciado(resolver: () => void, manejarError: (error: any) => void) {

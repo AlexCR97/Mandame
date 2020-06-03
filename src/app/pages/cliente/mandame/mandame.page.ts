@@ -12,6 +12,7 @@ import { MandadoService } from 'src/app/services/mandado.service';
 import { ActivatedRoute } from '@angular/router';
 import { CacheMandados } from 'src/app/cache/cache-mandados';
 import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
+import { SafeDocsService } from 'src/app/services/safe-docs.service';
 
 @Component({
   selector: 'app-mandame',
@@ -25,13 +26,13 @@ export class MandamePage implements OnInit {
 
   direccionOrigen: Direccion = {
     calle: 'Haz clic aquí para seleccionar una dirección',
-    numeroExterior: null,
+    numeroExterior: null as number,
     colonia: 'Selecciona a donde te llevaran tu pedido',
   };
 
   direccionDestino: Direccion = {
     calle: 'Haz clic aquí para seleccionar una dirección',
-    numeroExterior: null,
+    numeroExterior: null as number,
     colonia: 'Selecciona a donde tienen que hacer tu mandado',
   };
 
@@ -47,6 +48,7 @@ export class MandamePage implements OnInit {
     private mandadoService: MandadoService,
     private modalController: ModalController,
     private navController: NavController,
+    private safeDocs: SafeDocsService,
     private utils: UtilsService,
   ) { }
 
@@ -282,11 +284,14 @@ export class MandamePage implements OnInit {
     if (this.nuevaDireccionOrigenIngresada || this.nuevaDireccionDestinoIngresada) {
       console.log('El usuario ingreso otra direccion');
       
+      let safeDireccionOrigen = this.safeDocs.direccion(this.direccionOrigen);
+      let safeDireccionDestino = this.safeDocs.direccion(this.direccionDestino);
+
       console.log('Agregando direcciones a la base de datos y luego registrar mandado...');
       this.mandadoService.agregarMandadoYDirecciones(
         CacheUsuario.usuario,
-        this.nuevaDireccionOrigenIngresada? this.direccionOrigen : null,
-        this.nuevaDireccionDestinoIngresada? this.direccionDestino : null,
+        this.nuevaDireccionOrigenIngresada? safeDireccionOrigen : null,
+        this.nuevaDireccionDestinoIngresada? safeDireccionDestino : null,
         mandado,
         mandadoRegistrado => {
           console.log('El mandado se registro con exito! :D');

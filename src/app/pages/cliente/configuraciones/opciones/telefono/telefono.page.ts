@@ -16,7 +16,7 @@ import { ConfiguracionesService } from 'src/app/services/configuraciones.service
 export class TelefonoPage implements OnInit {
 
   antiguoTelefono: string;
-  nuevoTelefono: string = '';
+  nuevoTelefono: number;
   cargandoDialog;
 
   constructor(
@@ -32,21 +32,20 @@ export class TelefonoPage implements OnInit {
   }
 
   async guardarDatos() {
-    // telefono invalido
-    if (this.nuevoTelefono.length < 9) {
-      this.guiUtils.mostrarToast('Telefono invalido', 3000, 'danger');
-    }
+    console.log('El telefono es', this.nuevoTelefono);
+    let telefono = this.nuevoTelefono.toString();
+    
     // telefono valido
-    else if(this.nuevoTelefono.length === 10) {
+    if (telefono.trim().length == 10) {
       this.cargandoDialog = await this.guiUtils.mostrarCargando('Cambiando telefono...');
       
-      this.configService.actualizarTelefono(CacheUsuario.usuario.uid, this.nuevoTelefono)
+      this.configService.actualizarTelefono(CacheUsuario.usuario.uid, telefono)
       .then(() => {
         console.log('Exito al cambiar telefono :D');
         this.guiUtils.cerrarCargando(this.cargandoDialog);
         this.guiUtils.mostrarToast('¡Se ha cambiado tu numero de telefono! :D', 3000, 'success');
 
-        CacheUsuario.usuario.telefono = this.nuevoTelefono;
+        CacheUsuario.usuario.telefono = telefono;
 
         this.navController.back();
         this.navController.back();
@@ -58,6 +57,11 @@ export class TelefonoPage implements OnInit {
         this.guiUtils.cerrarCargando(this.cargandoDialog);
         this.guiUtils.mostrarToast('No se pudo cambiar tu telefono :(', 3000, 'danger');
       });
+    }
+    // telefono invalido
+    else {
+      this.guiUtils.mostrarToast('Telefono invalido. Solo 10 digitos permitidos', 3000, 'danger');
+      return;
     }
   }
 }

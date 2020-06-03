@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Direccion } from 'src/app/dbdocs/direccion';
-import { Usuario } from 'src/app/dbdocs/usuario';
 import { DireccionesService, OperacionDireccion } from 'src/app/services/direcciones.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { NavController } from '@ionic/angular';
 import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
+import { SafeDocsService } from 'src/app/services/safe-docs.service';
 
 @Component({
   selector: 'app-agregar-direccion',
@@ -27,18 +27,19 @@ export class AgregarDireccionPage implements OnInit {
     entreCalle1: '',
     entreCalle2: '',
     numeroExterior: undefined as number,
-    numeroInterior: undefined as number,
+    //numeroInterior: undefined as number,
     colonia: '',
   };
 
   cargandoDialog;
 
   constructor(
-    public activatedRoute: ActivatedRoute,
-    public direccionesService: DireccionesService,
-    public guiUtils: GuiUtilsService,
-    public navController: NavController,
-    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    private direccionesService: DireccionesService,
+    private guiUtils: GuiUtilsService,
+    private safeDocs: SafeDocsService,
+    private navController: NavController,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -58,8 +59,10 @@ export class AgregarDireccionPage implements OnInit {
   async agregarDireccion() {
     this.cargandoDialog = await this.guiUtils.mostrarCargando('Agregando nueva direccion...');
     
+    let safeDireccion = this.safeDocs.direccion(this.direccion);
+
     console.log('Agregando nueva direccion...');
-    this.direccionesService.agregarDireccion(CacheUsuario.usuario, this.direccion)
+    this.direccionesService.agregarDireccion(CacheUsuario.usuario, safeDireccion)
     .then(result => {
       console.log('Exito al agregar nueva direccion :D');
       this.guiUtils.cerrarCargando(this.cargandoDialog);
@@ -79,8 +82,10 @@ export class AgregarDireccionPage implements OnInit {
   async editarDireccion() {
     this.cargandoDialog = await this.guiUtils.mostrarCargando('Editando tu direccion...');
 
+    let safeDireccion = this.safeDocs.direccion(this.direccion);
+
     console.log('Editando tu direccion...');
-    this.direccionesService.actualizarDireccion(this.uidDireccion, this.direccion)
+    this.direccionesService.actualizarDireccion(this.uidDireccion, safeDireccion)
     .then(() => {
       console.log('Exito al editar tu direccion :D');
       this.guiUtils.cerrarCargando(this.cargandoDialog);

@@ -25,16 +25,17 @@
 
         <div class="mdm-center-horizontal">
           <ion-avatar class="foto">
-            <img src="../../../assets/img/perfil_prueba.JPG">
+            <ion-img [src]="usuario.foto? usuario.foto : fotoPorDefecto"></ion-img>
           </ion-avatar>
         </div>
 
         <div class="mdm-center-horizontal">
-          <ion-fab-button class="fab-agregar-imagen" color="naranja">
+          <ion-fab-button class="fab-agregar-imagen" color="naranja" (click)="onCambiarImagenClick()">
             <ion-icon name="camera"></ion-icon>
           </ion-fab-button>
         </div>
 
+        <input id="inputCambiarImagen" type="file" accept="image/*" style="display: none;" (change)="onInputCambiarImagen($event.target.files)"/>
       </div><!-- foto -->
 
       <br>
@@ -85,43 +86,72 @@
       <p>Proporciona tu dirección para saber a donde entregar tu pedido. Después puedes agregar más direcciones.</p>
 
       <!-- calle -->
-      <div>
-        <p class="textbox-label">Calle</p>
+      <div class="ion-margin-bottom">
+        <p class="textbox-label">Calle<ion-label color="danger">*</ion-label></p>
         <ion-item class="mdm-textbox-card" lines="none">
           <input type="text" placeholder="Tu calle" [(ngModel)]="direccion.calle">
         </ion-item>
-      </div>
+      </div><!-- calle -->
+
+      <!-- entre calles -->
+      <div>
+        <p class="textbox-label">Entre calles</p>
+
+        <ion-grid>
+          <ion-row>
+
+            <!-- entre calle 1 -->
+            <ion-col>
+              <ion-item class="mdm-textbox-card" lines="none">
+                <input type="text" placeholder="Entre calle" [(ngModel)]="direccion.entreCalle1">
+              </ion-item>
+            </ion-col>
+
+            <!-- entre calle 2 -->
+            <ion-col>
+              <ion-item class="mdm-textbox-card" lines="none">
+                <input type="text" placeholder="Entre calle" [(ngModel)]="direccion.entreCalle2">
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div><!-- entre calles -->
 
       <!-- numero -->
-      <p class="textbox-label">Número</p>
-      <ion-grid>
-        <ion-row>
+      <div>
+        <p class="textbox-label">Numero</p>
 
-          <!-- exterior -->
-          <ion-col>
-            <p class="textbox-label">Exterior</p>
-            <ion-item class="mdm-textbox-card" lines="none">
-              <input type="number" placeholder="Exterior" [(ngModel)]="direccion.numeroExterior">
-            </ion-item>
-          </ion-col>
+        <ion-grid>
+          <ion-row>
 
-          <!-- interior -->
-          <ion-col>
-            <p class="textbox-label">Interior</p>
-            <ion-item class="mdm-textbox-card" lines="none">
-              <input type="number" placeholder="Interior" [(ngModel)]="direccion.numeroInterior">
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+            <!-- exterior -->
+            <ion-col>
+              <p class="textbox-label">Exterior<ion-label color="danger">*</ion-label></p>
+              <ion-item class="mdm-textbox-card" lines="none">
+                <input type="number" placeholder="Exterior" [(ngModel)]="direccion.numeroExterior">
+              </ion-item>
+            </ion-col>
+
+            <!-- interior -->
+            <ion-col>
+              <p class="textbox-label">Interior</p>
+              <ion-item class="mdm-textbox-card" lines="none">
+                <input type="number" placeholder="Interior" [(ngModel)]="direccion.numeroInterior">
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div><!-- numero -->
 
       <!-- colonia -->
-      <div>
-        <p class="textbox-label">Colonia</p>
+      <div class="ion-margin-bottom">
+        <p class="textbox-label">Colonia o Localidad<ion-label color="danger">*</ion-label></p>
         <ion-item class="mdm-textbox-card" lines="none">
-          <input type="text" placeholder="Tu colonia" [(ngModel)]="direccion.colonia">
+          <input type="text" placeholder="Tu colonia o localidad" [(ngModel)]="direccion.colonia">
         </ion-item>
-      </div>
+      </div><!-- colonia -->
 
       <!--<ion-button color="naranja" class="ion-text-capitalize" expand="block" fill="outline">Añadir ubicación con mapa</ion-button>-->
 

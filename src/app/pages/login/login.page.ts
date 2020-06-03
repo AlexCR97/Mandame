@@ -60,10 +60,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-  onLinkClickOlvideContrasena() {
-    console.log('onLinkClickOlvideContrasena()');
-  }
-
   onLinkClickLoginRegistro(segmentId: string) {
     console.log('onLinkClick()');
     console.log(segmentId);

@@ -142,4 +142,8 @@ export class RegistroService {
       manejarError(error);
     });
   }
+
+  recuperarContrasena(correoUsuario: string): Promise<void> {
+    return this.afa.auth.sendPasswordResetEmail(correoUsuario);
+  }
 }
