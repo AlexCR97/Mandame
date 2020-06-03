@@ -20,6 +20,9 @@ export class ChatService {
     return this.afs.collection<any>('chats').doc<any>(uidEmisor).valueChanges()
     // Obtenemos los uids de los mensajes
     .pipe(map(chat => {
+      if (chat == undefined) {
+        throw new Error('El usuario no tiene un chat :(');
+      }
       return chat.mensajes as string[];
     }))
     // Obtenemos los mensajes
@@ -144,58 +147,6 @@ export class ChatService {
     );
   }
 
-  getRepartidorLibre(resolver: (repartidores: Repartidor) => void, manejarError: (error: any) => void) {
-    console.log('Obteniendo un repartidor libre 2...');
-
-    this.afs.collection<Usuario>('usuarios').valueChanges()
-    // Filtrar usuarios con posicion de repartidor
-    .pipe(map(usuarios => {
-      return usuarios.filter(u => u.posicion == 'repartidor');
-    }))
-    // Convertir usuarios a repartidores
-    .pipe(map(usuarios => {
-      return usuarios.map(async u => {
-        let repartidorDoc = await this.afs.firestore.collection('repartidores').doc(u.uid).get();
-        let repartidor: Repartidor = {
-          apellido: u.apellido,
-          calificacion: repartidorDoc.get('calificacion'),
-          email: u.email,
-          estado: repartidorDoc.get('estado'),
-          foto: u.foto,
-          nombre: u.nombre,
-          telefono: u.telefono,
-          uid: u.uid,
-        };
-        return repartidor;
-      });
-    }))
-    // Obtener asincronamente los repartidores
-    .subscribe(promises => {
-      Promise.all(promises)
-      .then(usuariosRepartidores => {
-
-        // Filtrar repartidores que esten libres
-        let repartidoresLibres = usuariosRepartidores.filter(i => i.estado == 'Libre');
-
-        // Obtener un repartidor al azar
-        let index = this.randomInt(0, repartidoresLibres.length - 1);
-        let repartidor = repartidoresLibres[index];
-
-        console.log('Los repartidores sin filtrar son:', usuariosRepartidores);
-        console.log('Los repartidores filtrados son:', repartidoresLibres);
-        console.log('El index es:', index);
-        console.log('El repartidor encontrado es:', repartidor);
-
-        if (repartidor == null) {
-          manejarError('No se encontro ningun repartidor :(');
-        } else {
-          resolver(repartidor);
-        }
-      })
-      .catch(error => manejarError(error));
-    });
-  }
-
   getRepartidores() {
     console.log('getRepartidores()');
 
@@ -231,60 +182,9 @@ export class ChatService {
       console.log('Los usuarios son', usuarios);
       return usuarios.filter(usuario => usuario.posicion == 'repartidor');
     }));
-
-    return this.afs.collection('repartidores').snapshotChanges()
-    // Obtener uids de los repartidores
-    .pipe(map(repartidorSnaphots => {
-      return repartidorSnaphots.map(snapshot => {
-        return snapshot.payload.doc.id;
-      })
-    }))
-    // Obtener usuarios con los uids encontrados
-    .pipe(map(uidsRepartidores => {
-      let usuarios = new Array<Usuario>();
-
-      uidsRepartidores.forEach(async uid => {
-        let usuario = await this.afs.collection<Usuario>('usuarios').doc<Usuario>(uid).valueChanges().toPromise();
-        usuarios.push(usuario);
-        /*let usuarioDoc = await this.afs.collection('usuarios').doc(uid).ref.get();
-        usuarios.push({
-          apellido: usuarioDoc.get('apellido'),
-          direcciones: usuarioDoc.get('direcciones'),
-          email: usuarioDoc.get('email'),
-          foto: usuarioDoc.get('foto'),
-          nombre: usuarioDoc.get('nombre'),
-          posicion: usuarioDoc.get('posicion'),
-          telefono: usuarioDoc.get('telefono'),
-          uid: usuarioDoc.get('uid'),
-        });*/
-      });
-
-      console.log('Los usuarios son', usuarios);
-
-      return usuarios;
-    }));
   }
 
-  getRepartidorLibre2(): Observable<Repartidor> {
-    console.log('getRepartidorLibre2()');
-
-    return this.getRepartidores()
-    .pipe(map(repartidores => {
-      // Filtrar repartidores que esten libres
-
-      console.log('Los repartidores son', repartidores);
-
-      let repartidoresLibres = repartidores.filter(i => i.estado == 'Libre');
-
-      // Obtener un repartidor al azar
-      let index = this.randomInt(0, repartidoresLibres.length - 1);
-      let repartidor = repartidoresLibres[index];
-
-      return repartidor;
-    }));
-  }
-
-  getRepartidorLibre3() {
+  getRepartidorLibre() {
     return this.afs.collection<Usuario>('usuarios').valueChanges()
     // Encontrar usuarios que sean repartidores
     .pipe(map(usuarios => {
@@ -299,6 +199,9 @@ export class ChatService {
 
       for (let usuario of usuariosReparidores) {
         let repartidorDoc = await this.afs.collection('repartidores').doc(usuario.uid).ref.get();
+
+        console.log('Repartidor doc ref', repartidorDoc);
+
         repartidores.push({
           apellido: usuario.apellido,
           calificacion: repartidorDoc.get('calificacion'),

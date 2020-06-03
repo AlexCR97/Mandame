@@ -55,7 +55,8 @@ export class MandadoService {
     }
 
     // Ahora, agregamos el mandado
-    this.chatService.getRepartidorLibre(
+    // TODO Implementar el nuevo metodo para obtener un repartidor libre
+    /*this.chatService.getRepartidorLibre(
       repartidor => {
         let mandadoUid = this.afs.createId();
         let mandadoDocRef = db.collection('mandados').doc(mandadoUid);
@@ -72,7 +73,7 @@ export class MandadoService {
         .catch(error => manejarError(error));
       },
       error => manejarError(error)
-    );
+    );*/
   }
 
   agregarMandado(
@@ -83,7 +84,8 @@ export class MandadoService {
     const db = this.afs.firestore;
     const batch = db.batch();
 
-    this.chatService.getRepartidorLibre(
+    // TODO Implementar el nuevo metodo para obtener un repartidor libre
+    /*this.chatService.getRepartidorLibre(
       repartidor => {
         let mandadoUid = this.afs.createId();
         let mandadoDocRef = db.collection('mandados').doc(mandadoUid);
@@ -100,7 +102,7 @@ export class MandadoService {
         .catch(error => manejarError(error));
       },
       error => manejarError(error)
-    );
+    );*/
   }
 
   getMandados() {

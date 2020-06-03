@@ -148,7 +148,9 @@ export class PrePedidoPage implements OnInit {
         CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
         CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
 
-        this.chatService.getRepartidorLibre(
+        // TODO Implementar aqui el metodo para obtener un repartidor libre
+
+        /*this.chatService.getRepartidorLibre(
             repartidor => {
                 console.log('Repartidor libre obtenido!');
                 console.log(repartidor);
@@ -173,7 +175,6 @@ export class PrePedidoPage implements OnInit {
                 this.guiUtls.cerrarCargando(this.cargandoDialog);
                 this.guiUtls.mostrarToast('No se encontro ningun repartidor libre :(', 3000, 'danger');
             }
-            );
-
+        );*/
     }
 }

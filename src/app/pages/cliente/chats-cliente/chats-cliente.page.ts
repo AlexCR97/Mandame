@@ -27,6 +27,7 @@ export class ChatsClientePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // TODO Uncomment this in production
     console.log('Obteniendo chats con repartidores...');
 
     // Si tiene conexion a internet
@@ -73,7 +74,7 @@ export class ChatsClientePage implements OnInit {
     // TODO Este dialogo no cierra
     //this.cargandoDialog = this.guiUtls.mostrarCargando('Buscando un repartidor libre...');
 
-    this.chatService.getRepartidorLibre3().subscribe(
+    this.chatService.getRepartidorLibre().subscribe(
       promise => promise.then(repartidor => {
         console.log('Repartidor libre encontrado!');
         console.log(repartidor);
@@ -132,6 +133,9 @@ export class ChatsClientePage implements OnInit {
         }),
         error => {
           console.error(error);
+
+          // El chat no existe, enviar mensaje de inauguracion, luego abrir mensajes
+          this.inaugurarChatConMensaje(uidEmisor, uidReceptor);
         }
       )
     } else {
