@@ -16,6 +16,29 @@ export class RestaurantService {
     private afs: AngularFirestore
   ) { }
 
+  /*async agregarRestaurantFavorito(uidUsuario: string, uidRestaurant: string) {
+    const db = this.afs.firestore;
+    const batch = db.batch();
+
+    // Obtenemos la referencia al documento con el uid del usuario
+    let restaurantFavoritoDoc = await db.collection('restaurantesFavoritos').doc(uidUsuario).get();
+    let restaurantFavoritoDocRef = restaurantFavoritoDoc.ref;
+
+    // Si no existe, hay que insertarlo
+    if (!restaurantFavoritoDoc.exists) {
+      let uidsRestaurantes = [uidRestaurant];
+      batch.set(restaurantFavoritoDocRef, {restaurantes: uidsRestaurantes});
+    }
+    // Si ya existe, hay que actualizar el array
+    else {
+      let uidsRestaurantes = (await restaurantFavoritoDocRef.get()).get('restaurantes') as string[];
+      uidsRestaurantes.push(uidRestaurant);
+      batch.update(restaurantFavoritoDocRef, {restaurantes: uidsRestaurantes});
+    }
+
+    return batch.commit();
+  }*/
+
   getAdicionalesFromRestaurant(idRestaurant) {
     return this.afs.collection('complementos', ref => ref.where('id_restaurant', '==', idRestaurant)).snapshotChanges();
   }
