@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyCA8AUuQzeC8Rd7spJpyB418kF08MnbnYc",
-    authDomain: "mandame-c3967.firebaseapp.com",
-    databaseURL: "https://mandame-c3967.firebaseio.com",
-    projectId: "mandame-c3967",
-    storageBucket: "mandame-c3967.appspot.com",
-    messagingSenderId: "870038190643",
-    appId: "1:870038190643:web:60a36f0ad2cc7f397fc146"
+    apiKey: "AIzaSyAGc7Tu05fUAhJdzKj91_nuXdn4-AA-_0Y",
+    authDomain: "mychat-8966e.firebaseapp.com",
+    databaseURL: "https://mychat-8966e.firebaseio.com",
+    projectId: "mychat-8966e",
+    storageBucket: "mychat-8966e.appspot.com",
+    messagingSenderId: "77503484793",
+    appId: "1:77503484793:web:17109201f986439c6715a8"
   },
 };
 

@@ -5,6 +5,10 @@ export class CachePedidos {
 
     public static pedidos = new Map<string, Pedido>();
     
+    public static clear() {
+        this.pedidos.clear();
+    }
+
     public static getPedido(uidPedido: string): Pedido {
         return this.pedidos.get(uidPedido);
     }

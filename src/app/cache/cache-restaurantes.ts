@@ -4,6 +4,10 @@ export class CacheRestaurantes {
 
     private static restaurantes = new Map<string, Restaurant>();
 
+    public static clear() {
+        this.restaurantes.clear();
+    }
+
     public static containsRestaurante(uidRestaurante: string): boolean {
         return this.restaurantes.get(uidRestaurante) != null;
     }

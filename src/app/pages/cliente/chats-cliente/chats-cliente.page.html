@@ -26,13 +26,13 @@
       <h5>Mensajes</h5>
     </ion-list-header>
 
-    <ion-item class="chat-item" lines="full" *ngFor="let i of chats" (click)="abrirMensajes(i.uid)">
+    <ion-item class="chat-item" lines="full" *ngFor="let i of vistasChats" (click)="abrirMensajes(i.uidRepartidor)">
       <ion-avatar slot="start">
-        <img src="../../../../assets/img/foto-perfil-01.jpg">
+        <ion-img [src]="i.foto"></ion-img>
       </ion-avatar>
       <ion-text>
-        <ion-label>{{i.nombre}} {{i.apellido}}<span class="hora">Hace cierto tiempo</span></ion-label>
-        <ion-label class="mensaje">Lorem ipsum dolor sit amet, consectetur </ion-label>
+        <ion-label>{{i.nombreRepartidor}} {{i.apellidoRepartidor}}<span class="hora">{{i.fechaUltimoMensaje}}</span></ion-label>
+        <ion-label class="mensaje">{{i.ultimoMensaje}}</ion-label>
       </ion-text>
     </ion-item>
 
@@ -43,7 +43,7 @@
 <!-- fab -->
 <ion-fab horizontal="end" vertical="bottom" slot="fixed">
 
-  <ion-fab-button color="naranja" (click)="crearNuevoChat()">
+  <ion-fab-button color="naranja" (click)="contactarRepartidor()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 
