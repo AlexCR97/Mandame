@@ -148,13 +148,10 @@ export class PrePedidoPage implements OnInit {
         CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
         CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
 
-        // TODO Implementar aqui el metodo para obtener un repartidor libre
-
-        /*this.chatService.getRepartidorLibre(
-            repartidor => {
-                console.log('Repartidor libre obtenido!');
+        this.chatService.getRepartidorLibre().subscribe(
+            promise => promise.then(repartidor => {
+                console.log('Repartidor libre encontrado!');
                 console.log(repartidor);
-
                 CacheCarrito.agregarRepartidor(repartidor.uid);
 
                 console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
@@ -163,18 +160,15 @@ export class PrePedidoPage implements OnInit {
                 .then(ref => {
                     this.uidPedido = ref.id;
                     console.log('THEN uidPedido: ', this.uidPedido);
+                    CacheCarrito.agregarUidPedido(this.uidPedido);
                     this.dismissModal();
                 }).catch(err => {
                     console.log('Error trying to insert pedido!');
                     this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
                 });
-            },
+                    }),
             error => {
-                console.error('Error al obtener un repartidor');
                 console.error(error);
-                this.guiUtls.cerrarCargando(this.cargandoDialog);
-                this.guiUtls.mostrarToast('No se encontro ningun repartidor libre :(', 3000, 'danger');
-            }
-        );*/
+            });
+        }
     }
-}
