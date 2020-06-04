@@ -14,6 +14,8 @@ import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CacheProductos } from 'src/app/cache/cache-productos';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CacheService } from 'src/app/cache/cache.service';
+import { NavigationExtras } from '@angular/router';
+import { CacheCarrito } from 'src/app/cache/cache-carrito';
 
 interface ProductosPorCategoria {
     categoria: string;
@@ -134,11 +136,21 @@ export class RestaurantPage implements OnInit {
 
     seguirPedido() {
         console.log('seguirPedido()');
+        this.verPedido();
     }
 
     detallarProducto(producto) {
         this.presentDetallesComidaModal(producto.nombre);
     }
+
+    verPedido() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                uid: CacheCarrito.getUidPedido()
+            }
+        }
+        this.router.navigate(['/preparando-pedido'], navigationExtras);
+    }    
 
     async presentDetallesComidaModal(nombreProducto) {
         const modal = await this.modalController.create({
@@ -155,38 +167,38 @@ export class RestaurantPage implements OnInit {
             this.estado = data['data'];
         });
 
-            return await modal.present();
-        }
-
-        async presentSeguirPedidoModal(uidpedido) {
-            const modal = await this.modalController.create({
-                component: ModalAlertPage,
-                componentProps: {
-                    'uid': uidpedido
-                },
-                cssClass: "dialog-modal"
-            });
-
-            modal.onDidDismiss()
-            .then(data => {
-                console.log('modal dismissed data: ', data);
-                // this.seguirPedido = data['data'];
-            });
-
-            return await modal.present();
-        }
-
-        async presentPrePedidoModal() {
-            const modal = await this.modalController.create({
-                component: PrePedidoPage
-            });
-            modal.onDidDismiss().then((data) => {
-                if(data.data) {
-                    console.log('data: ', data);
-                    this.presentSeguirPedidoModal(data.data);
-                }
-                // TODO: CAMBIAR EL ESTADO PARA QUE CAMBIE EL BOTON
-            });
-            return await modal.present();
-        }
+        return await modal.present();
     }
+
+    async presentSeguirPedidoModal(uidpedido) {
+        const modal = await this.modalController.create({
+            component: ModalAlertPage,
+            componentProps: {
+                'uid': uidpedido
+            },
+            cssClass: "dialog-modal"
+        });
+
+        modal.onDidDismiss()
+        .then(data => {
+            console.log('modal dismissed data: ', data);
+            // this.seguirPedido = data['data'];
+        });
+
+        return await modal.present();
+    }
+
+    async presentPrePedidoModal() {
+        const modal = await this.modalController.create({
+            component: PrePedidoPage
+        });
+        modal.onDidDismiss().then((data) => {
+            if(data.data) {
+                console.log('data: ', data);
+                this.estado = data['data'].estado;
+                this.presentSeguirPedidoModal(data['data'].uidPedido);
+            }
+        });
+        return await modal.present();
+    }
+}

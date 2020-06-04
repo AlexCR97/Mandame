@@ -34,6 +34,7 @@ export class ModalAlertPage implements OnInit {
   }
 
   verPedido() {
+    // uidPedido
     console.log('UID: ', this.uid);
   	this.dismissModal();
 

@@ -26,7 +26,8 @@ export class CacheCarrito {
 		adicionales: [],
 		complementos: [],
 		repartidor: 'uidrepartidor',
-		restaurante: 'uidrestaurante'
+		restaurante: 'uidrestaurante',
+		uidPedido: '' // uid pedido
 		// nombreRepartidor?: string,
 		// nombreRestaurante?: string,
 		// foto_perfil?: string,
@@ -89,6 +90,14 @@ export class CacheCarrito {
 
 	public static agregarFechaHora(fechaHora) {
 		this.carrito.fechaHora = fechaHora;
+	}
+
+	public static agregarUidPedido(uidPedido: string) {
+		this.carrito.uidPedido = uidPedido;
+	}
+
+	public static getUidPedido(): string {
+		return this.carrito.uidPedido;
 	}
 
 	public static isCarritoEmpty(): boolean {

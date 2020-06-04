@@ -7,6 +7,7 @@ import { CalificarRepartidorPage } from 'src/app/modals/calificar-repartidor/cal
 import { CacheChat } from 'src/app/cache/cache-chat';
 import { ChatService } from 'src/app/services/chat.service';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { Usuario } from 'src/app/dbdocs/usuario';
 
 @Component({
@@ -81,10 +82,10 @@ export class PreparandoPedidoPage implements OnInit {
         console.log('CARGAR PEDIDO');
         this.route.queryParams.subscribe(params => {
             console.log('queryParams: ', params);
-            this.uid = params['uidPedido'];
+            this.uid = params['uid'];
             this.restaurant.getPedido(this.uid).subscribe(ev => {
                 let event = ev as any;
-                this.pedido.restaurante = event.restaurante,
+                this.pedido.restaurante = CacheRestaurantes.getRestaurante(event.restaurante).nombre,
                 this.pedido.url = 'url', // \//TODO: DECIDE WHAT IMAGE IS GOING TO BE USED
                 this.pedido.uidrepartidor = event.repartidor,
                 this.pedido.estado = event.estado
