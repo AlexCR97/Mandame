@@ -28,4 +28,8 @@ export class SeleccionarDireccionPage implements OnInit {
 
     this.modalController.dismiss(direccion);
   }
+
+  dismissModal(){
+    this.modalController.dismiss();
+  }
 }

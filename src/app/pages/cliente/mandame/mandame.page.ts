@@ -25,15 +25,15 @@ export class MandamePage implements OnInit {
   mandadoSeleccionado: Mandado;
 
   direccionOrigen: Direccion = {
-    calle: 'Haz clic aquí para seleccionar una dirección',
+    calle: 'No haz elegido una dirección',
     numeroExterior: null as number,
-    colonia: 'Selecciona a donde te llevaran tu pedido',
+    colonia: 'Elige a donde te llevaran tu pedido',
   };
 
   direccionDestino: Direccion = {
-    calle: 'Haz clic aquí para seleccionar una dirección',
+    calle: 'No haz elegido una dirección',
     numeroExterior: null as number,
-    colonia: 'Selecciona a donde tienen que hacer tu mandado',
+    colonia: 'Elige a donde te llevaran tu pedido',
   };
 
   indicaciones = '';

@@ -18,6 +18,7 @@ export class PedidosPage implements OnInit {
   public pedidosPendientes: Pedido[];
   public pedidosConcluidos: Pedido[];
   public uidCliente: string;
+  public select: string;
   public nombreRestaurant : string;
 
   constructor(
@@ -27,7 +28,10 @@ export class PedidosPage implements OnInit {
     public utils: UtilsService,
   ) { }
 
+  segmentChanged(ev: any) { }
+
   ngOnInit() {
+    this.select = 'pendientes';
     this.uidCliente = CacheUsuario.usuario.uid;
     
     // SI HAY CONEXION A INTERNET

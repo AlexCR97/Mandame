@@ -1,6 +1,6 @@
 <ion-header mode="ios">
   <ion-toolbar color="naranja">
-    <ion-title>¡Ya casi esta tu pedido!</ion-title> 
+    <ion-title>¡Ya casi!</ion-title> 
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -13,19 +13,54 @@
 
   <!-- complementos -->
   <section>
-
+ 
     <h5><b>Complementos</b></h5>
 
     <div class="mdm-scroll-horizontal">
-
-      <!-- producto item -->
+<!--
       <div class="mdm-scroll-horizontal-item mdm-producto-item" *ngFor="let i of complementoItems">
         <ion-card class="mdm-center-both" (click)="seleccionarComplemento(i)">
           <img src="{{i.imgSrc}}" alt="{{i.nombre}}">
         </ion-card>
         <p>{{i.desc}}</p>
-      </div><!-- producto item -->
-
+      </div>
+    -->
+    <div class="mdm-scroll-horizontal-item mdm-producto-item">
+      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
+        <img src="../../../assets/img/pepsi.png">
+      </ion-card>
+      <p>Pepsi</p>
+    </div>
+    <div class="mdm-scroll-horizontal-item mdm-producto-item">
+      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
+        <img src="../../../assets/img/descarga.png">
+      </ion-card>
+      <p>Coca</p>
+    </div>
+    <div class="mdm-scroll-horizontal-item mdm-producto-item">
+      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
+        <img src="../../../assets/img/7up.png">
+      </ion-card>
+      <p>7-Up</p>
+    </div>
+    <div class="mdm-scroll-horizontal-item mdm-producto-item">
+      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
+        <img src="../../../assets/img/fanta.png">
+      </ion-card>
+      <p>Fanta</p>
+    </div>
+    <div class="mdm-scroll-horizontal-item mdm-producto-item">
+      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
+        <img src="../../../assets/img/sprite.jpg">
+      </ion-card>
+      <p>Sprite</p>
+    </div>
+    <div class="mdm-scroll-horizontal-item mdm-producto-item">
+      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
+        <img src="../../../assets/img/light.jpg">
+      </ion-card>
+      <p>Coca Light</p>
+    </div>
     </div>
     
   </section><!-- complementos -->
@@ -36,7 +71,8 @@
     <h5><b>Pedido</b></h5>
 
     <ion-item>
-      <ion-label color="naranja">{{nombreNegocio}}</ion-label>
+      <ion-label color="naranja">Koko Roll</ion-label>
+      <!-- <ion-label color="naranja">{{nombreNegocio}}</ion-label> -->
     </ion-item>
 
     <ion-list>
@@ -98,5 +134,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button class="ion-text-capitalize" color="naranja" expand="block" (click)="realizarPedido()">Realizar pedido</ion-button>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="full" (click)="realizarPedido()">Realizar pedido</ion-button>
 </ion-footer>

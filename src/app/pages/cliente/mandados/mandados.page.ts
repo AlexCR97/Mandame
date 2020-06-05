@@ -14,13 +14,18 @@ export class MandadosPage implements OnInit {
 
   mandadosPendientes = new Array<Mandado>();
   mandadosConcluidos = new Array<Mandado>();
+  public select: string;
 
   constructor(
     private mandadoService: MandadoService,
     private router: Router,
   ) { }
 
+  segmentChanged(ev: any){
+
+  }
   ngOnInit() {
+    this.select = 'pendientes';
     // Obtener informacion del cache si se tiene conexion a internet
 
     // TODO Cambiar por mandados pendientes

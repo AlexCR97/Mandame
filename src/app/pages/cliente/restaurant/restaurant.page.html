@@ -2,8 +2,8 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar>
 
-    <ion-buttons mode="ios" slot="start">
-      <ion-back-button text="">
+    <ion-buttons  mode="ios" slot="start">
+      <ion-back-button text="" color="light" defaultHref="inicio">
       </ion-back-button>
     </ion-buttons>
 
@@ -13,7 +13,7 @@
 
     <ion-buttons slot="end">
       <ion-button (click)="clickedStar()">
-        <ion-icon slot="icon-only" name="heart"></ion-icon>
+        <ion-icon color="light" slot="icon-only" name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
 
@@ -48,8 +48,7 @@
   <div class="enter" *ngIf="productosPorCategoria != undefined"> <!-- Restaurant Cargado -->
     <!-- restaurant header -->
     <!--background: url('../../../../assets/img/Pizza-de-pepperoni.jpg') center;-->
-    <div class="top-btn"
-      [style.background]="fotoPortada">
+    <div [style.backgroundImage]="fotoPortada" class="top-btn" >
     </div><!-- restaurant header -->
 
     <!-- main container -->

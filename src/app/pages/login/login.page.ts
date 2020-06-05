@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
     if (!credencialesValidas) {
       return;
     } else {
-      this.cargandoDialog = await this.guiUtils.mostrarCargando('Iniciando sesión...');
+      this.cargandoDialog = await this.guiUtils.mostrarCargando('');
 
       this.registroService.iniciarSesion(this.correo, this.contrasena,
         usuario => {

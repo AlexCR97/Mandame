@@ -1,12 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="naranja">
-
-    <ion-title>Selecciona una dirección</ion-title>
-
+    <ion-title>Dirección</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
     <ion-card mode="ios" *ngFor="let direccion of direcciones" (click)="seleccionarDireccion(direccion)">
       <ion-card-content class="direccion-content">

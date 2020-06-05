@@ -51,6 +51,10 @@ export class NuevaDireccionPage implements OnInit {
     this.modalController.dismiss(direccion);
   }
 
+  dismissModal(){
+    this.modalController.dismiss();
+  }
+
   validarDatos(): boolean {
     if (this.direccion.calle == undefined || this.direccion.calle.trim().length == 0) {
       return false;
