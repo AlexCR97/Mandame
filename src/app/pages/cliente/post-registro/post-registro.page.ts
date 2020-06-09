@@ -6,6 +6,7 @@ import { RegistroService } from 'src/app/services/registro.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { Router } from '@angular/router';
 import { ImagenesService } from 'src/app/services/imagenes.service';
+import { SafeDocsService } from 'src/app/services/safe-docs.service';
 
 @Component({
   selector: 'app-post-registro',
@@ -42,6 +43,7 @@ export class PostRegistroPage implements OnInit {
     private imagenService: ImagenesService,
     private registroService: RegistroService,
     private router: Router,
+    private safeDocs: SafeDocsService,
   ) { }
 
   ngOnInit() { }
@@ -72,7 +74,9 @@ export class PostRegistroPage implements OnInit {
 
     this.cargandoDialog = await this.guiUtils.mostrarCargando('Actualizando perfil de usuario...');
 
-    this.registroService.completarPerfilUsuario(this.usuario, this.direccion)
+    let direccionSafe = this.safeDocs.direccion(this.direccion);
+
+    this.registroService.completarPerfilUsuario(this.usuario, direccionSafe)
     .then(result => {
       console.log('El perfil del usuario ha sido actualizado con exito :)');
       this.guiUtils.cerrarCargando(this.cargandoDialog);

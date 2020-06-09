@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pedido } from 'src/app/dbdocs/pedido';
 import { CachePedidos } from 'src/app/cache/cache-pedidos';
-import { EsperaPedido, PedidosService, EstadoPedido } from 'src/app/services/pedidos.service';
+import { PedidosService, EstadoPedido } from 'src/app/services/pedidos.service';
 import { AlertController } from '@ionic/angular';
 
 interface ProductoItem {

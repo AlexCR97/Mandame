@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="inicio" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Mandame</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- direccion origen -->
+  <div class="ion-margin-bottom">
+    <ion-text color="success">
+      <h5 class="m-bottom">Origen</h5>
+    </ion-text>
+    
+    <ion-card mode="ios" (click)="seleccionarDireccionOrigen()">
+      <ion-card-content class="direccion-content">
+        <div class="detalles-entrega">
+          <div class="icon">
+            <ion-icon name="location-sharp" size="large"></ion-icon>
+          </div>
+          <div class="detalles">
+            <p class="title">
+              <b>{{direccionOrigen.calle}}</b> <span *ngIf="direccionOrigen.numeroExterior"> #{{direccionOrigen.numeroExterior}}</span>
+              <span *ngIf="direccionOrigen.numeroInterior">- {{direccionOrigen.numeroInterior}}</span>
+              <span *ngIf="direccionOrigen.entreCalle1 && direccionOrigen.entreCalle2">, entre <b>{{direccionOrigen.entreCalle1}}</b> y <b>{{direccionOrigen.entreCalle2}}</b></span>
+            </p>
+            <p class="description">{{direccionOrigen.colonia}}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <p *ngIf="uidMandadoSeleccionado == null" class="link-otra-direccion m-top">
+      O
+      <b (click)="ingresarOtraDireccionOrigen()">haz clic aquí</b>
+      para seleccionar otra dirección
+    </p>
+  </div><!-- direccion origen -->
+
+  <!-- direccion destino -->
+  <div class="ion-margin-bottom">
+    <ion-text color="success">
+      <h5 class="m-bottom">Destino</h5>
+    </ion-text>
+    
+    <ion-card mode="ios" (click)="seleccionarDireccionDestino()">
+      <ion-card-content class="direccion-content">
+        <div class="detalles-entrega">
+          <div class="icon">
+            <ion-icon name="location-sharp" size="large"></ion-icon>
+          </div>
+          <div class="detalles">
+            <p class="title">
+              <b>{{direccionDestino.calle}}</b> <span *ngIf="direccionDestino.numeroExterior"> #{{direccionDestino.numeroExterior}}</span>
+              <span *ngIf="direccionDestino.numeroInterior">- {{direccionDestino.numeroInterior}}</span>
+              <span *ngIf="direccionDestino.entreCalle1 && direccionDestino.entreCalle2">, entre <b>{{direccionDestino.entreCalle1}}</b> y <b>{{direccionDestino.entreCalle2}}</b></span>
+            </p>
+            <p class="description">{{direccionDestino.colonia}}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <p *ngIf="uidMandadoSeleccionado == null" class="link-otra-direccion m-top">
+      O
+      <b (click)="ingresarOtraDireccionDestino()">haz clic aquí</b>
+      para seleccionar otra dirección
+    </p>
+  </div><!-- direccion destino -->
+
+  <!-- indicaciones -->
+  <div class="m-bottom">
+    <ion-text color="danger">
+      <h5 class="m-bottom">Indicaciones</h5>
+    </ion-text>
+
+    <ion-card class="indicaciones" mode="ios" (click)="ingresarIndicaciones()">
+      <ion-card-content>
+        <ion-text>
+          <span *ngIf="!indicaciones">¡Indicanos lo que haremos por ti!</span>
+          <span *ngIf="indicaciones">{{indicaciones}}</span>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+  <!-- total -->
+  <div>
+    <ion-text>
+      <h5 class="m-top m-bottom"><b>Total</b></h5>
+    </ion-text>
+
+    <ion-card class="total-item detalles-entrega" mode="ios">
+      <ion-card-content>
+        <ion-text>
+          <ion-label>Costo del envío</ion-label>
+          <ion-label class="total">$35</ion-label>
+        </ion-text>
+        <ion-text>
+          <ion-label>Total</ion-label>
+          <ion-label class="total">$35</ion-label>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block" fill="outline" (click)="onBtnEsperaMandadoClick()">
+    {{mandadoSeleccionado.espera.toString()}}
+  </ion-button>
+</ion-footer>

@@ -59,7 +59,7 @@ export class InicioPage implements OnInit {
         console.error('setOnCacheRestaurantesIniciado FAILURE');
         console.error(error);
       }
-      );
+    );
 
     this.cacheService.setOnProductosIniciado(
       () => {
@@ -71,7 +71,7 @@ export class InicioPage implements OnInit {
         console.error('setOnProductosIniciado FAILURE');
         console.error(error);
       }
-      );
+    );
   }
 
   abrirRestaurante(uidRestaurant: string) {

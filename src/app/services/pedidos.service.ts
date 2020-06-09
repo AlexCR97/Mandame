@@ -56,8 +56,7 @@ export class PedidosService {
       map(pedidos => {
         let pedidosPorRepartidor = pedidos.filter(pedido => pedido.repartidor == uidRepartidor);
         let pedidosPorEstado = pedidosPorRepartidor.filter(pedido => pedido.espera == estado.toString());
-        //let pedidosOrdenados = pedidosPorEstado.sort((p1, p2) => 0);
-        let pedidosOrdenados = pedidosPorEstado;
+        let pedidosOrdenados = pedidosPorEstado.sort((p1, p2) => (new Date(p1.fechaHora)).getTime() - (new Date(p2.fechaHora)).getTime());
         return pedidosOrdenados;
       })
     );

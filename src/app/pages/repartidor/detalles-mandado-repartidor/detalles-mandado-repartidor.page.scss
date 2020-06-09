@@ -1,0 +1,10 @@
+.total-item {
+    ion-text {
+        display: flex;
+        justify-content: space-between;
+
+        .total {
+            color: black;
+        }
+    }
+}

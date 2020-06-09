@@ -28,8 +28,7 @@ export class MandadosPage implements OnInit {
     this.select = 'pendientes';
     // Obtener informacion del cache si se tiene conexion a internet
 
-    // TODO Cambiar por mandados pendientes
-    this.mandadoService.getMandadosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Todos).subscribe(
+    this.mandadoService.getMandadosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Pendiente).subscribe(
       mandados => {
         console.log('Se obtuvieron los mandados pendientes :D');
         console.table(mandados);
@@ -42,8 +41,7 @@ export class MandadosPage implements OnInit {
       }
     );
 
-    // TODO Cambiar por mandados concluidos
-    this.mandadoService.getMandadosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Todos).subscribe(
+    this.mandadoService.getMandadosDeUsuario(CacheUsuario.usuario.uid, EsperaPedido.Concluido).subscribe(
       mandados => {
         console.log('Se obtuvieron los mandados concluidos :D');
         console.table(mandados);

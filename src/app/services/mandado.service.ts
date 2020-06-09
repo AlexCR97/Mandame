@@ -18,6 +18,10 @@ export class MandadoService {
     private chatService: ChatService,
   ) { }
 
+  actualizarEsperaMandado(uidMandado: string, espera: EsperaPedido): Promise<void> {
+    return this.afs.collection('mandados').doc(uidMandado).update({espera: espera.toString()});
+  }
+
   agregarMandadoYDirecciones(
     usuario: Usuario,
     direccionOrigen: Direccion,
@@ -120,6 +124,29 @@ export class MandadoService {
 
         // Ordenar mandados por fecha
         let mandadosPorFecha = mandadosPorUsuario.sort((m1, m2) => {
+          let fechaHoraMandado1 = new Date(m1.fechaHora);
+          let fechaHoraMandado2 = new Date(m2.fechaHora);
+          return fechaHoraMandado2.getTime() - fechaHoraMandado1.getTime();
+        });
+
+        return mandadosPorFecha;
+      })
+    );
+  }
+
+  getMandadosDeRepartidor(uidRepartidor: string, espera: EsperaPedido) {
+    return this.getMandados().pipe(
+      map(mandados => {
+        // Filtrar mandados por repartidor
+        let mandadosPorRepartidor = mandados.filter(m => m.uidRepartidor == uidRepartidor);
+
+        // Filtrar mandados por espera
+        if (espera != EsperaPedido.Todos) {
+          mandadosPorRepartidor = mandadosPorRepartidor.filter(m => m.espera == espera.toString());
+        }
+
+        // Ordenar mandados por fecha
+        let mandadosPorFecha = mandadosPorRepartidor.sort((m1, m2) => {
           let fechaHoraMandado1 = new Date(m1.fechaHora);
           let fechaHoraMandado2 = new Date(m2.fechaHora);
           return fechaHoraMandado2.getTime() - fechaHoraMandado1.getTime();

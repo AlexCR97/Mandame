@@ -148,7 +148,7 @@ export class CacheService {
          CacheDirecciones.setAllDireccionesDeUsuario(CacheUsuario.usuario.uid, direcciones);
          console.log('CacheDirecciones iniciado!');
        }
-       );
+    );
    }
 
    iniciarCachePedidos() {
@@ -178,7 +178,7 @@ export class CacheService {
          console.error('CacheMandados ERROR');
          console.error(error);
        }
-       );
+    );
    }
 
   /**
