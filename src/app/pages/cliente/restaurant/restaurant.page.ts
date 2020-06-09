@@ -150,7 +150,7 @@ export class RestaurantPage implements OnInit {
             }
         }
         this.router.navigate(['/preparando-pedido'], navigationExtras);
-    }    
+    }
 
     async presentDetallesComidaModal(nombreProducto) {
         const modal = await this.modalController.create({

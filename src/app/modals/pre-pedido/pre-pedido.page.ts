@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { CacheCarrito } from 'src/app/cache/cache-carrito';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { ChatService } from 'src/app/services/chat.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
@@ -18,7 +19,7 @@ export class PrePedidoPage implements OnInit {
 
     cargandoDialog;
 
-    nombreNegocio = "Domino's Pizza"
+    nombreNegocio = "";
 
     complementoItems: any[];
 
@@ -47,9 +48,19 @@ export class PrePedidoPage implements OnInit {
     ngOnInit() { 
         console.log('Usuario ', CacheUsuario.usuario);
         this.cargarOrdenes();
+        this.cargarRestaurante();
         this.cargarComplementos();
         this.calcularTotal();
         this.cargarDireccion();
+    }
+
+    cargarRestaurante() {
+        if(!CacheCarrito.isCarritoEmpty()) {
+            let uidRestaurante = CacheCarrito.getUidRestaurante();
+            if(CacheRestaurantes.containsRestaurante(uidRestaurante)) {
+                this.nombreNegocio = CacheRestaurantes.getRestaurante(uidRestaurante).nombre;
+            }
+        }
     }
 
     cargarDireccion() {
@@ -71,8 +82,10 @@ export class PrePedidoPage implements OnInit {
     }
 
     cargarOrdenes() {
-        this.ordenItems = CacheCarrito.getProductosSimplificados();
-        console.log('ordenes: ', this.ordenItems);
+        if(!CacheCarrito.isCarritoEmpty()) {
+            this.ordenItems = CacheCarrito.getProductosSimplificados();    
+            console.log('ordenes: ', this.ordenItems);
+        }
     }
 
     cargarComplementos() {
@@ -131,10 +144,13 @@ export class PrePedidoPage implements OnInit {
         console.log('Nueva cantidad: ', orden.cantidad);
     }
 
-    dismissModal() {
+    dismissModal(dismiss=true) {
         console.log('uidPedido: ', this.uidPedido);
-        this.modalController.dismiss({uidPedido: this.uidPedido, estado: 'seguir-pedido'});
-        // TODO ADD SEGUIR PEDIDO ON RESTAURANT APGE
+        if(dismiss) {
+            this.modalController.dismiss({uidPedido: this.uidPedido, estado: 'seguir-pedido'});
+        } else {
+            this.modalController.dismiss();
+        }
     }
 
     ordenChanged(orden) {
@@ -142,33 +158,44 @@ export class PrePedidoPage implements OnInit {
         console.log('cantidad: ', orden.cantidad);
     }
 
+    cerrarModal() {
+        this.dismissModal(false);
+    }
+
     realizarPedido() {
-        console.log('Realizando pedido!');
 
-        CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
-        CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
+        if(CacheCarrito.isCarritoEmpty()) {
+            console.log('Carrito empty!');
+            this.guiUtls.mostrarToast('No puedes realizar un pedido sin elementos en carrito!', 3000, 'danger');
+        } else {
+            console.log('Realizando pedido!');
 
-        this.chatService.getRepartidorLibre().subscribe(
-            promise => promise.then(repartidor => {
-                console.log('Repartidor libre encontrado!');
-                console.log(repartidor);
-                CacheCarrito.agregarRepartidor(repartidor.uid);
+            CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
+            CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
 
-                console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
+            this.chatService.getRepartidorLibre().subscribe(
+                promise => promise.then(repartidor => {
+                    console.log('Repartidor libre encontrado!');
+                    console.log(repartidor);
+                    CacheCarrito.agregarRepartidor(repartidor.uid);
 
-                this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
-                .then(ref => {
-                    this.uidPedido = ref.id;
-                    console.log('THEN uidPedido: ', this.uidPedido);
-                    CacheCarrito.agregarUidPedido(this.uidPedido);
-                    this.dismissModal();
-                }).catch(err => {
-                    console.log('Error trying to insert pedido!');
-                    this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
+                    console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
+
+                    this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
+                    .then(ref => {
+                        this.uidPedido = ref.id;
+                        console.log('THEN uidPedido: ', this.uidPedido);
+                        CacheCarrito.vaciarCarrito();
+                        CacheCarrito.agregarUidPedido(this.uidPedido);
+                        this.dismissModal(true);
+                    }).catch(err => {
+                        console.log('Error trying to insert pedido!');
+                        this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
+                    });
+                }),
+                error => {
+                    console.error(error);
                 });
-                    }),
-            error => {
-                console.error(error);
-            });
         }
     }
+}

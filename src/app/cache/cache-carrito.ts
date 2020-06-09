@@ -1,6 +1,7 @@
 export class CacheCarrito {
 
 	public static restaurante = 'restaurante ejemplo';
+	private static uidPedido = '';
 
 	private onRestaurantesListener: () => void;
 	private onRestaurantesError: (error: any) => void;
@@ -33,6 +34,25 @@ export class CacheCarrito {
 		// foto_perfil?: string,
 	};
 
+	public static vaciarCarrito() {
+		this.carrito = {
+			aproximacion: 0,
+			cantidad: [ ],
+			cliente: 'uidcliente',
+			comentarios: [],  // arr of numbers
+			direccion: 'dirusuario',
+			estado: 'confirmado',
+			fechaHora: 'fecha',
+			precios: [], // arr of numbers
+			productos: [], // arr of strings
+			adicionales: [],
+			complementos: [],
+			repartidor: 'uidrepartidor',
+			restaurante: 'uidrestaurante',
+			uidPedido: '' // uid pedido
+		}
+	}
+
 	public static agregarAlCarrito(pedido) {
 		// CLIENTE IS GONNA BE ADDED ON pre-pedido PAGE
 		// COMPLEMENTOS ALSO ARE GONNA BE ADDED ON pre-pedido PAGE
@@ -54,6 +74,10 @@ export class CacheCarrito {
 
 	public static getCarrito() {
 		return this.carrito;
+	}
+
+	public static getUidRestaurante(): string {
+		return this.carrito.restaurante;
 	}
 
 	public static getProductosSimplificados() {
@@ -94,6 +118,7 @@ export class CacheCarrito {
 
 	public static agregarUidPedido(uidPedido: string) {
 		this.carrito.uidPedido = uidPedido;
+		this.uidPedido = uidPedido;
 	}
 
 	public static getUidPedido(): string {

@@ -30,9 +30,9 @@
         <ion-label>Pedidos</ion-label>
     </ion-item>
 
-    <!-- <ion-item routerLink="/pre-pedido">
+    <ion-item (click)="verCarrito()">
         <ion-label>Carrito</ion-label>
-    </ion-item> -->
+    </ion-item>
 
 </ion-list>
 
@@ -267,7 +267,7 @@
           <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let producto of i.productos">
 
             <!-- orden -->
-            <ion-card mode="ios" class="orden-item">
+            <ion-card mode="ios" class="orden-item" (click)="verProducto(producto)">
               <ion-img [src]="producto.foto"></ion-img>
               <ion-card-header>
                 <ion-card-title>{{producto.nombre}}</ion-card-title>
