@@ -1,7 +1,7 @@
 export class CacheCarrito {
 
 	public static restaurante = 'restaurante ejemplo';
-	private static uidPedido = '';
+	private static uidUltimoPedido = '';
 
 	private onRestaurantesListener: () => void;
 	private onRestaurantesError: (error: any) => void;
@@ -28,7 +28,7 @@ export class CacheCarrito {
 		complementos: [],
 		repartidor: 'uidrepartidor',
 		restaurante: 'uidrestaurante',
-		uidPedido: '' // uid pedido
+		uid: '' // uid pedido
 		// nombreRepartidor?: string,
 		// nombreRestaurante?: string,
 		// foto_perfil?: string,
@@ -49,7 +49,7 @@ export class CacheCarrito {
 			complementos: [],
 			repartidor: 'uidrepartidor',
 			restaurante: 'uidrestaurante',
-			uidPedido: '' // uid pedido
+			uid: '' // uid pedido
 		}
 	}
 
@@ -117,12 +117,16 @@ export class CacheCarrito {
 	}
 
 	public static agregarUidPedido(uidPedido: string) {
-		this.carrito.uidPedido = uidPedido;
-		this.uidPedido = uidPedido;
+		// this.carrito.uidPedido = uidPedido;
+		this.uidUltimoPedido = uidPedido;
+	}
+
+	public static getUltimoPedidoUid(): string {
+		return this.uidUltimoPedido;
 	}
 
 	public static getUidPedido(): string {
-		return this.carrito.uidPedido;
+		return this.carrito.uid;
 	}
 
 	public static isCarritoEmpty(): boolean {

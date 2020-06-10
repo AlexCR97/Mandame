@@ -103,6 +103,7 @@ export class PrePedidoPage implements OnInit {
     }
 
     seleccionarComplemento(complemento) {
+        console.log('complemento clicked: ', complemento);
         if(!complemento.seleccionado) {
             this.total += complemento.precio;
             complemento.seleccionado = true;
@@ -187,6 +188,7 @@ export class PrePedidoPage implements OnInit {
                         console.log('THEN uidPedido: ', this.uidPedido);
                         CacheCarrito.vaciarCarrito();
                         CacheCarrito.agregarUidPedido(this.uidPedido);
+                        this.restaurantService.actualizarUidPedido(this.uidPedido);
                         this.dismissModal(true);
                     }).catch(err => {
                         console.log('Error trying to insert pedido!');

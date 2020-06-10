@@ -76,7 +76,9 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
 
     obtenerAdicionales() {
         console.log('obtenerAdicionales()');
+        console.log('producto: ', this.producto);
         let uidAdicionales = CacheRestaurantes.getAdicionalesDeRestaurante(this.uidRestaurante);
+        console.log('uidAdicionalesRestaurante: ', uidAdicionales);
         this.afs.getAdicionalesPorUid(uidAdicionales).subscribe(adicionales => {
             this.adicionales = adicionales;
             console.log('adicionales obtenidos: ', adicionales);
@@ -100,6 +102,17 @@ export class DetallesComidaSeleccionadaPage implements OnInit {
         this.prepararPedido();
         CacheCarrito.agregarAlCarrito(this.pedido);
         console.log('Carrito actual: ', CacheCarrito.getCarrito());
+        this.producto = { 
+            categoria: '',
+            contenido: 0,
+            foto: '',
+            ingredientes: [],
+            nombre: '',
+            precio: 0,
+            restaurante: '',
+            uid: '',
+            nombreRestaurant: ''
+        };
         this.dismissModal();
     }
 

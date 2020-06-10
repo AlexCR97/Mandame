@@ -9,6 +9,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { Usuario } from 'src/app/dbdocs/usuario';
+import { Pedido } from 'src/app/dbdocs/pedido';
 
 @Component({
     selector: 'app-preparando-pedido',
@@ -80,18 +81,22 @@ export class PreparandoPedidoPage implements OnInit {
 
     cargarPedido() {
         console.log('CARGAR PEDIDO');
+        console.log('restaurantes en cache: ', CacheRestaurantes.getAllRestaurantes());
         this.route.queryParams.subscribe(params => {
             console.log('queryParams: ', params);
             this.uid = params['uid'];
             this.restaurant.getPedido(this.uid).subscribe(ev => {
-                let event = ev as any;
-                this.pedido.restaurante = CacheRestaurantes.getRestaurante(event.restaurante).nombre,
-                this.pedido.url = 'url', // \//TODO: DECIDE WHAT IMAGE IS GOING TO BE USED
-                this.pedido.uidrepartidor = event.repartidor,
-                this.pedido.estado = event.estado
+                let pedido = ev as Pedido;
+                console.log('pedido: ', pedido);
+                let restaurante = CacheRestaurantes.getRestaurante(pedido.restaurante);
+                console.log('restaurante obtenido de pedido: ', restaurante);
+                this.pedido.restaurante = restaurante.nombre,
+                this.pedido.url = restaurante.foto_perfil,
+                this.pedido.uidrepartidor = pedido.repartidor,
+                this.pedido.estado = pedido.estado
                 this.actualizarEstado(this.pedido.estado);
+                console.log('Pedidio retrieved: ', this.pedido);
             });
-            console.log('Pedidio retrieved: ', this.pedido);
         });
     }
 

@@ -70,6 +70,7 @@ export class InicioPage implements OnInit {
             () => {
                 console.log('setOnProductosIniciado SUCCESS');
                 this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+                console.log('this.productosPorCategoria: ', this.productosPorCategoria);
                 this.segmentInferior = this.productosPorCategoria[0].categoria;
             },
             error => {
