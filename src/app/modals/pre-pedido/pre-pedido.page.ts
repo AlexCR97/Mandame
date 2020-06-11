@@ -127,7 +127,7 @@ export class PrePedidoPage implements OnInit {
         if(!complemento.seleccionado) {
             this.total += complemento.precio;
             complemento.seleccionado = true;
-            CacheCarrito.agregarComplemento(complemento.uid);
+            CacheCarrito.agregarComplemento(complemento.uid, complemento.precio);
             this.agregarComplementoAOrden(complemento);
             this.subTotal += complemento.precio;
         } else {
