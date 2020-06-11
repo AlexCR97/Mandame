@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core'; 
 import { ModalController } from '@ionic/angular';
-// import { CalificarRepartidorPage } from '../../modals/calificar-repartidor.page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { CalificarRepartidorPage } from 'src/app/modals/calificar-repartidor/calificar-repartidor.page';
-import { CacheChat } from 'src/app/cache/cache-chat';
 import { ChatService } from 'src/app/services/chat.service';
-import { CacheUsuario } from 'src/app/cache/cache-usuario';
-import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { Usuario } from 'src/app/dbdocs/usuario';
 import { Pedido } from 'src/app/dbdocs/pedido';
+import { CachePedidos } from 'src/app/cache/cache-pedidos';
+import { EstadoPedido, PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
     selector: 'app-preparando-pedido',
@@ -26,45 +24,19 @@ export class PreparandoPedidoPage implements OnInit {
     estado4 = 'inactive';
     estado5 = 'inactive';
 
-    public numPedido: string = "1";
-    public lugar: string = "Dominos Pizza";
-
-    uid: string;
-
-    pedido: any = {
-        restaurante: 'Domino\'s',
-        url: 'url',
-        uidrepartidor: 'uidrepartidor',
-        estado: 'estadopedido'
-    };
+    uidPedido: string;
+    pedido: Pedido;
 
     entregado = false;
 
     constructor(
-        public chatService: ChatService,
-        public modalController: ModalController,
+        private modalController: ModalController,
+        private pedidoService: PedidosService,
         private route: ActivatedRoute,
         private router: Router,
-        private restaurant: RestaurantService
     ) { }
 
     ngOnInit() {
-        console.log('Obteniendo chats con repartidores...');
-        console.log('Usuario: ', CacheUsuario.usuario);
-        this.chatService.getChats(CacheUsuario.usuario.uid,
-            repartidores => {
-                console.log('Repartidores obtenidos en Chats Cliente');
-                console.log(repartidores);
-
-                CacheChat.setAllChatUsuario(repartidores);
-                this.chats = CacheChat.getAllChatsUsuarios();
-            },
-            error => {
-                console.error('Error al obtener los repartidores :(');
-                console.error(error);
-            }
-        );
-
         this.cargarPedido();
     }
 
@@ -80,27 +52,19 @@ export class PreparandoPedidoPage implements OnInit {
     }
 
     cargarPedido() {
-        console.log('CARGAR PEDIDO');
-        console.log('restaurantes en cache: ', CacheRestaurantes.getAllRestaurantes());
-        this.route.queryParams.subscribe(params => {
-            console.log('queryParams: ', params);
-            this.uid = params['uid'];
-            this.restaurant.getPedido(this.uid).subscribe(ev => {
-                let pedido = ev as Pedido;
-                console.log('pedido: ', pedido);
-                let restaurante = CacheRestaurantes.getRestaurante(pedido.restaurante);
-                console.log('restaurante obtenido de pedido: ', restaurante);
-                this.pedido.restaurante = restaurante.nombre,
-                this.pedido.url = restaurante.foto_perfil,
-                this.pedido.uidrepartidor = pedido.repartidor,
-                this.pedido.estado = pedido.estado
-                this.actualizarEstado(this.pedido.estado);
-                console.log('Pedidio retrieved: ', this.pedido);
-            });
+        console.log('cargarPedido()');
+        this.uidPedido = this.route.snapshot.queryParamMap.get('uidPedido');
+        this.pedido = CachePedidos.getPedido(this.uidPedido);
+
+        console.log('Uid pedido:', this.uidPedido);
+        console.log('Pedido:', this.pedido);
+
+        // Observar cambios en tiempo real en el pedido
+        this.pedidoService.getPedido(this.uidPedido).subscribe(pedido => {
+            console.log('Cambio en el pedido!');
+            this.actualizarEstado(pedido.estado);
         });
     }
-
-    contador = 0;
 
     async presentCalificarRepartidorModal(uidPedido: string) {
         const modal = await this.modalController.create({
@@ -114,12 +78,12 @@ export class PreparandoPedidoPage implements OnInit {
     }
 
     calificarRepartidor() {
-        this.presentCalificarRepartidorModal(this.uid);
+        this.presentCalificarRepartidorModal(this.uidPedido);
     }
 
     contactarRepartidor() {
         console.log('contactar con este repartidor alv'); 
-        this.abrirMensajes(this.pedido.uidrepartidor);
+        this.abrirMensajes(this.pedido.repartidor);
     }
 
     abrirMensajes(uidReceptor: string) {
@@ -130,37 +94,42 @@ export class PreparandoPedidoPage implements OnInit {
         });
     }
 
-    actualizarEstado(estado) {
+    actualizarEstado(estado: string) {
+        console.log(`actualizarEstado(${estado})`);
 
-        if(estado == 'confirmado') {
+        if (estado == EstadoPedido.Confirmado.toString()) {
             this.estado1 = 'active';
             this.estado2 = 'inactive';
             this.estado3 = 'inactive';
             this.estado4 = 'inactive';
             this.estado5 = 'inactive';
             this.entregado = false;     
-        } else if(estado == 'preparando') {
+        }
+        else if (estado == EstadoPedido.Preparando.toString()) {
             this.estado1 = 'active';
             this.estado2 = 'active';
             this.estado3 = 'inactive';
             this.estado4 = 'inactive';
             this.estado5 = 'inactive';
             this.entregado = false;
-        } else if(estado == 'recolectando') {
+        }
+        else if (estado == EstadoPedido.Recolectando.toString()) {
             this.estado1 = 'active';
             this.estado2 = 'active';
             this.estado3 = 'active';
             this.estado4 = 'inactive';
             this.estado5 = 'inactive';
             this.entregado = false;
-        } else if(estado == 'transitando') {
+        }
+        else if (estado == EstadoPedido.Transitando) {
             this.estado1 = 'active';
             this.estado2 = 'active';
             this.estado3 = 'active';
             this.estado4 = 'active';
             this.estado5 = 'inactive';
             this.entregado = false;
-        } else if(estado == 'entregado') {
+        }
+        else if (estado == EstadoPedido.Entregado) {
             this.estado1 = 'active';
             this.estado2 = 'active';
             this.estado3 = 'active';
@@ -169,5 +138,4 @@ export class PreparandoPedidoPage implements OnInit {
             this.entregado = true;
         }
     }
-
 }

@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CalificarRepartidoService } from 'src/app/services/calificar-repartido.service';
 import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { ActivatedRoute } from '@angular/router';
-import { format } from 'url';
 import { Pedido } from 'src/app/dbdocs/pedido';
-
-
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-calificar-repartidor',
@@ -25,6 +23,7 @@ export class CalificarRepartidorPage implements OnInit {
   constructor(
     public activatedRoute: ActivatedRoute ,
     public calificarRepartidoService: CalificarRepartidoService,
+    private modalController: ModalController,
   ) { }
 
   ngOnInit() {
@@ -54,9 +53,10 @@ export class CalificarRepartidorPage implements OnInit {
   
   calificar() {
     console.log('Calificando pedido...');
-    this.calificarRepartidoService.calificarYComentar(this.pedido.repartidor, this.calificacion, this.pedido.uid, this.comentario)
+    this.calificarRepartidoService.calificarYComentar(this.pedido.repartidor, this.calificacion, this.pedido.repartidor, this.comentario)
     .then(result => {
       console.log('Repartidor calificado y comentado! :D');
+      this.modalController.dismiss();
     })
     .catch(error => {
       console.error('Error al calificar y comentar repartidor :(');

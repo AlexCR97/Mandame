@@ -7,6 +7,7 @@ import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { Mandado } from 'src/app/dbdocs/mandado';
 import { MandadoService } from 'src/app/services/mandado.service';
 import { CacheMandados } from 'src/app/cache/cache-mandados';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 
 @Component({
   selector: 'app-tab-pedidos-repartidor',
@@ -44,24 +45,42 @@ export class TabPedidosRepartidorPage implements OnInit {
       console.log('Pedidos en transito');
       console.table(pedidos);
 
+      // Obtener imagen del cache
+      pedidos = pedidos.map(pedido => {
+        pedido.foto_perfil = CacheRestaurantes.getRestaurante(pedido.restaurante).foto_perfil;
+        return pedido;
+      });
+
       this.pedidosEnTransito = pedidos;
-      CachePedidos.setAllPedidos(this.pedidosEnTransito);
+      CachePedidos.addAllPedidos(this.pedidosEnTransito);
     });
 
     this.pedidosService.getPedidosDeRepartidor(CacheUsuario.usuario.uid, EsperaPedido.Pendiente).subscribe(pedidos => {
       console.log('Pedidos pendientes');
       console.table(pedidos);
 
+      // Obtener imagen del cache
+      pedidos = pedidos.map(pedido => {
+        pedido.foto_perfil = CacheRestaurantes.getRestaurante(pedido.restaurante).foto_perfil;
+        return pedido;
+      });
+
       this.pedidosPendientes = pedidos;
-      CachePedidos.setAllPedidos(this.pedidosPendientes);
+      CachePedidos.addAllPedidos(this.pedidosPendientes);
     });
 
     this.pedidosService.getPedidosDeRepartidor(CacheUsuario.usuario.uid, EsperaPedido.Concluido).subscribe(pedidos => {
       console.log('Pedidos concluidos');
       console.table(pedidos);
 
+      // Obtener imagen del cache
+      pedidos = pedidos.map(pedido => {
+        pedido.foto_perfil = CacheRestaurantes.getRestaurante(pedido.restaurante).foto_perfil;
+        return pedido;
+      });
+
       this.pedidosConcluidos = pedidos;
-      CachePedidos.setAllPedidos(this.pedidosConcluidos);
+      CachePedidos.addAllPedidos(this.pedidosConcluidos);
     });
   }
 

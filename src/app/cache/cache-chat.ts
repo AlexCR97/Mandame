@@ -29,6 +29,10 @@ export class CacheChat {
         return this.mensajes.clear();
     }
 
+    public static containsChatUsuario(uidReceptor: string): boolean {
+        return this.getChatUsuario(uidReceptor) != undefined;
+    }
+
     public static chatExiste(uidReceptor: string): boolean {
         return this.getChatUsuario(uidReceptor) != null;
     }
