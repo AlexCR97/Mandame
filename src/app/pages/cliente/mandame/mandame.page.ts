@@ -21,6 +21,7 @@ import { SafeDocsService } from 'src/app/services/safe-docs.service';
 })
 export class MandamePage implements OnInit {
 
+  realizandoProceso = false;
   uidMandadoSeleccionado: string;
   mandadoSeleccionado: Mandado;
 
@@ -279,6 +280,7 @@ export class MandamePage implements OnInit {
     console.log('El mandado generado es:', mandado);
 
     // TODO Mostrar dialogo de cargando
+    this.realizandoProceso = true
 
     // Si el usuario ingreso otra direccion, hay que agregarla a la base de datos
     if (this.nuevaDireccionOrigenIngresada || this.nuevaDireccionDestinoIngresada) {
@@ -300,12 +302,14 @@ export class MandamePage implements OnInit {
           mandado = mandadoRegistrado;
 
           // TODO meter mandado en el cache
+          this.realizandoProceso = false;
           this.guiUtils.mostrarAlertaConfirmar('Mandado en proceso', '¡Genial! Tu mandado ya está en proceso. Puedes verlo en la sección de "Mandados"');
           this.navController.back();
         },
         error => {
           console.error('No se pudo registrar el mandado :(');
           console.error(error);
+          this.realizandoProceso = false;
           this.guiUtils.mostrarToast('No se pudo registrar tu mandado :(', 3000, 'danger');
         }
       );
@@ -322,12 +326,14 @@ export class MandamePage implements OnInit {
           mandado = mandadoRegistrado;
 
           // TODO meter mandado en el cache
+          this.realizandoProceso = false;
           this.guiUtils.mostrarAlertaConfirmar('Mandado en proceso', '¡Genial! Tu mandado ya está en proceso. Puedes verlo en la sección de "Mandados"');
           this.navController.back();
         },
         error => {
           console.error('No se pudo registrar el mandado :(');
           console.error(error);
+          this.realizandoProceso = false;
           this.guiUtils.mostrarToast('No se pudo registrar tu mandado :(', 3000, 'danger');
         }
       );

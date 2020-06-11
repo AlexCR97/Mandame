@@ -113,5 +113,5 @@
 </ion-content>
 
 <ion-footer *ngIf="uidMandadoSeleccionado == null">
-  <ion-button class="ion-text-capitalize" color="naranja" expand="full" (click)="realizarMandado()">Realizar Mandado</ion-button>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="full" (click)="realizarMandado()" [disabled]="realizandoProceso">Realizar Mandado</ion-button>
 </ion-footer>
