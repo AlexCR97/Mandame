@@ -10,6 +10,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
 import { RegistroService } from 'src/app/services/registro.service';
+import { SeleccionarDireccionPage } from 'src/app/modals/seleccionar-direccion/seleccionar-direccion.page';
 
 @Component({
     selector: 'app-pre-pedido',
@@ -189,6 +190,21 @@ export class PrePedidoPage implements OnInit {
         this.dismissModal(false);
     }
 
+    async abrirModalSeleccionarDireccion(
+        onModalResult: (result: any) => void, 
+        onModalError: (error: any) => void) {
+        const modal = await this.modalController.create({
+            component: SeleccionarDireccionPage,
+            cssClass: 'dialog-modal',
+        });
+
+        modal.onDidDismiss()
+        .then(result => onModalResult(result))
+        .catch(error => onModalError(error));
+
+        return await modal.present();
+    }
+
     realizarPedido() {
 
         if(CacheCarrito.isCarritoEmpty()) {
@@ -197,33 +213,42 @@ export class PrePedidoPage implements OnInit {
         } else {
             console.log('Realizando pedido!');
 
-            CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
-            CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
+            this.abrirModalSeleccionarDireccion(
+                result => {
+                    console.log('res: ', result);
 
-            this.chatService.getRepartidorLibre().subscribe(
-                promise => promise.then(repartidor => {
-                    console.log('Repartidor libre encontrado!');
-                    console.log(repartidor);
-                    CacheCarrito.agregarRepartidor(repartidor.uid);
+                    // CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
+                    CacheCarrito.agregarDireccion(result['data'].uid);
+                    CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
 
-                    console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
+                    this.chatService.getRepartidorLibre().subscribe(
+                        promise => promise.then(repartidor => {
+                            console.log('Repartidor libre encontrado!');
+                            console.log(repartidor);
+                            CacheCarrito.agregarRepartidor(repartidor.uid);
 
-                    CacheCarrito.agregarFechaHora(this.utilsService.getFechaHoyString());
-                    this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
-                    .then(ref => {
-                        this.uidPedido = ref.id;
-                        console.log('THEN uidPedido: ', this.uidPedido);
-                        CacheCarrito.vaciarCarrito();
-                        CacheCarrito.agregarUidPedido(this.uidPedido);
-                        this.restaurantService.actualizarUidPedido(this.uidPedido);
-                        this.dismissModal(true);
-                    }).catch(err => {
-                        console.log('Error trying to insert pedido!');
-                        this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
-                    });
-                }),
-                error => {
-                    console.error(error);
+                            console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
+
+                            CacheCarrito.agregarFechaHora(this.utilsService.getFechaHoyString());
+                            this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
+                            .then(ref => {
+                                this.uidPedido = ref.id;
+                                console.log('THEN uidPedido: ', this.uidPedido);
+                                CacheCarrito.vaciarCarrito();
+                                CacheCarrito.agregarUidPedido(this.uidPedido);
+                                this.restaurantService.actualizarUidPedido(this.uidPedido);
+                                this.dismissModal(true);
+                            }).catch(err => {
+                                console.log('Error trying to insert pedido!');
+                                this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
+                            });
+                        }),
+                        error => {
+                            console.error(error);
+                        });
+                },
+                err => {
+                    console.log('error: ', err);
                 });
         }
     }

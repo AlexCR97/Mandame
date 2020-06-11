@@ -47,7 +47,7 @@ export class RestaurantService {
 
 getAdicionalesPorUid(uidAdicionales: string[]): Observable<Adicional[]> {
     console.log('lista uid adicionales pedidos: ', uidAdicionales);
-    return this.afs.collection<Adicional>('complementos').valueChanges()
+    return this.afs.collection<Adicional>('productos').valueChanges()
     .pipe(map(adicionales => {
         console.log('from getAdicionalesPorUid(): ');
         console.log('adicionales: ', adicionales);
