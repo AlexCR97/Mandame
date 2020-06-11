@@ -43,11 +43,10 @@ ion-card{
     background: #fff;
     margin: 15px 5px;
 
-    img{
+    ion-img{
         width: 100%;
-        max-height: 100px;
-        object-fit: cover;
-    } 
+    }
+
     ion-card-title{
         margin: 2px 0;
         p{

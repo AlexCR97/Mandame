@@ -46,7 +46,6 @@ export class MensajesPage implements OnInit {
   ngOnInit() {
     this.uidEmisor = CacheUsuario.usuario.uid;
     this.uidReceptor = this.activatedRoute.snapshot.queryParamMap.get('uidReceptor');
-    this.usuarioReceptor = CacheChat.getChatUsuario(this.uidReceptor);
 
     console.log('Uid emisor:   ' + this.uidEmisor);
     console.log('Uid receptor: ' + this.uidReceptor);

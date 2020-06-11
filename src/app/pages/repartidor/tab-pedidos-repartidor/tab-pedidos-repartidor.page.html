@@ -21,9 +21,11 @@
         <h5>Pedidos en transito</h5>
       </ion-list-header>
 
-      <ion-card class="pedido-item" *ngFor="let i of pedidosEnTransito" (click)="verDetallesPedido(i)">
+      <ion-card class="pedido-item" *ngFor="let i of pedidosEnTransito" (click)="verDetallesPedido(i)" mode="ios">
         <ion-item lines="none">
-          <img src="../../../../assets/img/burger_king.png">
+          <ion-avatar>
+            <ion-img [src]="i.foto_perfil"></ion-img>
+          </ion-avatar>
           <ion-label>{{i.productos.join(", ")}}</ion-label>
           <ion-icon name="chevron-forward" slot="end"></ion-icon>
         </ion-item>
@@ -37,9 +39,11 @@
         <h5>Pedidos pendientes</h5>
       </ion-list-header>
 
-      <ion-card class="pedido-item" *ngFor="let i of pedidosPendientes" (click)="verDetallesPedido(i)">
+      <ion-card class="pedido-item" *ngFor="let i of pedidosPendientes" (click)="verDetallesPedido(i)" mode="ios">
         <ion-item lines="none">
-          <img src="../../../../assets/img/churchs.jfif">
+          <ion-avatar>
+            <ion-img [src]="i.foto_perfil"></ion-img>
+          </ion-avatar>
           <ion-label>{{i.productos.join(", ")}}</ion-label>
           <ion-icon name="chevron-forward" slot="end"></ion-icon>
         </ion-item>
@@ -53,9 +57,11 @@
         <h5>Pedidos concluidos</h5>
       </ion-list-header>
 
-      <ion-card class="pedido-item" *ngFor="let i of pedidosConcluidos" (click)="verDetallesPedido(i)">
+      <ion-card class="pedido-item" *ngFor="let i of pedidosConcluidos" (click)="verDetallesPedido(i)" mode="ios">
         <ion-item lines="none">
-          <img src="../../../../assets/img/dominos.png">
+          <ion-avatar>
+            <ion-img [src]="i.foto_perfil"></ion-img>
+          </ion-avatar>
           <ion-label>{{i.productos.join(", ")}}</ion-label>
           <ion-icon name="chevron-forward" slot="end"></ion-icon>
         </ion-item>

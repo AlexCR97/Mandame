@@ -28,14 +28,21 @@ export class CalificarRepartidoService {
     return batch.commit();
   }
 
-  comentarPedido(uidPedido:string,comentario:string): Promise<void>{
+  async comentarRepartidor(uidRepartidor: string, comentario: string): Promise<void> {
     const db = this.afs.firestore;
     const batch = db.batch();
     
-    let pedidoDocRef = db.collection('pedidos').doc(uidPedido);
+    let repartidorDocRef = db.collection('repartidores').doc(uidRepartidor);
+    let comentarios = (await repartidorDocRef.get()).get('comentarios') as string[];
 
-    batch.update(pedidoDocRef, {
-      comentarios:comentario,
+    console.log('Repartidor doc ref', repartidorDocRef);
+    console.log('Comentarios', comentarios);
+    console.log('Comentario', comentario);
+
+    comentarios.push(comentario);
+
+    batch.update(repartidorDocRef, {
+      comentarios: comentario,
     });
     
     return batch.commit();
@@ -44,7 +51,7 @@ export class CalificarRepartidoService {
   calificarYComentar(uidRepartidor: string, calificacion: number, uidPedido: string, comentario: string) {
     return Promise.all([
       this.calificarRepartidor(uidRepartidor, calificacion),
-      this.comentarPedido(uidPedido, comentario),
+      this.comentarRepartidor(uidPedido, comentario),
     ]);
   }
 }
