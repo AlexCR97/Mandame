@@ -20,7 +20,7 @@
 
       <div class="mdm-scroll-horizontal-item mdm-producto-item" *ngFor="let i of complementoItems">
         <ion-card class="mdm-center-both" (click)="seleccionarComplemento(i)">
-          <img src="{{i.imgSrc}}" alt="{{i.nombre}}">
+          <img src="{{i.foto}}" alt="{{i.nombre}}">
         </ion-card>
         <p>{{i.desc}}</p>
       </div>
@@ -81,7 +81,7 @@
         <ion-label>{{i.nombre}}</ion-label>
         <ion-label>$ {{i.precio}}</ion-label>
       </ion-text>
-      <div class="mdm-btn-numeric mdm-btn-outline-naranja" slot="end">
+      <div *ngIf="i.uid == ''" class="mdm-btn-numeric mdm-btn-outline-naranja" slot="end">
         <ion-icon color="naranja" name="remove" (click)="disminuirCantidad(i)"></ion-icon>
         <p (ionChange)="ordenChanged(i)">{{i.cantidad}}</p>
         <ion-icon color="naranja" name="add" (click)="aumentarCantidad(i)"></ion-icon>

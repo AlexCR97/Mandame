@@ -6,6 +6,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 import { CacheCarrito } from 'src/app/cache/cache-carrito';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { ChatService } from 'src/app/services/chat.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
 import { RegistroService } from 'src/app/services/registro.service';
@@ -42,6 +43,7 @@ export class PrePedidoPage implements OnInit {
         private restaurantService: RestaurantService,
         private chatService: ChatService,
         public guiUtls: GuiUtilsService,
+        private utilsService: UtilsService,
         private registroService: RegistroService){
     }
 
@@ -54,12 +56,12 @@ export class PrePedidoPage implements OnInit {
         this.cargarDireccion();
     }
 
+
+
     cargarRestaurante() {
-        if(!CacheCarrito.isCarritoEmpty()) {
-            let uidRestaurante = CacheCarrito.getUidRestaurante();
-            if(CacheRestaurantes.containsRestaurante(uidRestaurante)) {
-                this.nombreNegocio = CacheRestaurantes.getRestaurante(uidRestaurante).nombre;
-            }
+        let uidRestaurante = CacheCarrito.getUidRestaurante();
+        if(CacheRestaurantes.containsRestaurante(uidRestaurante)) {
+            this.nombreNegocio = CacheRestaurantes.getRestaurante(uidRestaurante).nombre;
         }
     }
 
@@ -96,10 +98,28 @@ export class PrePedidoPage implements OnInit {
                     precio: complemento['precio'],
                     contenido: complemento['contenido'],
                     foto: complemento['foto'],
+                    uid: complemento['uid'],
                     seleccionado: false
                 }  
             });
         });
+    }
+
+    agregarComplementoAOrden(complemento) {
+        console.log('agregarComplementoAOrden()');
+        this.ordenItems.push({
+            nombre: complemento.nombre,
+            precio: complemento.precio,
+            cantidad: 1,
+            uid: complemento.uid
+        });
+        console.log('orden items: ', this.ordenItems);
+    }
+
+    eliminarComplementoDeOrden(complemento) {
+        console.log('eliminarComplementoDeOrden()');
+        this.ordenItems = this.ordenItems.filter(o => o.uid !== complemento.uid);
+        console.log('orden items: ', this.ordenItems);
     }
 
     seleccionarComplemento(complemento) {
@@ -107,9 +127,15 @@ export class PrePedidoPage implements OnInit {
         if(!complemento.seleccionado) {
             this.total += complemento.precio;
             complemento.seleccionado = true;
+            CacheCarrito.agregarComplemento(complemento.uid, complemento.precio);
+            this.agregarComplementoAOrden(complemento);
+            this.subTotal += complemento.precio;
         } else {
             this.total -= complemento.precio;
             complemento.seleccionado = false;
+            CacheCarrito.eliminarComplemento(complemento.uid);
+            this.eliminarComplementoDeOrden(complemento);
+            this.subTotal -= complemento.precio;
         }
     }
 
@@ -182,6 +208,7 @@ export class PrePedidoPage implements OnInit {
 
                     console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
 
+                    CacheCarrito.agregarFechaHora(this.utilsService.getFechaHoyString());
                     this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
                     .then(ref => {
                         this.uidPedido = ref.id;

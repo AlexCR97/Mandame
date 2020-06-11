@@ -10,12 +10,14 @@ import { CacheService } from 'src/app/cache/cache.service';
 import { Router } from '@angular/router';
 import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { CacheProductos } from 'src/app/cache/cache-productos';
+import { CacheCarrito } from 'src/app/cache/cache-carrito';
 import { DocsPlantillas, getPlantilla } from 'src/app/dbdocs/plantillas';
 import { NavController } from '@ionic/angular';
 import { DetallesComidaSeleccionadaPage } from 'src/app/pages/cliente/detalles-comida-seleccionada/detalles-comida-seleccionada.page'; 
 import { ModalController } from '@ionic/angular';
 import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
 import { ModalAlertPage } from 'src/app/modals/modal-alert/modal-alert.page';
+import { AlertController } from '@ionic/angular';
 
 @Component({
     selector: 'app-inicio',
@@ -47,7 +49,8 @@ export class InicioPage implements OnInit {
         private restaurantService: RestaurantService,
         private navController: NavController,
         private router: Router,
-        private modalController: ModalController
+        private modalController: ModalController,
+        public alertController: AlertController
         ) { }
 
     ngOnInit() {
@@ -80,9 +83,24 @@ export class InicioPage implements OnInit {
             );
     }
 
+    async presentAlert() {
+        const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Carrito vacio',
+            message: 'Agregue elementos al carrito.',
+            buttons: ['OK']
+        });
+
+        await alert.present();
+    }
+
     verCarrito() {
         console.log('inicio.page verCarrito()');
-        this.presentPrePedidoModal();
+        if(!CacheCarrito.isCarritoEmpty()) {
+            this.presentPrePedidoModal();
+        } else {
+            this.presentAlert();
+        }
     }
 
     verProducto(producto) {
