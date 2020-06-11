@@ -23,13 +23,14 @@
     <div class="top-shop">
       <div class="description">
         <p class="title"><span class="name" id="title">Pedido #{{numPedido}}</span></p>
-        <!-- <p class="subtitle margin"><span class="name">{{pedido.restaurante}}</span></p> -->
-        <p class="subtitle margin"><span class="name">Koko Roll</span></p>
+        <p class="subtitle margin"><span class="name">{{pedido.restaurante}}</span></p>
+        <!-- <p class="subtitle margin"><span class="name">Koko Roll</span></p> -->
       </div>
     </div>
     <div class="lugar margin">
       <!-- <img src="../../../assets/img/pizzah.jpg"> -->
-      <img src="../../../assets/img/koko.jpg">
+      <!-- <img src="../../../assets/img/koko.jpg"> -->
+      <img [src]="pedido.url">
     </div>
 
     <ion-list class="margin">

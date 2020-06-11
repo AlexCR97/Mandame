@@ -13,11 +13,19 @@ export class CacheRestaurantes {
     }
 
     public static getRestaurante(uidRestaurante: string): Restaurant{
+        console.log('restaurante uid: ', uidRestaurante);
+        console.log('exists: ', this.containsRestaurante(uidRestaurante));
         return this.restaurantes.get(uidRestaurante);
     }
 
     public static getAdicionalesDeRestaurante(uidRestaurante: string): string[] {
-        return this.restaurantes.get(uidRestaurante).adicionales;
+        console.log('getAdicionalesDeRestaurante( ', uidRestaurante, ' )');
+
+        console.log('restaurantes en cache: ', this.restaurantes);
+
+        let restaurante = this.restaurantes.get(uidRestaurante);
+        console.log('restaurante: ', restaurante);
+        return restaurante.adicionales;
     }
 
     public static getComplementosDeRestaurante(uidRestaurante: string) {
