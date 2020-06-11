@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 })
 export class RestaurantesPage implements OnInit {
 
+  searchbarInput = '';
   restaurantes = new Array<Restaurant>();
+  restaurantesFiltrados = this.restaurantes;
 
   constructor(
     private restaurantService: RestaurantService,
@@ -25,6 +27,7 @@ export class RestaurantesPage implements OnInit {
         console.table(restaurantes);
 
         this.restaurantes = restaurantes;
+        this.restaurantesFiltrados = this.restaurantes;
       },
       error => {
         console.error('Error al obtener restaurantes :(')
@@ -43,4 +46,14 @@ export class RestaurantesPage implements OnInit {
     });
   }
 
+  onSearchbarChange($event, searchbarInput: string) {
+    console.log(`onSearchbarChange(${searchbarInput})`);
+
+    if (searchbarInput.trim().length == 0) {
+      this.restaurantesFiltrados = this.restaurantes;
+      return;
+    }
+
+    this.restaurantesFiltrados = this.restaurantes.filter(r => r.nombre.trim().toLowerCase().includes(searchbarInput.trim().toLowerCase()));
+  }
 }
