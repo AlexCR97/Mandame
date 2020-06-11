@@ -6,60 +6,60 @@
   <ion-header>
     <ion-toolbar>
       <img src="../../../assets/img/logo.png" class="logo-menu">
-  </ion-toolbar>
-</ion-header>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
+  <ion-content>
 
-    <!-- principal -->
-    <ion-list>
+      <!-- principal -->
+      <ion-list>
 
-      <ion-list-header>
-        <h4><b>Principal</b></h4>
-    </ion-list-header>
+        <ion-list-header>
+          <h4><b>Principal</b></h4>
+      </ion-list-header>
 
-    <ion-item routerLink="/restaurantes">
-        <ion-label>Restaurantes</ion-label>
-    </ion-item>
+      <ion-item routerLink="/restaurantes">
+          <ion-label>Restaurantes</ion-label>
+      </ion-item>
 
-    <ion-item routerLink="/mandados">
-        <ion-label>Mandados</ion-label>
-    </ion-item>
+      <ion-item routerLink="/mandados">
+          <ion-label>Mandados</ion-label>
+      </ion-item>
 
-    <ion-item routerLink="/pedidos">
-        <ion-label>Pedidos</ion-label>
-    </ion-item>
+      <ion-item routerLink="/pedidos">
+          <ion-label>Pedidos</ion-label>
+      </ion-item>
 
-    <!-- <ion-item routerLink="/pre-pedido">
-        <ion-label>Carrito</ion-label>
-    </ion-item> -->
+      <!-- <ion-item routerLink="/pre-pedido">
+          <ion-label>Carrito</ion-label>
+      </ion-item> -->
 
-</ion-list>
+  </ion-list>
 
-<!-- cuenta -->
-<ion-list>
+  <!-- cuenta -->
+  <ion-list>
 
-  <ion-list-header>
-    <h4><b>Cuenta</b></h4>
-</ion-list-header>
+    <ion-list-header>
+      <h4><b>Cuenta</b></h4>
+  </ion-list-header>
 
-<ion-item routerLink="/configuraciones">
-  <ion-label>Configuración</ion-label>
-</ion-item>
+  <ion-item routerLink="/configuraciones">
+    <ion-label>Configuración</ion-label>
+  </ion-item>
 
-<ion-item routerLink="/direcciones">
-    <ion-label>Direcciones</ion-label>
-</ion-item>
+  <ion-item routerLink="/direcciones">
+      <ion-label>Direcciones</ion-label>
+  </ion-item>
 
-<ion-item (click)="cerrarSesion()">
-    <ion-label>Cerrar sesión</ion-label>
-</ion-item>
+  <ion-item (click)="cerrarSesion()">
+      <ion-label>Cerrar sesión</ion-label>
+  </ion-item>
 
-</ion-list>
+  </ion-list>
 
-</ion-content>
+  </ion-content>
 
-</ion-menu>
+</ion-menu><!-- barra lateral -->
 
 <!-- contenido principal -->
 <ion-content (ionScroll)="onScroll($event)" [scrollEvents]="true">
@@ -72,7 +72,7 @@
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-menu-button color="light"></ion-menu-button>
-      </ion-buttons>
+        </ion-buttons>
 
       <ion-title mode="ios">
           <img src="../../../assets/img/logo-blanco.png" [ngClass]="showTitle ? 'logoVisible' : 'logoInvisible'">
@@ -306,7 +306,7 @@
   </ion-fab-button>
 </ion-fab>
 
-</ion-content>
+</ion-content><!-- contenido principal -->
 
 <!-- fab -->
 <ion-fab horizontal="end" vertical="bottom" slot="fixed">

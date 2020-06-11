@@ -39,6 +39,28 @@ export class CacheProductos{
         return productosPorCategoria;
     }
 
+    public static getAllProductosPorCategoriaDeRestaurant(uidRestaurante: string): ProductosPorCategoria[] {
+        let productos = this.getAllProductosRestaurante(uidRestaurante);
+
+        console.log(`Los productos del restaurant con uid ${uidRestaurante} son`, productos);
+
+        let productosPorCategoria = new Array<ProductosPorCategoria>();
+
+        let categoriasRepetidas = productos.map(producto => producto.categoria);
+        let categoriasUnicas = new Set<string>(categoriasRepetidas);
+
+        categoriasUnicas.forEach(categ =>{
+            let prods = productos.filter(prod => prod.categoria == categ);
+
+            productosPorCategoria.push({
+                categoria: categ,
+                productos: prods,
+            });
+        });
+
+        return productosPorCategoria;
+    }
+
     public static getAllProductosRestaurante(uidRestaurante: string): Producto[]{
         return this.getAllProductos()
         .filter(p => p.restaurante == uidRestaurante);

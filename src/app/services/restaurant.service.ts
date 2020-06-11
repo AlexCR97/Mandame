@@ -5,6 +5,7 @@ import { Restaurant, RestaurantesPorCategoria } from '../dbdocs/restaurant';
 import { map } from 'rxjs/operators';
 import { Producto } from '../dbdocs/producto';
 import { Adicional } from '../dbdocs/adicional';
+import { CacheUsuario } from '../cache/cache-usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +34,12 @@ export class RestaurantService {
     // Si ya existe, hay que actualizar el array
     else {
       let uidsRestaurantes = (await restaurantFavoritoDocRef.get()).get('restaurantes') as string[];
-      uidsRestaurantes.push(uidRestaurant);
-      batch.update(restaurantFavoritoDocRef, {restaurantes: uidsRestaurantes});
+
+      // Checamos si el restaurante ya se encuentra en favoritos
+      if (uidsRestaurantes.find(uid => uid == uidRestaurant) == undefined) {
+        uidsRestaurantes.push(uidRestaurant);
+        batch.update(restaurantFavoritoDocRef, {restaurantes: uidsRestaurantes});
+      }
     }
 
     return batch.commit();

@@ -49,7 +49,7 @@ export class RestaurantPage implements OnInit {
         public domSanitizer: DomSanitizer,
         public modalController: ModalController,
         public utils: UtilsService,
-        ) { }
+    ) { }
 
     ngOnInit() {
         this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
@@ -73,7 +73,7 @@ export class RestaurantPage implements OnInit {
                     error => {
                         console.error(error);
                     }
-                    );
+                );
             }
             // Si hay cache, cargar el restaurant desde el cache
             else {
@@ -90,20 +90,19 @@ export class RestaurantPage implements OnInit {
                 this.cacheService.iniciarCacheProductos();
                 this.cacheService.setOnProductosIniciado(
                     () => {
-                        console.log('');
-                        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+                        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
                         this.select = this.productosPorCategoria[0].categoria;
                     },
                     error => {
                         console.error('');
                     }
-                    );
+                );
             }
             // Si hay cache, cargar los productos desde el cache
             else {
                 console.log('Cargando productos desde el cache...');
 
-                this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+                this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
                 this.select = this.productosPorCategoria[0].categoria;
             }
         }
@@ -112,8 +111,8 @@ export class RestaurantPage implements OnInit {
             console.log('No hay conexion a internet. Cargando restaurantes y productos desde el cache...');
 
             this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
-            this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
-            this.select = this.productosPorCategoria[0].categoria;
+            this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
+                this.select = this.productosPorCategoria[0].categoria;
             // TODO Cambiar foto de portada por otra por defecto si no hay internet
             //this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
         }

@@ -20,14 +20,13 @@ export class ChatsClientePage implements OnInit {
 
   constructor(
     private cacheService: CacheService,
-    public chatService: ChatService,
-    public guiUtls: GuiUtilsService,
-    public router: Router,
-    public utils: UtilsService,
+    private chatService: ChatService,
+    private guiUtls: GuiUtilsService,
+    private router: Router,
+    private utils: UtilsService,
   ) { }
 
   ngOnInit() {
-    // TODO Uncomment this in production
     console.log('Obteniendo chats con repartidores...');
 
     // Si tiene conexion a internet
