@@ -1,3 +1,5 @@
+import { EsperaPedido, EstadoPedido } from 'src/app/services/pedidos.service';
+
 export class CacheCarrito {
 
 	public static restaurante = 'restaurante ejemplo';
@@ -20,7 +22,8 @@ export class CacheCarrito {
 		cliente: 'uidcliente',
 		comentarios: [],  // arr of numbers
 		direccion: 'dirusuario',
-		estado: 'confirmado',
+		estado: EstadoPedido.Confirmado.toString(),
+		espera: EsperaPedido.EnTransito.toString(),
 		fechaHora: 'fecha',
 		precios: [], // arr of numbers
 		productos: [], // arr of strings
@@ -41,7 +44,8 @@ export class CacheCarrito {
 			cliente: 'uidcliente',
 			comentarios: [],  // arr of numbers
 			direccion: 'dirusuario',
-			estado: 'confirmado',
+			estado: EstadoPedido.Confirmado.toString(),
+			espera: EsperaPedido.EnTransito.toString(),
 			fechaHora: 'fecha',
 			precios: [], // arr of numbers
 			productos: [], // arr of strings
@@ -87,13 +91,26 @@ export class CacheCarrito {
 			let producto = {
 				'nombre': this.carrito.productos[i],
 				'precio': this.carrito.precios[i],
-				'cantidad': this.carrito.cantidad[i]
+				'cantidad': this.carrito.cantidad[i],
+				'uid': ''
 			};
 
 			productos.push(producto);
 		}
 
 		return productos;
+	}
+
+	public static agregarComplemento(complemento: string) {
+		console.log('agregarComplemento()');
+		this.carrito.complementos.push(complemento);
+		console.log('complementos: ', this.carrito.complementos);
+	}
+
+	public static eliminarComplemento(uid: string) {
+		console.log('eliminarComplemento()');
+		this.carrito.complementos = this.carrito.complementos.filter(c => c !== uid);
+		console.log('complementos: ', this.carrito.complementos);	
 	}
 
 	public static agregarUsuario(uidUsuario) {
@@ -112,7 +129,7 @@ export class CacheCarrito {
 		this.carrito.direccion = uidDireccion;
 	}
 
-	public static agregarFechaHora(fechaHora) {
+	public static agregarFechaHora(fechaHora: string) {
 		this.carrito.fechaHora = fechaHora;
 	}
 
