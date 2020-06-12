@@ -21,23 +21,18 @@ import { AlertController, LoadingController } from '@ionic/angular';
 export class PrePedidoPage implements OnInit {
 
     cargandoDialog;
-
     nombreNegocio = "";
-
     complementoItems: any[];
-
     ordenItems: any[];
-
     direccionEntrega = {
         nombreCasa: '',
         direccion: '',
     };
-
     costoEnvio = 45.00;
     subTotal = 0;
     total = 0;
-
     uidPedido: string;
+
     
     constructor(
         private modalController: ModalController,
@@ -135,12 +130,19 @@ export class PrePedidoPage implements OnInit {
             this.agregarComplementoAOrden(complemento);
             this.subTotal += complemento.precio;
         } else {
-            this.total -= complemento.precio;
-            complemento.seleccionado = false;
-            CacheCarrito.eliminarComplemento(complemento.uid);
-            this.eliminarComplementoDeOrden(complemento);
-            this.subTotal -= complemento.precio;
+            this.removerComplemento(complemento);
         }
+    }
+
+    removerComplemento(complemento) {
+        this.eliminarComplementoDeOrden(complemento);
+        let comp = this.complementoItems.find(c => c.uid == complemento.uid);
+        this.complementoItems.find(c => c.uid == complemento.uid).seleccionado = !comp.seleccionado;
+
+        this.total -= complemento.precio;
+        CacheCarrito.eliminarComplemento(complemento.uid);
+        this.eliminarComplementoDeOrden(complemento);
+        this.subTotal -= complemento.precio;
     }
 
     calcularTotal() {
