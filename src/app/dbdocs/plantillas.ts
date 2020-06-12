@@ -1,11 +1,13 @@
 import { Direccion } from './direccion';
 import { Usuario } from './usuario';
 import { Restaurant } from './restaurant';
+import { RestaurantesFavoritos } from './restaurantesFavoritos';
 
 export enum DocsPlantillas {
     direccion,
     restaurant,
     usuario,
+    restaurantesFavoritos,
 }
 
 let restaurant: Restaurant = {
@@ -47,10 +49,16 @@ let usuario: Usuario = {
     uid: '',
 };
 
+let restaurantesFavoritos: RestaurantesFavoritos = {
+    restaurantes: [],
+    uid: '',
+}
+
 export function getPlantilla(plantilla: DocsPlantillas) {
     switch (plantilla) {
         case DocsPlantillas.direccion: return direccion;
         case DocsPlantillas.usuario: return usuario;
         case DocsPlantillas.restaurant: return restaurant;
+        case DocsPlantillas.restaurantesFavoritos: return restaurantesFavoritos;
     }
 }

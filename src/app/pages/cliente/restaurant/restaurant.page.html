@@ -2,9 +2,8 @@
 <ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
   <ion-toolbar>
 
-    <ion-buttons  mode="ios" slot="start">
-      <ion-back-button text="" color="light" defaultHref="inicio">
-      </ion-back-button>
+    <ion-buttons slot="start">
+      <ion-back-button color="light"></ion-back-button>
     </ion-buttons>
 
     <ion-title mode="ios">
@@ -12,8 +11,8 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="clickedStar()">
-        <ion-icon color="light" slot="icon-only" name="heart"></ion-icon>
+      <ion-button (click)="agregarFavoritos()">
+        <ion-icon [color]="asignarColor > 0 ? 'naranja' : 'light'"slot="icon-only" name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
 

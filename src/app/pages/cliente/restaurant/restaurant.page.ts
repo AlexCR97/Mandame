@@ -16,6 +16,9 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CacheService } from 'src/app/cache/cache.service';
 import { NavigationExtras } from '@angular/router';
 import { CacheCarrito } from 'src/app/cache/cache-carrito';
+import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { RestaurantesFavoritos } from 'src/app/dbdocs/restaurantesFavoritos'
+import { Observable } from 'rxjs';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 
 interface ProductosPorCategoria {
@@ -43,6 +46,10 @@ export class RestaurantPage implements OnInit {
     public fotoPortada: SafeStyle;
     public restaurant = getPlantilla(DocsPlantillas.restaurant) as Restaurant;
     public productosPorCategoria: ProductosPorCategoria[];
+    public uidCliente = CacheUsuario.usuario.uid;
+    public restaurantesFavoritos = getPlantilla(DocsPlantillas.restaurantesFavoritos) as RestaurantesFavoritos;
+    public esResturanteFavorito: boolean;
+    public asignarColor = 0;
 
     constructor(
         public activatedRoute: ActivatedRoute,
@@ -51,7 +58,8 @@ export class RestaurantPage implements OnInit {
         public domSanitizer: DomSanitizer,
         public modalController: ModalController,
         public utils: UtilsService,
-        private guiUtils: GuiUtilsService
+        public restaurantService: RestaurantService,
+        private guiUtils: GuiUtilsService,
         ) { }
 
     ngOnInit() {
@@ -119,6 +127,8 @@ export class RestaurantPage implements OnInit {
             // TODO Cambiar foto de portada por otra por defecto si no hay internet
             //this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
         }
+
+        this.cargarRestaurantesFavoritos();
     }
 
     segmentChanged(ev: any) { }
@@ -206,5 +216,47 @@ export class RestaurantPage implements OnInit {
             }
         });
         return await modal.present();
+    }
+
+    agregarFavoritos(){
+        this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
+        this.uidCliente = CacheUsuario.usuario.uid;
+        if(this.esResturanteFavorito){
+            console.log("agregarFavoritos() el restaurante ya es favorito");
+            this.restaurantService.quitarRestaurantFavorito(this.uidCliente, this.uidRestaurant);
+            this.esResturanteFavorito = false;
+            this.asignarColor = 0;
+            
+        }else{
+            console.log("agregarFavoritos() el restaurante NOOOOO es favorito");
+            this.restaurantService.agregarRestauranteFavoritos(this.uidCliente, this.uidRestaurant);
+            this.esResturanteFavorito = true;
+            this.asignarColor = 100;
+        }
+    }
+
+    cargarRestaurantesFavoritos(){
+        this.restaurantService.getRestaurantesFavoritos(this.uidCliente).subscribe(
+            restaurantesFav => {
+              console.log('Restaurantes favoritos obtenidos!');
+              this.restaurantesFavoritos = restaurantesFav;
+              console.log(this.restaurantesFavoritos.restaurantes);
+
+              if(this.restaurantesFavoritos.restaurantes.includes(this.uidRestaurant)){
+                this.esResturanteFavorito = true;
+                this.asignarColor = 100;
+              }
+              else{
+                this.esResturanteFavorito = false;
+                this.asignarColor = 0;
+              }
+                console.log("Booooolena");
+                console.log(this.esResturanteFavorito);
+            },
+            error => {
+              console.error('No se pudieron obtener los restaurantes favoritos :(');
+              console.error(error);
+            }
+        );
     }
 }
