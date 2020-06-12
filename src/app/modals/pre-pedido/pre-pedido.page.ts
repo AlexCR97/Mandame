@@ -11,6 +11,7 @@ import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
 import { RegistroService } from 'src/app/services/registro.service';
 import { SeleccionarDireccionPage } from 'src/app/modals/seleccionar-direccion/seleccionar-direccion.page';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
     selector: 'app-pre-pedido',
@@ -45,7 +46,9 @@ export class PrePedidoPage implements OnInit {
         private chatService: ChatService,
         public guiUtls: GuiUtilsService,
         private utilsService: UtilsService,
-        private registroService: RegistroService){
+        private registroService: RegistroService,
+        private alertController: AlertController,
+        private loadingController: LoadingController){
     }
 
     ngOnInit() { 
@@ -205,6 +208,29 @@ export class PrePedidoPage implements OnInit {
         return await modal.present();
     }
 
+    async mostrarCargando(mensaje: string) {
+        const cargandoDialog = await this.loadingController.create({
+            message: mensaje,
+        });
+
+        cargandoDialog.present();
+
+        return cargandoDialog;
+    }
+
+    async cerrarCargando(cargandoDialog) {
+        if (cargandoDialog == undefined) {
+            return;
+        }
+
+        if (cargandoDialog == null) {
+            return;
+        }
+
+        this.loadingController.dismiss();
+        // cargandoDialog.dismiss();
+    }
+
     realizarPedido() {
 
         if(CacheCarrito.isCarritoEmpty()) {
@@ -215,6 +241,7 @@ export class PrePedidoPage implements OnInit {
 
             this.abrirModalSeleccionarDireccion(
                 result => {
+                    this.cargandoDialog = this.mostrarCargando('Procesando peticion...');
                     console.log('res: ', result);
 
                     // CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
@@ -233,17 +260,20 @@ export class PrePedidoPage implements OnInit {
                             this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
                             .then(ref => {
                                 this.uidPedido = ref.id;
-                                console.log('THEN uidPedido: ', this.uidPedido);
+                                // console.log('THEN uidPedido: ', this.uidPedido);
                                 CacheCarrito.vaciarCarrito();
                                 CacheCarrito.agregarUidPedido(this.uidPedido);
                                 this.restaurantService.actualizarUidPedido(this.uidPedido);
+
+                                this.cerrarCargando(this.cargandoDialog);
+
                                 this.dismissModal(true);
                             }).catch(err => {
                                 console.log('Error trying to insert pedido!');
                                 this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
                             });
                         }),
-                        error => {
+                        error => { // n6wHWwWaJqbAyGiQyzZT
                             console.error(error);
                         });
                 },

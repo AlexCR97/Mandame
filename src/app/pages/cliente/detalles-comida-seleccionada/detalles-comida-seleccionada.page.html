@@ -53,19 +53,18 @@
         <ion-row>
             <ion-col size="6" class="center">
                 <div class="hacks">
-                    <ion-button (click)='remove()' size="default" class="f-25">
-                        <ion-icon name="remove-outline"></ion-icon>
-                    </ion-button>
+                    <button (click)='remove()' size="default" class="f-25">
+                        <ion-icon size="large" name="remove-outline"></ion-icon>
+                    </button>
                     <div class="f-50">
                         <ion-label>
                             {{cantidad}}
                         </ion-label>
                     </div>
-                    <ion-button (click)='add()' size="default" class="f-25">
-                        <ion-icon name="add-outline"></ion-icon>
-                    </ion-button>
+                    <button (click)='add()' size="default" class="f-25">
+                        <ion-icon size="large" name="add-outline"></ion-icon>
+                    </button>
                 </div>
-
             </ion-col>
             <ion-col size="6">
                 <ion-button expand="block" class="bg-principal" (click)='agregar()'>
