@@ -174,6 +174,33 @@ export class ChatService {
     }));
   }
 
+  getRepartidoresPromise() {
+    console.log('getRepartidores()');
+
+    return this.getRepartidoresUsuarios()
+    .pipe(map(async usuarios => {
+      console.log('Los usuarios repatidores son:', usuarios);
+
+      let repartidores = new Array<Repartidor>();
+
+      for (let usuario of usuarios) {
+        let repartidorDoc = await this.afs.collection('repartidores').doc(usuario.uid).ref.get();
+        repartidores.push({
+          apellido: usuario.apellido,
+          calificacion: repartidorDoc.get('calificacion'),
+          email: usuario.email,
+          estado: repartidorDoc.get('estado'),
+          foto: usuario.foto,
+          nombre: usuario.nombre,
+          telefono: usuario.telefono,
+          uid: usuario.uid,
+        });
+      }
+
+      return repartidores;
+    }));
+  }
+
   getRepartidoresUsuarios(): Observable<Usuario[]> {
     console.log('getRepartidoresUsuarios()');
 

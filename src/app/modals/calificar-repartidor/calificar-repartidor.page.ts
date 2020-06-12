@@ -4,6 +4,7 @@ import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { ActivatedRoute } from '@angular/router';
 import { Pedido } from 'src/app/dbdocs/pedido';
 import { ModalController } from '@ionic/angular';
+import { CacheRepartidor } from 'src/app/cache/cache-repartidor';
 
 @Component({
   selector: 'app-calificar-repartidor',
@@ -12,12 +13,13 @@ import { ModalController } from '@ionic/angular';
 })
 export class CalificarRepartidorPage implements OnInit {
 
+  @Input() uidPedido: string;
+
   nombre: string;
   foto: string;
   comentario: string;
   calificacion = 1;
   iconName: boolean[] = [true, true, true, false, false];
-  @Input() uidPedido: string;
   pedido: Pedido;
 
   constructor(
@@ -27,8 +29,6 @@ export class CalificarRepartidorPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.uidPedido = this.activatedRoute.snapshot.queryParamMap.get("uidPedido");
-
     console.log('Uid Pedido:', this.uidPedido);
 
     this.pedido = CachePedidos.pedidos.get(this.uidPedido);
@@ -36,7 +36,7 @@ export class CalificarRepartidorPage implements OnInit {
     console.log('Pedido:', this.pedido);
 
     this.nombre = this.pedido.nombreRepartidor;
-    this.foto = this.pedido.foto_perfil;
+    this.foto = CacheRepartidor.getRepartidor(this.pedido.repartidor).foto;
   }
 
   iconChanged(value: number) {

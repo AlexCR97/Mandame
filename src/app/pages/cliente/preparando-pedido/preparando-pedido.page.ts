@@ -67,6 +67,8 @@ export class PreparandoPedidoPage implements OnInit {
     }
 
     async presentCalificarRepartidorModal(uidPedido: string) {
+        console.log(`presentCalificarRepartidorModal(${uidPedido})`);
+
         const modal = await this.modalController.create({
             component: CalificarRepartidorPage,
             componentProps: {
@@ -74,6 +76,7 @@ export class PreparandoPedidoPage implements OnInit {
             },
             cssClass: "dialog-modal"
         });
+
         return await modal.present();
     }
 
