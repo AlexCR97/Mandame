@@ -84,7 +84,11 @@ export class PostRegistroPage implements OnInit {
 
       CacheUsuario.usuario = this.usuario;
 
-      this.router.navigateByUrl('/inicio');
+      this.router.navigateByUrl('/inicio', 
+        { 
+          skipLocationChange: true, 
+          replaceUrl: true 
+        });
     })
     .catch(error => {
       console.log('Error al completar el perfil del usuario :(');
