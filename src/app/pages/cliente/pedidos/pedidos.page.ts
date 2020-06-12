@@ -30,9 +30,12 @@ export class PedidosPage implements OnInit {
   segmentChanged(ev: any) { }
 
   ngOnInit() {
+    console.log('PEDIDOS PAGE');
     this.select = 'pendientes';
     this.uidCliente = CacheUsuario.usuario.uid;
-    
+
+    console.log('uid cliente: ', this.uidCliente);
+
     // SI HAY CONEXION A INTERNET
     if (this.utils.tieneConexionInternet()) {
 
@@ -82,7 +85,7 @@ export class PedidosPage implements OnInit {
 
     this.router.navigate(['/preparando-pedido'], {
       queryParams: {
-        uidPedido: uid,
+        uid: uid,
       }
     });
   }

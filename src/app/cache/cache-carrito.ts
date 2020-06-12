@@ -23,7 +23,7 @@ export class CacheCarrito {
 		comentarios: [],  // arr of numbers
 		direccion: 'dirusuario',
 		estado: EstadoPedido.Confirmado.toString(),
-		espera: EsperaPedido.EnTransito.toString(),
+		espera: EsperaPedido.Pendiente.toString(),
 		fechaHora: 'fecha',
 		precios: [], // arr of numbers
 		preciosComplementos: [], // arr of numbers
@@ -46,7 +46,7 @@ export class CacheCarrito {
 			comentarios: [],  // arr of numbers
 			direccion: 'dirusuario',
 			estado: EstadoPedido.Confirmado.toString(),
-			espera: EsperaPedido.EnTransito.toString(),
+			espera: EsperaPedido.Pendiente.toString(),
 			fechaHora: 'fecha',
 			precios: [], // arr of numbers
 			preciosComplementos: [], // arr of numbers

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CalificarRepartidoService } from 'src/app/services/calificar-repartido.service';
 import { CachePedidos } from 'src/app/cache/cache-pedidos';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ export class CalificarRepartidorPage implements OnInit {
   comentario: string;
   calificacion = 1;
   iconName: boolean[] = [true, true, true, false, false];
-  uidPedido: string;
+  @Input() uidPedido: string;
   pedido: Pedido;
 
   constructor(
