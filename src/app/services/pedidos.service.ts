@@ -30,6 +30,12 @@ export class PedidosService {
     public afs: AngularFirestore,
   ) { }
 
+  getPedido(uidPedido: string): Observable<Pedido> {
+    return this.getPedidos(EsperaPedido.Todos).pipe(
+      map(pedidos => pedidos.find(p => p.uid == uidPedido))
+    );
+  }
+
   getPedidos(estado: EsperaPedido) {
     if (estado == EsperaPedido.Todos) {
       return this.afs.collection<Pedido>('pedidos').valueChanges();
@@ -37,16 +43,15 @@ export class PedidosService {
 
     return this.afs.collection<Pedido>('pedidos').valueChanges().pipe(
       map(pedidos => {
-        let pedidosPorEstado = pedidos.filter(pedido => pedido.espera == estado.toString());
-        //let pedidosOrdenados = pedidosPorEstado.sort((p1, p2) => 0);
-        let pedidosOrdenados = pedidosPorEstado;
+        let pedidosPorEspera = pedidos.filter(pedido => pedido.espera == estado.toString());
+        let pedidosOrdenados = pedidosPorEspera.sort((p1, p2) => (new Date(p1.fechaHora)).getTime() - (new Date(p2.fechaHora)).getTime());
         return pedidosOrdenados;
       })
     );
   }
 
-  getPedidosDeRepartidor(uidRepartidor: string, estado: EsperaPedido): Observable<Pedido[]> {
-    if (estado == EsperaPedido.Todos) {
+  getPedidosDeRepartidor(uidRepartidor: string, espera: EsperaPedido): Observable<Pedido[]> {
+    if (espera == EsperaPedido.Todos) {
       return this.afs.collection<Pedido>('pedidos').valueChanges().pipe(
         map(pedidos => pedidos.filter(pedido => pedido.repartidor == uidRepartidor))
       );
@@ -55,16 +60,15 @@ export class PedidosService {
     return this.afs.collection<Pedido>('pedidos').valueChanges().pipe(
       map(pedidos => {
         let pedidosPorRepartidor = pedidos.filter(pedido => pedido.repartidor == uidRepartidor);
-        let pedidosPorEstado = pedidosPorRepartidor.filter(pedido => pedido.espera == estado.toString());
-        //let pedidosOrdenados = pedidosPorEstado.sort((p1, p2) => 0);
-        let pedidosOrdenados = pedidosPorEstado;
+        let pedidosPorEstado = pedidosPorRepartidor.filter(pedido => pedido.espera == espera.toString());
+        let pedidosOrdenados = pedidosPorEstado.sort((p1, p2) => (new Date(p1.fechaHora)).getTime() - (new Date(p2.fechaHora)).getTime());
         return pedidosOrdenados;
       })
     );
   }
 
   updateEsperaPedido(uidPedido: string, nuevaEspera: EsperaPedido): Promise<void> {
-    return this.afs.collection('pedidos').doc(uidPedido).update({ estado: nuevaEspera.toString()});
+    return this.afs.collection('pedidos').doc(uidPedido).update({ espera: nuevaEspera.toString()});
   }
 
   updateEstadoPedido(uidPedido: string, nuevoEstado: EstadoPedido): Promise<void> {

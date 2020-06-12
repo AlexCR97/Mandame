@@ -112,6 +112,8 @@
 
 </ion-content>
 
-<ion-footer *ngIf="uidMandadoSeleccionado == null">
-  <ion-button class="ion-text-capitalize" color="naranja" expand="full" (click)="realizarMandado()" [disabled]="realizandoProceso">Realizar Mandado</ion-button>
+<ion-footer>
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block" fill="outline" (click)="onBtnEsperaMandadoClick()">
+    {{mandadoSeleccionado.espera.toString()}}
+  </ion-button>
 </ion-footer>

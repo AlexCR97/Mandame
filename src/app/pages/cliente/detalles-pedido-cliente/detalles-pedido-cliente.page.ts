@@ -9,6 +9,7 @@ import { CacheDirecciones } from 'src/app/cache/cache-direcciones';
 import { DocsPlantillas, getPlantilla } from 'src/app/dbdocs/plantillas';
 import { DireccionesService } from 'src/app/services/direcciones.service';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 
 interface ProductoItem {
   desc: string;
@@ -33,7 +34,7 @@ export class DetallesPedidoClientePage implements OnInit {
   constructor(
     public activatedRoute: ActivatedRoute,
     public alertController: AlertController,
-    public direccioService: DireccionesService,
+    public direccionService: DireccionesService,
     public pedidoService: PedidosService,
     public router: Router,
   ) { }
@@ -44,38 +45,33 @@ export class DetallesPedidoClientePage implements OnInit {
     this.uidPedido = this.activatedRoute.snapshot.queryParamMap.get('uidPedido');
     this.pedido = CachePedidos.getPedido(this.uidPedido);
 
+    // Completar datos del pedido
+    this.pedido.foto_perfil = CacheRestaurantes.getRestaurante(this.pedido.restaurante).foto_perfil;
+    this.pedido.nombreRestaurante = CacheRestaurantes.getRestaurante(this.pedido.restaurante).nombre;
+
     console.log('Uid del pedido: ' + this.uidPedido);
     console.log('Pedido encontrado:');
     console.log(this.pedido);
 
-    this.productos = this.getProductos(this.pedido);
-    this.total = this.getTotal(this.productos);
-
-    console.log('Buscando la direccion del pedido...');
-    if (!CacheDirecciones.getDireccion(this.pedido.direccion)) {
-      this.direccioService.getDireccion(this.pedido.direccion).subscribe(
-        direccion => {
-          console.log('Direccion del pedido encontrada! :D', direccion);
-          this.direccion = direccion;
-
-          CacheDirecciones.addDireccion(CacheUsuario.usuario.uid, direccion);
-        },
-        error => {
-          console.error('Error al buscar direccion del pedido :(');
-          console.error(error);
-        }
-      );
+    if (CacheDirecciones.containsDireccion(this.pedido.direccion)) {
+      this.direccion = CacheDirecciones.getDireccion(this.pedido.direccion)
     }
     else {
-      this.direccion = CacheDirecciones.getDireccion(this.pedido.direccion);
+      this.direccionService.getDireccion(this.pedido.direccion).subscribe(
+        direccion => this.direccion = direccion
+      );
     }
+
+    this.productos = this.getProductos(this.pedido);
+    this.total = this.getTotal(this.productos);
   }
 
   getProductos(pedido: Pedido): ProductoItem[] {
-    let count = pedido.productos.length;
     let productosCompletos = new Array<ProductoItem>();
-
-    for (let i = 0; i < count; i++) {
+    
+    // Productos
+    let countProductos = pedido.productos.length;
+    for (let i = 0; i < countProductos; i++) {
       productosCompletos.push({
         desc: pedido.productos[i],
         cantidad: pedido.cantidad[i],
@@ -83,6 +79,17 @@ export class DetallesPedidoClientePage implements OnInit {
       });
     }
 
+    // Complementos
+    let countComplementos = pedido.complementos.length;
+    for (let i = 0; i < countComplementos; i++) {
+      let complemento = CacheRestaurantes.getComplemento(pedido.complementos[i]);
+      productosCompletos.push({
+        desc: complemento.nombre,
+        cantidad: 1,
+        precio: complemento.precio,
+      });
+    }
+    
     return productosCompletos;
   }
 

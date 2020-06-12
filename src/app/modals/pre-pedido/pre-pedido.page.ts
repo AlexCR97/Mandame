@@ -4,10 +4,14 @@ import { Router } from '@angular/router';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { CacheCarrito } from 'src/app/cache/cache-carrito';
+import { CacheRestaurantes } from 'src/app/cache/cache-restaurantes';
 import { ChatService } from 'src/app/services/chat.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { CacheChat } from 'src/app/cache/cache-chat';
 import { RegistroService } from 'src/app/services/registro.service';
+import { SeleccionarDireccionPage } from 'src/app/modals/seleccionar-direccion/seleccionar-direccion.page';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
     selector: 'app-pre-pedido',
@@ -17,23 +21,18 @@ import { RegistroService } from 'src/app/services/registro.service';
 export class PrePedidoPage implements OnInit {
 
     cargandoDialog;
-
-    nombreNegocio = "Domino's Pizza"
-
+    nombreNegocio = "";
     complementoItems: any[];
-
     ordenItems: any[];
-
     direccionEntrega = {
         nombreCasa: '',
         direccion: '',
     };
-
     costoEnvio = 45.00;
     subTotal = 0;
     total = 0;
-
     uidPedido: string;
+
     
     constructor(
         private modalController: ModalController,
@@ -41,15 +40,28 @@ export class PrePedidoPage implements OnInit {
         private restaurantService: RestaurantService,
         private chatService: ChatService,
         public guiUtls: GuiUtilsService,
-        private registroService: RegistroService){
+        private utilsService: UtilsService,
+        private registroService: RegistroService,
+        private alertController: AlertController,
+        private loadingController: LoadingController){
     }
 
     ngOnInit() { 
         console.log('Usuario ', CacheUsuario.usuario);
         this.cargarOrdenes();
+        this.cargarRestaurante();
         this.cargarComplementos();
         this.calcularTotal();
         this.cargarDireccion();
+    }
+
+
+
+    cargarRestaurante() {
+        let uidRestaurante = CacheCarrito.getUidRestaurante();
+        if(CacheRestaurantes.containsRestaurante(uidRestaurante)) {
+            this.nombreNegocio = CacheRestaurantes.getRestaurante(uidRestaurante).nombre;
+        }
     }
 
     cargarDireccion() {
@@ -71,8 +83,10 @@ export class PrePedidoPage implements OnInit {
     }
 
     cargarOrdenes() {
-        this.ordenItems = CacheCarrito.getProductosSimplificados();
-        console.log('ordenes: ', this.ordenItems);
+        if(!CacheCarrito.isCarritoEmpty()) {
+            this.ordenItems = CacheCarrito.getProductosSimplificados();    
+            console.log('ordenes: ', this.ordenItems);
+        }
     }
 
     cargarComplementos() {
@@ -83,20 +97,52 @@ export class PrePedidoPage implements OnInit {
                     precio: complemento['precio'],
                     contenido: complemento['contenido'],
                     foto: complemento['foto'],
+                    uid: complemento['uid'],
                     seleccionado: false
                 }  
             });
         });
     }
 
+    agregarComplementoAOrden(complemento) {
+        console.log('agregarComplementoAOrden()');
+        this.ordenItems.push({
+            nombre: complemento.nombre,
+            precio: complemento.precio,
+            cantidad: 1,
+            uid: complemento.uid
+        });
+        console.log('orden items: ', this.ordenItems);
+    }
+
+    eliminarComplementoDeOrden(complemento) {
+        console.log('eliminarComplementoDeOrden()');
+        this.ordenItems = this.ordenItems.filter(o => o.uid !== complemento.uid);
+        console.log('orden items: ', this.ordenItems);
+    }
+
     seleccionarComplemento(complemento) {
+        console.log('complemento clicked: ', complemento);
         if(!complemento.seleccionado) {
             this.total += complemento.precio;
             complemento.seleccionado = true;
+            CacheCarrito.agregarComplemento(complemento.uid, complemento.precio);
+            this.agregarComplementoAOrden(complemento);
+            this.subTotal += complemento.precio;
         } else {
-            this.total -= complemento.precio;
-            complemento.seleccionado = false;
+            this.removerComplemento(complemento);
         }
+    }
+
+    removerComplemento(complemento) {
+        this.eliminarComplementoDeOrden(complemento);
+        let comp = this.complementoItems.find(c => c.uid == complemento.uid);
+        this.complementoItems.find(c => c.uid == complemento.uid).seleccionado = !comp.seleccionado;
+
+        this.total -= complemento.precio;
+        CacheCarrito.eliminarComplemento(complemento.uid);
+        this.eliminarComplementoDeOrden(complemento);
+        this.subTotal -= complemento.precio;
     }
 
     calcularTotal() {
@@ -131,10 +177,13 @@ export class PrePedidoPage implements OnInit {
         console.log('Nueva cantidad: ', orden.cantidad);
     }
 
-    dismissModal() {
+    dismissModal(dismiss=true) {
         console.log('uidPedido: ', this.uidPedido);
-        this.modalController.dismiss({uidPedido: this.uidPedido, estado: 'seguir-pedido'});
-        // TODO ADD SEGUIR PEDIDO ON RESTAURANT APGE
+        if(dismiss) {
+            this.modalController.dismiss({uidPedido: this.uidPedido, estado: 'seguir-pedido'});
+        } else {
+            this.modalController.dismiss();
+        }
     }
 
     ordenChanged(orden) {
@@ -142,33 +191,96 @@ export class PrePedidoPage implements OnInit {
         console.log('cantidad: ', orden.cantidad);
     }
 
+    cerrarModal() {
+        this.dismissModal(false);
+    }
+
+    async abrirModalSeleccionarDireccion(
+        onModalResult: (result: any) => void, 
+        onModalError: (error: any) => void) {
+        const modal = await this.modalController.create({
+            component: SeleccionarDireccionPage,
+            cssClass: 'dialog-modal',
+        });
+
+        modal.onDidDismiss()
+        .then(result => onModalResult(result))
+        .catch(error => onModalError(error));
+
+        return await modal.present();
+    }
+
+    async mostrarCargando(mensaje: string) {
+        const cargandoDialog = await this.loadingController.create({
+            message: mensaje,
+        });
+
+        cargandoDialog.present();
+
+        return cargandoDialog;
+    }
+
+    async cerrarCargando(cargandoDialog) {
+        if (cargandoDialog == undefined) {
+            return;
+        }
+
+        if (cargandoDialog == null) {
+            return;
+        }
+
+        this.loadingController.dismiss();
+    }
+
     realizarPedido() {
-        console.log('Realizando pedido!');
 
-        CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
-        CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
+        if(CacheCarrito.isCarritoEmpty()) {
+            console.log('Carrito empty!');
+            this.guiUtls.mostrarToast('No puedes realizar un pedido sin elementos en carrito!', 3000, 'danger');
+        } else {
+            console.log('Realizando pedido!');
 
-        this.chatService.getRepartidorLibre().subscribe(
-            promise => promise.then(repartidor => {
-                console.log('Repartidor libre encontrado!');
-                console.log(repartidor);
-                CacheCarrito.agregarRepartidor(repartidor.uid);
+            this.abrirModalSeleccionarDireccion(
+                result => {
+                    this.cargandoDialog = this.mostrarCargando('Procesando peticion...');
+                    console.log('res: ', result);
 
-                console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
+                    // CacheCarrito.agregarDireccion(CacheUsuario.usuario.direcciones[0]);
+                    CacheCarrito.agregarDireccion(result['data'].uid);
+                    CacheCarrito.agregarUsuario(CacheUsuario.usuario.uid);
 
-                this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
-                .then(ref => {
-                    this.uidPedido = ref.id;
-                    console.log('THEN uidPedido: ', this.uidPedido);
-                    CacheCarrito.agregarUidPedido(this.uidPedido);
-                    this.dismissModal();
-                }).catch(err => {
-                    console.log('Error trying to insert pedido!');
-                    this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
+                    this.chatService.getRepartidorLibre().subscribe(
+                        promise => promise.then(repartidor => {
+                            console.log('Repartidor libre encontrado!');
+                            console.log(repartidor);
+                            CacheCarrito.agregarRepartidor(repartidor.uid);
+
+                            console.log('pedido listo para insertar: ', CacheCarrito.getCarrito());
+
+                            CacheCarrito.agregarFechaHora(this.utilsService.getFechaHoyString());
+                            this.restaurantService.agregarPedido(CacheCarrito.getCarrito())
+                            .then(ref => {
+                                this.uidPedido = ref.id;
+                                // console.log('THEN uidPedido: ', this.uidPedido);
+                                CacheCarrito.vaciarCarrito();
+                                CacheCarrito.agregarUidPedido(this.uidPedido);
+                                this.restaurantService.actualizarUidPedido(this.uidPedido);
+
+                                this.cerrarCargando(this.cargandoDialog);
+
+                                this.dismissModal(true);
+                            }).catch(err => {
+                                console.log('Error trying to insert pedido!');
+                                this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
+                            });
+                        }),
+                        error => {
+                            console.error(error);
+                        });
+                },
+                err => {
+                    console.log('error: ', err);
                 });
-                    }),
-            error => {
-                console.error(error);
-            });
         }
     }
+}

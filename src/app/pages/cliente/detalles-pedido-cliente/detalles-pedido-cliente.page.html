@@ -21,13 +21,10 @@
 <ion-content class="ion-padding">
 
   <!-- pedidos en transito -->
-  <ion-card class="detalles-pedido-item" (click)="abrirRestaurante(pedido.restaurante)">
+  <ion-card class="detalles-pedido-item" (click)="abrirRestaurante(pedido.restaurante)" mode="ios">
     <ion-item lines="none">
       <ion-img [src]="pedido.foto_perfil"></ion-img>
-      <ion-text>
-        <ion-label class="restaurant">{{pedido.nombreRestaurante}}</ion-label>
-      </ion-text>
-      <ion-icon color="naranja" name="location" slot="end"></ion-icon>
+      <ion-label class="restaurant">{{pedido.nombreRestaurante}}</ion-label>
     </ion-item>
   </ion-card>
 

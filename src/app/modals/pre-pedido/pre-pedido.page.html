@@ -2,7 +2,7 @@
   <ion-toolbar color="naranja">
     <ion-title>¡Ya casi!</ion-title> 
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">
+      <ion-button (click)="cerrarModal()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -13,123 +13,89 @@
 
   <!-- complementos -->
   <section>
- 
+   
     <h5><b>Complementos</b></h5>
 
     <div class="mdm-scroll-horizontal">
-<!--
+
       <div class="mdm-scroll-horizontal-item mdm-producto-item" *ngFor="let i of complementoItems">
-        <ion-card class="mdm-center-both" (click)="seleccionarComplemento(i)">
-          <img src="{{i.imgSrc}}" alt="{{i.nombre}}">
+        <ion-card class="mdm-center-both" (click)="seleccionarComplemento(i)" disabled="{{i.seleccionado}}">
+          <img src="{{i.foto}}" alt="{{i.nombre}}">
         </ion-card>
         <p>{{i.desc}}</p>
       </div>
-    -->
-    <div class="mdm-scroll-horizontal-item mdm-producto-item">
-      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
-        <img src="../../../assets/img/pepsi.png">
-      </ion-card>
-      <p>Pepsi</p>
-    </div>
-    <div class="mdm-scroll-horizontal-item mdm-producto-item">
-      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
-        <img src="../../../assets/img/descarga.png">
-      </ion-card>
-      <p>Coca</p>
-    </div>
-    <div class="mdm-scroll-horizontal-item mdm-producto-item">
-      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
-        <img src="../../../assets/img/7up.png">
-      </ion-card>
-      <p>7-Up</p>
-    </div>
-    <div class="mdm-scroll-horizontal-item mdm-producto-item">
-      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
-        <img src="../../../assets/img/fanta.png">
-      </ion-card>
-      <p>Fanta</p>
-    </div>
-    <div class="mdm-scroll-horizontal-item mdm-producto-item">
-      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
-        <img src="../../../assets/img/sprite.jpg">
-      </ion-card>
-      <p>Sprite</p>
-    </div>
-    <div class="mdm-scroll-horizontal-item mdm-producto-item">
-      <ion-card class="mdm-center-both ion-no-margin" mode="ios" (click)="seleccionarComplemento(i)">
-        <img src="../../../assets/img/light.jpg">
-      </ion-card>
-      <p>Coca Light</p>
-    </div>
-    </div>
-    
-  </section><!-- complementos -->
+  </div>
+  
+</section><!-- complementos -->
 
-  <!-- pedidos -->
-  <section>
+<!-- pedidos -->
+<section>
 
-    <h5><b>Pedido</b></h5>
+  <h5><b>Pedido</b></h5>
 
-    <ion-item>
-      <ion-label color="naranja">Koko Roll</ion-label>
-      <!-- <ion-label color="naranja">{{nombreNegocio}}</ion-label> -->
+  <!-- TODO: Agregar multiples lables para los diferentes restaurantes a los que se pida -->
+  <ion-item>
+    <ion-label color="naranja">{{nombreNegocio}}</ion-label>
+  </ion-item>
+
+  <ion-list>
+    <ion-item class="mdm-mb-2" *ngFor="let i of ordenItems">
+      <ion-text>
+        <ion-label>{{i.nombre}}</ion-label>
+        <ion-label>$ {{i.precio}}</ion-label>
+      </ion-text>
+      <div *ngIf="i.uid == ''" class="mdm-btn-numeric mdm-btn-outline-naranja" slot="end">
+        <ion-icon color="naranja" name="remove" (click)="disminuirCantidad(i)"></ion-icon>
+        <p (ionChange)="ordenChanged(i)">{{i.cantidad}}</p>
+        <ion-icon color="naranja" name="add" (click)="aumentarCantidad(i)"></ion-icon>
+      </div>
+      <div *ngIf="i.uid !== ''" slot="end">
+        <ion-icon color="naranja" name="close-circle-outline" (click)="removerComplemento(i)"></ion-icon>
+      </div>
     </ion-item>
+  </ion-list>
 
-    <ion-list>
-      <ion-item class="mdm-mb-2" *ngFor="let i of ordenItems">
-        <ion-text>
-          <ion-label>{{i.nombre}}</ion-label>
-          <ion-label>$ {{i.precio}}</ion-label>
-        </ion-text>
-        <div class="mdm-btn-numeric mdm-btn-outline-naranja" slot="end">
-          <ion-icon color="naranja" name="remove" (click)="disminuirCantidad(i)"></ion-icon>
-          <p (ionChange)="ordenChanged(i)">{{i.cantidad}}</p>
-          <ion-icon color="naranja" name="add" (click)="aumentarCantidad(i)"></ion-icon>
-        </div>
-      </ion-item>
-    </ion-list>
+</section><!-- pedidos -->
 
-  </section><!-- pedidos -->
+<!-- direccion -->
+<section>
+  <h5><b>Dirección de entrega</b></h5>
 
-  <!-- direccion -->
-  <section>
-    <h5><b>Dirección de entrega</b></h5>
+  <ion-card class="direccion-item">
+    <ion-item lines="none">
+      <ion-icon name="location"></ion-icon>
+      <ion-text>
+        <ion-label class="titulo">{{direccionEntrega.nombreCasa}}</ion-label>
+        <ion-label class="subtitulo">{{direccionEntrega.direccion}}</ion-label>
+      </ion-text>
+    </ion-item>
+  </ion-card>
 
-    <ion-card class="direccion-item">
-      <ion-item lines="none">
-        <ion-icon name="location"></ion-icon>
-        <ion-text>
-          <ion-label class="titulo">{{direccionEntrega.nombreCasa}}</ion-label>
-          <ion-label class="subtitulo">{{direccionEntrega.direccion}}</ion-label>
-        </ion-text>
-      </ion-item>
-    </ion-card>
+</section><!-- direccion -->
 
-  </section><!-- direccion -->
+<!-- total -->
+<section>
 
-  <!-- total -->
-  <section>
+  <h5><b>Total</b></h5>
 
-    <h5><b>Total</b></h5>
+  <ion-card>
+    <ion-card-content>
+      <div class="item-total">
+        <p>Total de los productos</p>
+        <p><span>$ {{subTotal}}</span></p>
+      </div>
+      <div class="item-total">
+        <p>Costo del envío</p>
+        <p><span>$ {{costoEnvio}}</span></p>
+      </div>
+      <div class="item-total">
+        <p>Total</p>
+        <p><span>$ {{total}}</span></p>
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-    <ion-card>
-      <ion-card-content>
-        <div class="item-total">
-          <p>Total de los productos</p>
-          <p><span>$ {{subTotal}}</span></p>
-        </div>
-        <div class="item-total">
-          <p>Costo del envío</p>
-          <p><span>$ {{costoEnvio}}</span></p>
-        </div>
-        <div class="item-total">
-          <p>Total</p>
-          <p><span>$ {{total}}</span></p>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-  </section><!-- total-->
+</section><!-- total-->
 
 </ion-content>
 

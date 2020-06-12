@@ -11,6 +11,10 @@ export class CacheDirecciones {
         this.direcciones.clear();
     }
     
+    public static containsDireccion(uidDireccion: string) {
+        return this.getDireccion(uidDireccion) != null;
+    }
+
     public static getDireccion(uidDireccion: string): Direccion {
         return this.getAllDirecciones()
             .find(d => d.uid == uidDireccion);
@@ -36,9 +40,10 @@ export class CacheDirecciones {
     }
 
     public static addDireccion(uidUsuario: string, direccion: Direccion) {
-        let direcciones = this.direcciones.get(uidUsuario);
-        direcciones.push(direccion);
+        if (this.direcciones.get(uidUsuario) == null) {
+            this.direcciones.set(uidUsuario, []);
+        }
 
-        this.direcciones.set(uidUsuario, direcciones);
+        this.direcciones.get(uidUsuario).push(direccion);
     }
 }

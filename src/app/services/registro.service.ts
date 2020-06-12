@@ -27,6 +27,7 @@ export class RegistroService {
     let direccionUid = this.afs.createId();
     let direccionDocRef = db.collection('direcciones').doc(direccionUid);
 
+    direccion.uid = direccionUid;
     batch.set(direccionDocRef, direccion);
 
     // agregar uid de la nueva direccion al array de direcciones del usuario

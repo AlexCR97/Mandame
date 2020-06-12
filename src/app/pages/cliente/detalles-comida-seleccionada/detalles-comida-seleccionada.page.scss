@@ -54,11 +54,11 @@ ion-button{
         --background: #FF6800 !important;
     }
 }
- .bg{
-     color: black;
-     font-weight: 500;
-     background-color: #F9F9F9;
- }
+.bg{
+   color: black;
+   font-weight: 500;
+   background-color: #F9F9F9;
+}
 
 
 
@@ -90,14 +90,14 @@ ion-button{
 
 
 .numeric-input {
-    
+
 
     & > *{
         padding: 0 !important;
         margin: 0 !important;
     }
-    }
-    
+}
+
 
 .btn-filled {
     background: #000;
@@ -138,7 +138,7 @@ ion-button{
     background: white;
     display: flex;
     align-items: center;
-        justify-content: center;
+    justify-content: center;
 
     .f-50{
         flex: 50%;
@@ -147,8 +147,10 @@ ion-button{
         justify-content: center;
     }
     .f-25{
-        --color: orange !important;
-        --background: none !important;
+        color: orange !important;
+        background: none !important;
         flex: 25%;
+
+        height: 100%;
     }
 }

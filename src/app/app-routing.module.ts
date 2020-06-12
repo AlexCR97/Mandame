@@ -126,6 +126,10 @@ const routes: Routes = [
     path: 'recuperar-contrasena',
     loadChildren: () => import('./pages/recuperar-contrasena/recuperar-contrasena.module').then( m => m.RecuperarContrasenaPageModule)
   },
+  {
+    path: 'detalles-mandado-repartidor',
+    loadChildren: () => import('./pages/repartidor/detalles-mandado-repartidor/detalles-mandado-repartidor.module').then( m => m.DetallesMandadoRepartidorPageModule)
+  },
 
 
 ];

@@ -5,6 +5,10 @@ export class CachePedidos {
 
     public static pedidos = new Map<string, Pedido>();
     
+    public static addAllPedidos(pedidos: Pedido[]) {
+        pedidos.forEach(pedido => this.setPedido(pedido.uid, pedido));
+    }
+
     public static clear() {
         this.pedidos.clear();
     }
@@ -30,7 +34,7 @@ export class CachePedidos {
 
     public static setAllPedidos(pedidos: Pedido[]) {
         this.pedidos.clear();
-        pedidos.forEach(pedido => this.setPedido(pedido.uid, pedido));
+        this.addAllPedidos(pedidos);
     }
 
     public static setPedido(uidPedido: string, pedido: Pedido) {

@@ -5,7 +5,8 @@ import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/services/utils.service';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
-import { CacheChat } from 'src/app/cache/cache-chat';
+import { CacheChat, VistaChat } from 'src/app/cache/cache-chat';
+import { CacheService } from 'src/app/cache/cache.service';
 
 @Component({
   selector: 'app-tab-chats-repartidor',
@@ -15,30 +16,29 @@ import { CacheChat } from 'src/app/cache/cache-chat';
 export class TabChatsRepartidorPage implements OnInit {
 
   cargandoDialog;
-  chats: Usuario[];
+  vistasChats = new Array<VistaChat>();
 
   constructor(
-    public chatService: ChatService,
-    public guiUtls: GuiUtilsService,
-    public router: Router,
-    public utils: UtilsService,
+    private cacheService: CacheService,
+    private chatService: ChatService,
+    private guiUtls: GuiUtilsService,
+    private router: Router,
+    private utils: UtilsService,
   ) { }
 
   ngOnInit() {
     console.log('Obteniendo chats con usuarios...');
-    this.chatService.getChats(CacheUsuario.usuario.uid,
-      usuarios => {
-        console.log('Usuarios obtenidos en Chats Repartidor');
-        console.table(usuarios);
-
-        CacheChat.setAllChatUsuario(usuarios);
-        this.chats = CacheChat.getAllChatsUsuarios();
-      },
-      error => {
-        console.error('Error al obtener los usuarios :(');
-        console.error(error);
-      }
-    );
+    
+    // Si tiene conexion a internet
+    if (this.utils.tieneConexionInternet()) {
+      console.log('Si hay conexion a internet');
+      this.cargarChatsDesdeBd();
+    }
+    // No tiene conexion a internet
+    else {
+      console.log('No hay conexion a internet');
+      this.cargarChatsDesdeCache();
+    }
   }
 
   abrirMensajes(uidReceptor: string) {
@@ -49,4 +49,22 @@ export class TabChatsRepartidorPage implements OnInit {
     });
   }
 
+  cargarChatsDesdeBd() {
+    console.log('Cargando chats desde la bd');
+
+    this.cacheService.iniciarCacheChats();
+    this.cacheService.setOnChatsIniciado(
+      () => {
+        this.vistasChats = CacheChat.getVistasChats();
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+  cargarChatsDesdeCache() {
+    console.log('Cargando chats desde el cache');
+    this.vistasChats = CacheChat.getVistasChats();
+  }
 }

@@ -1,3 +1,44 @@
+<ion-router-outlet main></ion-router-outlet>
+
+<!-- barra lateral -->
+<ion-menu side="start">
+
+  <ion-header>
+    <ion-toolbar>
+      <img src="../../../assets/img/logo.png" class="logo-menu">
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <!-- cuenta -->
+    <ion-list>
+
+      <ion-item (click)="cerrarSesion()">
+          <ion-label>Cerrar sesión</ion-label>
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+
+</ion-menu><!-- barra lateral -->
+
+<!-- header -->
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title mode="ios">
+        <img src="../../../assets/img/logo-blanco.png" class="logo-menu">
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header><!-- header -->
+
 <ion-tabs>
   <ion-tab-bar color="naranja" slot="bottom">
 

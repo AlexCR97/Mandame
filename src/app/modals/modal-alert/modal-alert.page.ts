@@ -3,16 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
-
-// constructor(public navCtrl: NavController) { }
-// //...
-// let navigationExtras: NavigationExtras = {
-//     queryParams: {
-//         currency: JSON.stringify(currency),
-//         refresh: refresh
-//     }
-// };
-// this.navCtrl.navigateForward(['page-slug'], true, navigationExtras);
+import { CacheCarrito } from 'src/app/cache/cache-carrito';
 
 @Component({
   selector: 'app-modal-alert',
@@ -23,7 +14,7 @@ export class ModalAlertPage implements OnInit {
 
   imagen:string = "assets/icon/logo.png";
 
-  @Input() uid: any;
+  // @Input() uid: any;
 
   constructor(
   	private modalController: ModalController,
@@ -35,12 +26,12 @@ export class ModalAlertPage implements OnInit {
 
   verPedido() {
     // uidPedido
-    console.log('UID: ', this.uid);
+    console.log('UID: ', CacheCarrito.getUltimoPedidoUid());
   	this.dismissModal();
 
     let navigationExtras: NavigationExtras = {
       queryParams: {
-        uid: this.uid
+        uid: CacheCarrito.getUltimoPedidoUid()
       }
     }
 

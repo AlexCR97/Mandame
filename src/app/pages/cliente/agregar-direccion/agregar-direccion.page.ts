@@ -61,7 +61,7 @@ export class AgregarDireccionPage implements OnInit {
     
     let safeDireccion = this.safeDocs.direccion(this.direccion);
 
-    console.log('Agregando nueva direccion...');
+    console.log('Agregando nueva direccion...', safeDireccion);
     this.direccionesService.agregarDireccion(CacheUsuario.usuario, safeDireccion)
     .then(result => {
       console.log('Exito al agregar nueva direccion :D');

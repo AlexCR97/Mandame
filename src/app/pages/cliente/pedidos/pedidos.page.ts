@@ -14,7 +14,6 @@ import { CacheUsuario } from 'src/app/cache/cache-usuario';
 })
 export class PedidosPage implements OnInit {
 
-  public Pedidos: Pedido[];
   public pedidosPendientes: Pedido[];
   public pedidosConcluidos: Pedido[];
   public uidCliente: string;
@@ -38,14 +37,13 @@ export class PedidosPage implements OnInit {
     if (this.utils.tieneConexionInternet()) {
 
       console.log('Obteniendo pedidos pendientes...');
-      // TODO Santana: Cambiar la espera del pedido a pendientes
-      this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Todos,
+      this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Pendiente,
         pedidos => {
           console.log('Pedidos obtenidos! :D');
           console.table(pedidos);
 
           this.pedidosPendientes = pedidos;
-          CachePedidos.setAllPedidos(this.pedidosPendientes);
+          CachePedidos.addAllPedidos(this.pedidosPendientes);
         },
         error => {
           console.log('Error al obtener los pedidos :(');
@@ -56,14 +54,13 @@ export class PedidosPage implements OnInit {
       );
 
       console.log('Obteniendo pedidos concluidos...');
-      // TODO Santana: Cambiar la espera del pedido a concluidos
-      this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Todos,
+      this.pedidoservice.getPedidosCompletosDeUsuario(this.uidCliente, EsperaPedido.Concluido,
         pedidos => {
           console.log('Pedidos obtenidos! :D');
           console.table(pedidos);
 
           this.pedidosConcluidos = pedidos;
-          CachePedidos.setAllPedidos(this.pedidosConcluidos);
+          CachePedidos.addAllPedidos(this.pedidosConcluidos);
         },
         error => {
           console.log('Error al obtener los pedidos :(');
@@ -75,15 +72,13 @@ export class PedidosPage implements OnInit {
     }
     // NO HAY CONEXION A INTERNET
     else {
-      // TODO Santana: Cambiar la espera del pedido al correspondiente
-      this.pedidosPendientes = CachePedidos.getAllPedidosDeUsuario(this.uidCliente, EsperaPedido.Todos);
-      this.pedidosConcluidos = CachePedidos.getAllPedidosDeUsuario(this.uidCliente, EsperaPedido.Todos);
+      this.pedidosPendientes = CachePedidos.getAllPedidosDeUsuario(this.uidCliente, EsperaPedido.Pendiente);
+      this.pedidosConcluidos = CachePedidos.getAllPedidosDeUsuario(this.uidCliente, EsperaPedido.Concluido);
     }
   }
 
   abrirDetallesPedido(uid: string) {
-    console.log('abrirDetallesPedido()')
-    console.log(uid);
+    console.log(`abrirDetallesPedido(${uid})`)
 
     this.router.navigate(['/preparando-pedido'], {
       queryParams: {

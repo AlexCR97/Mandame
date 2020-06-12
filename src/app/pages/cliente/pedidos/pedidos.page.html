@@ -51,8 +51,8 @@
 
         <!-- pedidos pendientes -->
         <div class="ion-margin-bottom" *ngIf="pedidosPendientes.length > 0">
-          <ion-card *ngFor="let i of pedidosPendientes" (click)="abrirDetallesPedido(i.uid)">
-            <img src="../../../assets/img/pizzah.jpg" alt="">
+          <ion-card class="pedido-item" *ngFor="let i of pedidosPendientes" (click)="abrirDetallesPedido(i.uid)" mode="ios">
+            <ion-img [src]="i.foto_perfil"></ion-img>
             <div class="padding">
               <ion-card-header>
                 <ion-card-title>
@@ -84,8 +84,8 @@
         </div>
         <!-- pedidos concluidos -->
         <div class="ion-margin-bottom" *ngIf="pedidosConcluidos.length > 0">
-          <ion-card *ngFor="let i of pedidosConcluidos" (click)="abrirDetallesPedido(i.uid)">
-            <img src="../../../assets/img/pizzah.jpg" alt="">
+          <ion-card class="pedido-item" *ngFor="let i of pedidosConcluidos" (click)="abrirDetallesPedido(i.uid)" mode="ios">
+            <ion-img [src]="i.foto_perfil"></ion-img>
             <div class="padding">
               <ion-card-header>
                 <ion-card-title>

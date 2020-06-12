@@ -9,6 +9,10 @@ export class CacheMandados {
         this.mandados.clear();
     }
 
+    public static addAllMandados(mandados: Mandado[]) {
+        mandados.forEach(mandado => this.setMandado(mandado.uid, mandado));
+    }
+
     public static getMandado(uidMandado: string): Mandado {
         return this.mandados.get(uidMandado);
     }

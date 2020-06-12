@@ -19,7 +19,7 @@ import { CacheCarrito } from 'src/app/cache/cache-carrito';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RestaurantesFavoritos } from 'src/app/dbdocs/restaurantesFavoritos'
 import { Observable } from 'rxjs';
-import { R3ResolvedDependencyType } from '@angular/compiler';
+import { GuiUtilsService } from 'src/app/services/gui-utils.service';
 
 interface ProductosPorCategoria {
     categoria: string;
@@ -39,6 +39,7 @@ export class RestaurantPage implements OnInit {
     select: string;
     nombreRestaurant: string;
     estado: string = '';
+    carritoVacio: boolean = true;
 
     //public uidRestaurant: string = 'K0WCy5wF99fdaQb1kxJ9';
     public uidRestaurant: string;
@@ -58,6 +59,7 @@ export class RestaurantPage implements OnInit {
         public modalController: ModalController,
         public utils: UtilsService,
         public restaurantService: RestaurantService,
+        private guiUtils: GuiUtilsService,
         ) { }
 
     ngOnInit() {
@@ -99,8 +101,7 @@ export class RestaurantPage implements OnInit {
                 this.cacheService.iniciarCacheProductos();
                 this.cacheService.setOnProductosIniciado(
                     () => {
-                        console.log('');
-                        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+                        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
                         this.select = this.productosPorCategoria[0].categoria;
                     },
                     error => {
@@ -112,7 +113,7 @@ export class RestaurantPage implements OnInit {
             else {
                 console.log('Cargando productos desde el cache...');
 
-                this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+                this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
                 this.select = this.productosPorCategoria[0].categoria;
             }
         }
@@ -121,7 +122,7 @@ export class RestaurantPage implements OnInit {
             console.log('No hay conexion a internet. Cargando restaurantes y productos desde el cache...');
 
             this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
-            this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
+            this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
             this.select = this.productosPorCategoria[0].categoria;
             // TODO Cambiar foto de portada por otra por defecto si no hay internet
             //this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
@@ -139,10 +140,13 @@ export class RestaurantPage implements OnInit {
         }
     }
 
-    // TODO: Change the btnClick name to another most meaningful
     verCarrito() {
         console.log('Down Button Click');
-        this.presentPrePedidoModal();
+        if(!CacheCarrito.isCarritoEmpty()) {
+            this.presentPrePedidoModal();
+        } else {
+            this.guiUtils.mostrarAlertaConfirmar('Carrito vacio', 'Antes de ver carrito, agregue elementos.');
+        }
     }
 
     seguirPedido() {
@@ -161,7 +165,7 @@ export class RestaurantPage implements OnInit {
             }
         }
         this.router.navigate(['/preparando-pedido'], navigationExtras);
-    }    
+    }
 
     async presentDetallesComidaModal(nombreProducto) {
         const modal = await this.modalController.create({
@@ -176,6 +180,7 @@ export class RestaurantPage implements OnInit {
         .then(data => {
             console.log('detalles comida modal dismissed data: ', data);
             this.estado = data['data'];
+            this.carritoVacio = CacheCarrito.isCarritoEmpty();
         });
 
         return await modal.present();

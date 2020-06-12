@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CacheService } from 'src/app/cache/cache.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio-repartidor',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioRepartidorPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private cacheService: CacheService,
+    private navController: NavController,
+  ) { }
 
   ngOnInit() {
+    console.log('Iniciando cache...');
+    this.cacheService.iniciarCache();
+  }
+
+  cerrarSesion() {
+    this.cacheService.setOnBorrarCacheListener(() => {
+      console.log('Cache de la app borrado!');
+      this.navController.navigateBack('/login');
+    });
+
+    this.cacheService.borrarCache();
   }
 
 }
