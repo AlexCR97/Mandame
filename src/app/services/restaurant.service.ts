@@ -156,6 +156,19 @@ getPedido(uidPedido) {
     return batch.commit(); 
   }
 
+  async verificarSiHayFavoritos(uidUsuario: string){
+    const db = this.afs.firestore;
+    const batch = db.batch();
+
+    let restauranteFavoritoDoc = await db.collection('restaurantesFavoritos').doc(uidUsuario).get();
+
+    if(restauranteFavoritoDoc.exists){
+      return true;
+    }else{
+      return false;
+    }  
+  }
+
   getRestaurantesFavoritos(uidUsuario: string){
     return this.afs.collection<RestaurantesFavoritos>('restaurantesFavoritos').doc<RestaurantesFavoritos>(uidUsuario).valueChanges();
   }
