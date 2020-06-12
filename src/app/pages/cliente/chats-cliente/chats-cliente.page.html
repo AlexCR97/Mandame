@@ -28,7 +28,7 @@
 
     <ion-item class="chat-item" lines="full" *ngFor="let i of vistasChats" (click)="abrirMensajes(i.uidRepartidor)">
       <ion-avatar slot="start">
-        <ion-img [src]="i.foto"></ion-img>
+        <ion-img [src]="i.foto? i.foto : fotoPorDefecto"></ion-img>
       </ion-avatar>
       <ion-text>
         <ion-label>{{i.nombreRepartidor}} {{i.apellidoRepartidor}}<span class="hora">{{i.fechaUltimoMensaje}}</span></ion-label>

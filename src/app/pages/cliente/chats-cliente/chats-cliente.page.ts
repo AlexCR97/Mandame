@@ -15,6 +15,7 @@ import { CacheUsuario } from 'src/app/cache/cache-usuario';
 })
 export class ChatsClientePage implements OnInit {
 
+  fotoPorDefecto = '../../../../assets/img/perfil_prueba.JPG';
   cargandoDialog;
   vistasChats = new Array<VistaChat>();
 

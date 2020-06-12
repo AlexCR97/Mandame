@@ -15,6 +15,7 @@ import { CacheService } from 'src/app/cache/cache.service';
 })
 export class TabChatsRepartidorPage implements OnInit {
 
+  fotoPorDefecto = '../../../../assets/img/perfil_prueba.JPG';
   cargandoDialog;
   vistasChats = new Array<VistaChat>();
 
