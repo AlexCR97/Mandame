@@ -127,8 +127,10 @@ export class RestaurantPage implements OnInit {
             // TODO Cambiar foto de portada por otra por defecto si no hay internet
             //this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
         }
-
-        this.cargarRestaurantesFavoritos();
+        
+        if(this.restaurantService.verificarSiHayFavoritos(this.uidCliente)){    
+            this.cargarRestaurantesFavoritos();
+        }
     }
 
     segmentChanged(ev: any) { }
@@ -238,24 +240,24 @@ export class RestaurantPage implements OnInit {
     cargarRestaurantesFavoritos(){
         this.restaurantService.getRestaurantesFavoritos(this.uidCliente).subscribe(
             restaurantesFav => {
-              console.log('Restaurantes favoritos obtenidos!');
-              this.restaurantesFavoritos = restaurantesFav;
-              console.log(this.restaurantesFavoritos.restaurantes);
+            console.log('Restaurantes favoritos obtenidos!');
+            this.restaurantesFavoritos = restaurantesFav;
+            console.log(this.restaurantesFavoritos.restaurantes);
 
-              if(this.restaurantesFavoritos.restaurantes.includes(this.uidRestaurant)){
+            if(this.restaurantesFavoritos.restaurantes.includes(this.uidRestaurant)){
                 this.esResturanteFavorito = true;
                 this.asignarColor = 100;
-              }
-              else{
+            }
+            else{
                 this.esResturanteFavorito = false;
                 this.asignarColor = 0;
-              }
+            }
                 console.log("Booooolena");
                 console.log(this.esResturanteFavorito);
             },
             error => {
-              console.error('No se pudieron obtener los restaurantes favoritos :(');
-              console.error(error);
+            console.error('No se pudieron obtener los restaurantes favoritos :(');
+            console.error(error);
             }
         );
     }
