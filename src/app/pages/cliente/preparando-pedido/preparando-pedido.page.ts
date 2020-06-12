@@ -53,7 +53,7 @@ export class PreparandoPedidoPage implements OnInit {
 
     cargarPedido() {
         console.log('cargarPedido()');
-        this.uidPedido = this.route.snapshot.queryParamMap.get('uidPedido');
+        this.uidPedido = this.route.snapshot.queryParamMap.get('uid');
         this.pedido = CachePedidos.getPedido(this.uidPedido);
 
         console.log('Uid pedido:', this.uidPedido);

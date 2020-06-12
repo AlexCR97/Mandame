@@ -230,7 +230,6 @@ export class PrePedidoPage implements OnInit {
         }
 
         this.loadingController.dismiss();
-        // cargandoDialog.dismiss();
     }
 
     realizarPedido() {
@@ -275,7 +274,7 @@ export class PrePedidoPage implements OnInit {
                                 this.guiUtls.mostrarToast('Error al tratar de insertar un pedido:(', 3000, 'danger');
                             });
                         }),
-                        error => { // n6wHWwWaJqbAyGiQyzZT
+                        error => {
                             console.error(error);
                         });
                 },
