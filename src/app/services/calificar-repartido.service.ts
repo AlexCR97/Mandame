@@ -42,7 +42,7 @@ export class CalificarRepartidoService {
     comentarios.push(comentario);
 
     batch.update(repartidorDocRef, {
-      comentarios: comentario,
+      comentarios: comentarios,
     });
     
     return batch.commit();

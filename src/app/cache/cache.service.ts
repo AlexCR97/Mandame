@@ -12,8 +12,7 @@ import { CacheRestaurantes } from './cache-restaurantes';
 import { CacheProductos } from './cache-productos';
 import { MandadoService } from '../services/mandado.service';
 import { CacheMandados } from './cache-mandados';
-import { map } from 'rxjs/operators';
-import { Adicional } from '../dbdocs/adicional';
+import { CacheRepartidor } from './cache-repartidor';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +91,7 @@ export class CacheService {
    public iniciarCache() {
      this.iniciarCacheRestaurantes();
      this.iniciarCacheProductos();
+     this.iniciarCacheRepartidores();
      this.iniciarCacheComplementos();
      this.iniciarCacheDirecciones();
      this.iniciarCachePedidos();
@@ -153,6 +153,18 @@ export class CacheService {
         console.error('CacheComplementos ERROR');
         console.error(error);
        }
+     );
+   }
+
+   iniciarCacheRepartidores() {
+     console.log('iniciarCacheRepartidores()');
+    
+     this.chatsService.getRepartidoresPromise().subscribe(
+       promise => promise.then(repartidores => {
+        CacheRepartidor.setAllRepartidores(repartidores);
+        console.log('CacheRepartidor iniciado!');
+        console.log(repartidores);
+       })
      );
    }
 

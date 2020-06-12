@@ -79,14 +79,26 @@ export class DetallesPedidoRepartidorPage implements OnInit {
   }
 
   getProductos(pedido: Pedido): ProductoItem[] {
-    let count = pedido.productos.length;
     let productosCompletos = new Array<ProductoItem>();
-
-    for (let i = 0; i < count; i++) {
+    
+    // Productos
+    let countProductos = pedido.productos.length;
+    for (let i = 0; i < countProductos; i++) {
       productosCompletos.push({
         desc: pedido.productos[i],
         cantidad: pedido.cantidad[i],
         precio: pedido.precios[i],
+      });
+    }
+
+    // Complementos
+    let countComplementos = pedido.complementos.length;
+    for (let i = 0; i < countComplementos; i++) {
+      let complemento = CacheRestaurantes.getComplemento(pedido.complementos[i]);
+      productosCompletos.push({
+        desc: complemento.nombre,
+        cantidad: 1,
+        precio: complemento.precio,
       });
     }
 
