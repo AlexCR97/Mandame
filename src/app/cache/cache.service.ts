@@ -12,8 +12,8 @@ import { CacheRestaurantes } from './cache-restaurantes';
 import { CacheProductos } from './cache-productos';
 import { MandadoService } from '../services/mandado.service';
 import { CacheMandados } from './cache-mandados';
+import { map } from 'rxjs/operators';
 import { Adicional } from '../dbdocs/adicional';
-import { Producto } from '../dbdocs/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +92,7 @@ export class CacheService {
    public iniciarCache() {
      this.iniciarCacheRestaurantes();
      this.iniciarCacheProductos();
+     this.iniciarCacheComplementos();
      this.iniciarCacheDirecciones();
      this.iniciarCachePedidos();
      this.iniciarCacheMandados();
@@ -138,6 +139,21 @@ export class CacheService {
          }
        }
        );
+   }
+
+   iniciarCacheComplementos() {
+     console.log('iniciarCacheComplementos()');
+
+     this.restaurantService.getAdicionales().subscribe(
+       adicionales => {
+         console.log('CacheComplementos SUCCESS');
+         CacheRestaurantes.setAllComplementos(adicionales);
+       },
+       error => {
+        console.error('CacheComplementos ERROR');
+        console.error(error);
+       }
+     );
    }
 
    iniciarCacheDirecciones() {
