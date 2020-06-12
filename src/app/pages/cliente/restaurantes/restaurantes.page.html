@@ -19,14 +19,14 @@
 <ion-content class="ion-padding">
 
   <div class="searchbar">
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchbarInput" (ionInput)="onSearchbarChange($event, searchbarInput)"></ion-searchbar>
     <ion-icon name="filter" slot="icon-only"></ion-icon>
   </div>
 
   <div class="reset">
     <ion-grid>
       <ion-row>
-        <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let i of restaurantes">
+        <ion-col size-xs="6" size-sm="4" size-md="3" *ngFor="let i of restaurantesFiltrados">
           <ion-card mode="ios" (click)="abrirRestaurante(i.uid)">
             <div  class="portada">
               <img [src]="i.foto_portada" class="foto" alt="">
