@@ -3,6 +3,7 @@ export interface Pedido {
     cantidad: number[];
     cliente: string;
     comentarios: string[];
+    complementos: string[];
     direccion: string;
     espera: string;
     estado: string;

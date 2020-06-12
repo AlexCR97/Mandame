@@ -105,6 +105,10 @@ getComplementos() {
     return this.afs.collection('complementos').valueChanges() 
 }
 
+getAdicionales() {
+    return this.afs.collection<Adicional>('complementos').valueChanges();
+}
+
 agregarPedido(pedido) {
     return this.afs.collection('pedidos').add(pedido);
 }
