@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- restaurant -->
+  <ion-card class="detalles-pedido-item" mode="ios">
+    <ion-item lines="none">
+      <ion-avatar>
+        <ion-img [src]="pedido.foto_perfil"></ion-img>
+      </ion-avatar>
+      <ion-label class="restaurant">{{pedido.nombreRestaurante}}</ion-label>
+    </ion-item>
+  </ion-card><!-- restaurant -->
+
+  <!-- productos -->
+  <ion-list>
+
+    <ion-item lines="full">
+      <h4>Productos</h4>
+    </ion-item>
+
+    <ion-item class="producto-item" lines="none" *ngFor="let producto of productos">
+      <ion-text>
+        <ion-label class="nombre">{{producto.desc}}</ion-label>
+        <ion-label class="cantidad">Cantidad: <span>{{producto.cantidad}}</span></ion-label>
+      </ion-text>
+      <ion-label class="ion-text-end">${{producto.precio}}</ion-label>
+    </ion-item>
+
+    <div class="separador"></div>
+
+    <ion-item class="total-item" lines="full">
+      <ion-label>Total</ion-label>
+      <ion-label class="ion-text-end" color="naranja">${{total}}</ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- comentarios -->
+  <ion-list>
+    <ion-list-header>
+      <h4>Comentarios</h4>
+    </ion-list-header>
+
+    <ion-item class="comentario-item" lines="none">
+      <ion-text>
+        <p *ngFor="let comentario of pedido.comentarios">{{comentario}}</p>
+      </ion-text>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- direccion de entrega -->
+  <h4 class="ion-padding-horizontal">Direccion de entrega</h4>
+  
+  <ion-card mode="ios">
+    <ion-card-content class="direccion-content">
+      <div class="detalles-entrega">
+        <div class="icon">
+          <ion-icon name="location-sharp" size="large"></ion-icon>
+        </div>
+        <div class="detalles">
+          <p class="title">
+            <b>{{direccion.calle}}</b> #{{direccion.numeroExterior}}
+            <span *ngIf="direccion.numeroInterior">- {{direccion.numeroInterior}}</span>
+            <span *ngIf="direccion.entreCalle1 && direccion.entreCalle2">, entre <b>{{direccion.entreCalle1}}</b> y <b>{{direccion.entreCalle2}}</b></span>
+          </p>
+          <p class="description">{{direccion.colonia}}</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer class="enviar-mensaje mdm-center-vertical">
+
+  <ion-button class="ion-text-capitalize" color="naranja" expand="block" fill="outline" (click)="onBtnEstadoPedidoClick()">{{estadoPedido.toString()}}</ion-button>
+
+  <ion-button class="btn-enviar" color="naranja" (click)="abrirMensajes()">
+    <ion-icon name="chatbox" slot="icon-only"></ion-icon>
+  </ion-button>
+
+</ion-footer>
+

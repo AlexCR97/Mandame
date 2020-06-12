@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Recuperación de contraseña</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <p>Proporciona tu correo electrónico. Te mandaremos un mensaje para que puedas reestablecer tu contraseña</p>
+
+  <ion-item class="mdm-textbox-card ion-margin-bottom" lines="none">
+    <ion-icon name="mail"></ion-icon>
+    <input type="text" [(ngModel)]="correo" placeholder="correo@ejemplo.com">
+  </ion-item>
+
+  <ion-button color="naranja" class="ion-text-capitalize" expand="block" (click)="onBtnClick()" [disabled]="!isCorreoValid()">
+    Enviar correo
+  </ion-button>
+
+</ion-content>

@@ -1,0 +1,76 @@
+<ion-header class="ion-no-border" [ngClass]="this.showToolbar ? 'background' : 'none'">
+    <ion-toolbar color="dart">
+        <ion-buttons color="dark" slot="start">
+            <ion-button (click)="dismissModal()">
+                <ion-icon color="light" name="chevron-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title mode="ios">
+            <img src="../../../assets/img/logo-blanco.png" width="40px" height="20px" alt="">
+        </ion-title>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="content">
+    <div class="img-header">
+        <img [src]="producto.foto">
+    </div>
+    <ion-item lines="none">
+        <ion-label class="bold">
+            {{producto.nombre}}
+        </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+        <ion-text class="item-adicional descripcion">
+            {{producto.nombre}} que incluye {{producto.ingredientes.join(', ')}}.
+        </ion-text>
+    </ion-item>
+    <ion-list>
+        <ion-list-header class="bg" mode="md">
+            <ion-label>Adicionales</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let adicional of adicionalesChecks" mode="ios" class="item-adicional">
+            <ion-label>{{adicional.valor.nombre}}</ion-label>
+            <div slot="end" class="complements">
+                <ion-label>+${{adicional.valor.precio}}</ion-label>
+                <ion-checkbox [(ngModel)]="adicional.isChecked" (ionChange)="checkboxChanged($event, adicional)" class="ml" color="success"></ion-checkbox>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-list-header mode="md">
+            <ion-label>Comentario opcional</ion-label>
+        </ion-list-header>
+        <div class="textarea">
+            <ion-textarea [(ngModel)]="comentario" id="txtComment" rows="4" cols="4" placeholder="Ej. Pedir servilletas"></ion-textarea>
+        </div>
+    </ion-list>
+</ion-content>
+
+<ion-footer mode="ios">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" class="center">
+                <div class="hacks">
+                    <button (click)='remove()' size="default" class="f-25">
+                        <ion-icon size="large" name="remove-outline"></ion-icon>
+                    </button>
+                    <div class="f-50">
+                        <ion-label>
+                            {{cantidad}}
+                        </ion-label>
+                    </div>
+                    <button (click)='add()' size="default" class="f-25">
+                        <ion-icon size="large" name="add-outline"></ion-icon>
+                    </button>
+                </div>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button expand="block" class="bg-principal" (click)='agregar()'>
+                    Agregar ${{total}}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

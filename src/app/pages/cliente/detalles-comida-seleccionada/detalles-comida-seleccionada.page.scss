@@ -1,0 +1,156 @@
+$color-principal: #FF6800;
+$color-secundario: #B3B1B1; 
+
+
+*{
+    font-family: Montserrat;
+}
+
+ion-content{
+    position: relative;
+    top:-60px;
+    --ion-background-color: #fff;
+}
+
+ion-toolbar {
+    color: black;
+    --background: transparent;
+    --ion-color-base: transparent;
+}
+
+.textarea{
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+ion-textarea{
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 0 10px;
+    border: 1px solid #eaeaea;
+}
+
+.bold{
+    font-family: Montserrat;
+    font-weight: 600;
+}
+
+.img-header{
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+    background: url('../../../../assets/img/koko.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+
+.item-adicional {
+    font-size: .8em;
+    color: rgb(167, 167, 167);
+}
+
+ion-button{
+    &.bg-principal{
+        --background: #FF6800 !important;
+    }
+}
+.bg{
+   color: black;
+   font-weight: 500;
+   background-color: #F9F9F9;
+}
+
+
+
+.background{
+    transition: all 500ms ease;
+    background: $color-principal !important;
+}
+
+.none{
+    transition: all 500ms ease;
+    background: transparent !important;
+}
+
+
+
+
+.descripcion {
+    margin-bottom: 10px;;
+}
+
+.chiquito { 
+    font-size: 0.5em;
+    color: rgb(167, 167, 167);
+}
+
+.item-native{
+    padding: 0 !important;
+}
+
+
+.numeric-input {
+
+
+    & > *{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+
+.btn-filled {
+    background: #000;
+}
+
+.center{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-comentario {
+    box-shadow: 3px 3px 5px 1px darkgray;
+    border-radius: 10px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ml{
+    margin-left: 5px;
+}
+
+.complements{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+
+}
+
+.hacks{
+    border: 1px solid rgba(255,104,0, .5);
+    border-radius: 10px;
+    width: 100%;
+    height: 45px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .f-50{
+        flex: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .f-25{
+        color: orange !important;
+        background: none !important;
+        flex: 25%;
+
+        height: 100%;
+    }
+}

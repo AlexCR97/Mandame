@@ -1,0 +1,95 @@
+.detalles-pedido-item {
+    ion-img {
+        width: 30px;
+        height: 30px;
+        margin-right: 15px;
+    }
+
+    .restaurant {
+        margin-bottom: 4px;
+    }
+
+    .tiempo {
+        font-size: 13px;
+
+        span {
+            color: var(--ion-color-naranja);
+        }
+    }
+}
+
+.producto-item {
+    .nombre {
+        margin-bottom: 4px;
+    }
+
+    .cantidad {
+        color: gray;
+        font-size: 13px;
+    }
+}
+
+.separador {
+    width: 100%;
+    height: 1px;
+    background-color: lightgray;
+}
+
+.comentario-item {
+    color: gray;
+}
+
+.direccion-item {
+    ion-icon {
+        margin-right: 15px;
+    }
+
+    .repartidor {
+        margin-bottom: 4px;
+    }
+
+    .direccion {
+        font-size: 13px;
+
+        span {
+            color: var(--ion-color-naranja);
+        }
+    }
+}
+
+.enviar-mensaje {
+    padding: 0px 5px;
+
+    ion-button {
+        width: 85%;
+    }
+
+    .btn-enviar {
+        margin-left: 5px;
+        width: 15%;
+    }
+}
+
+.direccion-content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .detalles-entrega {
+        display: flex;
+        flex-direction: row;
+
+        .description{
+            color: #a5a5a5;
+        }
+
+        .title {
+            color: #555555;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #a5a5a5;
+        }
+    }
+}

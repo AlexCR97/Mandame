@@ -1,0 +1,209 @@
+*{
+    font-family: Montserrat;
+}
+
+ion-grid {
+    --ion-grid-padding: 0px;
+}
+
+ion-segment{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+ion-segment-button{
+    min-width: 135px !important;
+}
+
+.in-segment-color{
+    color: #B1AFB0;
+    font-weight: 700;
+}
+
+ion-card{
+    margin: 5px 0;
+}
+
+ion-card-subtitle{
+    margin: 5px 0;
+    font-weight: 300;
+    font-size: 8px !important;
+}
+
+.toEnter{
+    animation: opacidad 500ms ease;
+}
+
+@keyframes opacidad{
+    from{ opacity: 0;}
+    to{ opacity: 1;}
+}
+
+.toolbar-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+ion-toolbar {
+    --background: transparent;
+}
+
+.toolbarAnchor {
+    background: var(--ion-color-naranja);
+    box-shadow: 0px 2px 3px rgba(50, 50, 50, 0.30);
+    transition: all 300ms ease;
+}
+
+.toolbarAlpha {
+    background: transparent;
+    transition: all 300ms ease;
+}
+
+.logoVisible {
+    transition: all 300ms ease;
+    width: 40px;
+    height: 20px;
+}
+
+.logoInvisible {
+    transition: all 300ms ease;
+    width: 0px;
+    height: 0px;
+}
+
+.logo-menu {
+    width: 70px;
+    height: 35px;
+    display: block;
+    margin: auto;
+    padding: 5px;
+}
+
+.banner {
+    background: url('src/assets/img/banner-inicio.png') no-repeat center center;
+    background-size: cover;
+}
+
+.banner-description{
+    z-index: 999;
+    padding-top: 110px;
+    padding-bottom: 60px;
+
+    p{
+        font-weight: 200;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    h1{
+        
+        font-size: 30px;
+        font-weight: 700;
+    }
+}
+
+.banner-text {
+    margin: 0;
+    color: white;
+}
+
+.contenedor-principal {
+    position: relative;
+    background-color: white;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    bottom: 15px;
+    // box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.40);
+    // margin-top: -15px;
+    // margin-bottom: 15px;
+}
+
+.segment-superior-card {
+    width: 170px;
+    height: 100px;
+
+    img {
+        width: 170px;
+        height: 100px;
+    }
+}
+
+.producto-item {
+    ion-card {
+        width: 100px;
+        height: 100px;
+
+        ion-img {
+            width: 75px;
+            height: 75px;
+        }
+    }
+
+    p {
+        font-size: 12px;
+        text-align: center;
+    }
+}
+
+.segmentInferior{
+    margin-bottom: 20px;
+}
+
+.ordenes-container {
+    
+}
+
+.restaurant_name{
+    color: #8b8b8b;
+    font-size: 8px !important;
+}
+
+.orden-item {
+    ion-img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    ion-card-header {
+        padding: 6px;
+
+        ion-card-title {
+            font-size: 14px;
+        }
+    
+        ion-card-subtitle {
+            font-size: 12px;
+        }
+    }
+
+    ion-card-content {
+        padding: 6px;
+        display: flex;
+    }
+}
+
+ion-segment-button{
+    min-width: 105px;
+}
+
+ion-fab-button[data-desc] {
+    position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+    position: absolute;
+    content: attr(data-desc);
+    z-index: 1;
+    right: 55px;
+    bottom: 4px;
+    background-color: var(--ion-color-dark);
+    padding: 9px;
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+}
+
+

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/configuraciones" color="dark" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nombre</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()" disabled>Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-list lines="full"> 
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="nuevoNombre" (ionChange)="habilitar()" required type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Apellido</ion-label>
+      <ion-input [(ngModel)]="nuevoApellido" (ionChange)="habilitar()" required type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <ion-list-header>
+      <h5>Mensajes</h5>
+    </ion-list-header>
+
+    <ion-item class="chat-item" lines="full" *ngFor="let i of vistasChats" (click)="abrirMensajes(i.uidRepartidor)">
+      <ion-avatar slot="start">
+        <ion-img [src]="i.foto"></ion-img>
+      </ion-avatar>
+      <ion-text>
+        <ion-label>{{i.nombreRepartidor}} {{i.apellidoRepartidor}}<span class="hora">{{i.fechaUltimoMensaje}}</span></ion-label>
+        <ion-label class="mensaje">{{i.ultimoMensaje}}</ion-label>
+      </ion-text>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

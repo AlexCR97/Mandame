@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <div class="mdm-center-horizontal">
+      <img src="../../../../assets/img/logo-blanco.png" style="height: 30px;">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name=""></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+
+  <ion-item lines="full">
+    <ion-label>Edgar Vazquez</ion-label>
+    <ion-icon name="alert-circle-outline" slot="end"></ion-icon>
+  </ion-item>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div *ngFor="let i of mensajes" class="mensaje-item" [ngClass]="{'mensaje-item-emisor': i.isEmisor, 'mensaje-item-receptor': !i.isEmisor}">
+    <div class="espacio"></div>
+    <div>
+      <ion-card>
+        <ion-card-content>
+          <ion-label>{{i.mensaje}}</ion-label>
+        </ion-card-content>
+      </ion-card>
+      <p class="ion-padding-horizontal">{{i.fechaHora}}</p>
+    </div>
+  </div>
+  
+</ion-content>

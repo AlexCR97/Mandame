@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/configuraciones" color="dark" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Teléfono</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardarDatos()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-content fullscreen>
+    <ion-list lines="full">
+      <ion-item class="ion-margin">
+        <ion-label position="stacked">Teléfono actual</ion-label>
+        <ion-input type="text" [(ngModel)]="antiguoTelefono" disabled></ion-input>
+      </ion-item>
+      <ion-item class="ion-margin">
+        <ion-label position="stacked">Nuevo teléfono</ion-label>
+        <ion-input type="number" required [(ngModel)]="nuevoTelefono"></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-content>

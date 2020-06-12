@@ -1,0 +1,60 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.center{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.imclass{
+    animation: toCenter 1s infinite;
+    animation-iteration-count: 4;
+    animation-delay: 1s;
+    width: 130px;
+    left: -35%;
+    position: relative;
+    
+}
+
+.byebye{
+    width: 130px;
+    left: -35%;
+    position: relative;
+    animation: byebro 1s;
+}
+
+@keyframes byebro{
+    0%{
+        left: -25%;
+    }
+    50%{
+        width: 130px;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    100%{
+        width: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes toCenter{
+    0%{
+        left: -35%;
+    }
+    50%{
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    100%{
+        left: 125%;
+        transform: translate(-50%, 0);
+    }
+}
+

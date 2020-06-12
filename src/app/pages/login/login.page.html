@@ -1,0 +1,58 @@
+<ion-content>
+
+  <div class="flecha">
+    <img src="../../assets/img/SVG/Capa 2.svg">
+  </div>
+
+  <div class="section ion-padding">
+  <div class="ion-padding-horizontal">
+
+    <img src="../../assets/img/logo.png" class="logo">
+
+    <div class="bienvenida">
+      <p>{{subTitulos.get(segmentId)}}</p>
+      <h3>{{titulos.get(segmentId)}}</h3>
+    </div>
+
+    <div class="links ion-margin">
+      <p [ngClass]="{'link-bold': segmentId == segmentLogin}" (click)="onLinkClickLoginRegistro(segmentLogin)">Iniciar Sesión</p>
+      <p [ngClass]="{'link-bold': segmentId == segmentRegistro}" (click)="onLinkClickLoginRegistro(segmentRegistro)">Registrarse</p>
+    </div>
+
+    <!-- usuario -->
+    <div class="ion-margin-bottom">
+      <p class="textbox-label">Usuario</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="person"></ion-icon>
+        <input type="text" [(ngModel)]="correo" placeholder="correo@ejemplo.com">
+      </ion-item>
+    </div>
+
+    <!-- contrasena -->
+    <div class="ion-margin-bottom">
+      <p class="textbox-label">Contraseña</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input type="password" [(ngModel)]="contrasena" placeholder="***********">
+      </ion-item>
+    </div>
+
+    <!-- confirmar contrasena -->
+    <div *ngIf="segmentId == segmentRegistro" class="ion-margin-bottom">
+      <p class="textbox-label">Confirmar contraseña</p>
+      <ion-item class="mdm-textbox-card" lines="none">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input type="password" placeholder="Confirma tu contraseña" [(ngModel)]="confirmarContrasena">
+      </ion-item>
+    </div>
+
+    <ion-button color="naranja" class="button-f ion-text-capitalize ion-margin-bottom" expand="full" (click)="onBtnClick()">
+      {{btnTexts.get(segmentId)}}
+    </ion-button>
+    
+    <p *ngIf="segmentId == segmentLogin" class="forgot ion-margin-top" routerLink="/recuperar-contrasena">Olvidé mi contraseña</p>
+
+  </div>
+  </div>
+
+</ion-content>

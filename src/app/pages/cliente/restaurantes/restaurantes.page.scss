@@ -1,0 +1,129 @@
+*{
+    font-family: Montserrat;
+}
+
+.title{
+    color: black;
+    font-weight: bold;
+}
+
+.category{
+    font-weight: 300;
+}
+
+ion-grid{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+ion-col{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+ion-card{
+    margin: 10px !important;
+    padding: 0 !important;
+}
+ion-card-content{
+    padding: 10px;
+}
+
+
+.reset{
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: Montserrat;
+
+    & > * {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: Montserrat !important;
+    }
+}
+
+.portada{
+    position: relative;
+    height: 100px;
+    width: 100%;
+
+    & > .foto{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .avatar{
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+
+    ion-icon {
+        color: gray;
+        font-size: 26px;
+        margin-left: 10px;
+    }
+}
+
+.restaurant-item {
+    .content {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+    }
+
+    ion-avatar {
+        background-color: white;
+        border: 2px solid orange;
+        margin-right: 10px;
+        width: 70px;
+        height: 70px;
+    }
+
+    .details {
+        flex-grow: 1;
+
+        .title-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0px;
+        }
+
+        .score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            ion-icon {
+                margin-right: 4px;
+            }
+        }
+
+        .category {
+            color: gray;
+            margin: 0px;
+        }
+    }
+}
+
+/*
+foto
+nombre
+categoria
+puntaje
+*/

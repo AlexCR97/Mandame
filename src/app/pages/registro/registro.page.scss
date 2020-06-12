@@ -1,0 +1,72 @@
+*{
+    font-family: Montserrat;
+}
+.flecha {
+    position: relative;
+    width: 100%;
+    height: 20vh;
+    background-color: #FF6500;
+
+    img{
+        position: absolute;
+        bottom: -2px;
+        width: 100%;
+    }
+}
+
+.logo { 
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.bienvenida {
+    p{
+        margin: 0 0;
+    }
+    h3{
+        margin: 0;
+        font-size: 30px;
+        font-weight: 600;
+    }
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+
+    p {
+        color: gray;
+        margin-left: 10px;
+    }
+}
+
+.textbox-label {
+    margin: 0px 0px 7px 0px;
+}
+
+
+@media (max-width: 768px){
+    .section{
+        width: 100%;
+    }
+}
+
+@media (max-width: 355px){
+    .flecha{
+        display: none;
+    }
+
+    .section{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100vh;
+    }
+}
+
+@media (max-height: 420px){
+    .flecha{
+        display: none;
+    }
+}

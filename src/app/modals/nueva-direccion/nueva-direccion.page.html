@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="naranja">
+
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Dirección</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+ 
+  <!-- calle -->
+  <div class="m-bottom">
+    <p class="textbox-label m-min-bottom">Calle <ion-label color="danger">*</ion-label></p>
+    <ion-item class="mdm-textbox-card" lines="none">
+      <input type="text" placeholder="Tu calle" [(ngModel)]="direccion.calle">
+    </ion-item>
+  </div><!-- calle -->
+
+  <!-- entre calles -->
+  <div class="m-top">
+    <p class="textbox-label m-min-bottom">Entre calles</p>
+
+    <ion-grid class="">
+      <ion-row>
+        <!-- entre calle 1 -->
+        <ion-col>
+          <ion-item class="mdm-textbox-card" lines="none">
+            <input type="text" placeholder="Entre calle" [(ngModel)]="direccion.entreCalle1">
+          </ion-item>
+        </ion-col>
+
+        <!-- entre calle 2 -->
+        <ion-col class="right">
+          <ion-item class="mdm-textbox-card" lines="none">
+            <input type="text" placeholder="Entre calle" [(ngModel)]="direccion.entreCalle2">
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div><!-- entre calles -->
+
+  <!-- numero -->
+  <div class="m-top m-bottom">
+    <p class="textbox-label m-min-bottom">Numero exterior <ion-label color="danger">*</ion-label></p>
+    <ion-item class="mdm-textbox-card m-bottom" lines="none">
+      <input type="number" placeholder="Exterior" [(ngModel)]="direccion.numeroExterior">
+    </ion-item>
+  </div>
+  <div class="m-top m-bottom">
+    <p class="textbox-label m-min-bottom">Numero interior</p>
+    <ion-item class="mdm-textbox-card" lines="none">
+      <input type="number" placeholder="Interior" [(ngModel)]="direccion.numeroInterior">
+    </ion-item>
+  </div>
+   
+    <!-- <ion-grid>
+      <ion-row>
+
+        <ion-col>
+          <p class="textbox-label m-min-bottom">Exterior<ion-label color="danger">*</ion-label></p>
+          <ion-item class="mdm-textbox-card" lines="none">
+            <input type="number" placeholder="Exterior" [(ngModel)]="direccion.numeroExterior">
+          </ion-item>
+        </ion-col>
+
+        <ion-col class="right">
+          <p class="textbox-label">Interior</p>
+          <ion-item class="mdm-textbox-card" lines="none">
+            <input type="number" placeholder="Interior" [(ngModel)]="direccion.numeroInterior">
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid> -->
+  <!-- numero -->
+
+  <!-- colonia -->
+  <div class="m-top">
+    <p class="textbox-label m-min-bottom">Colonia o Localidad <ion-label color="danger">*</ion-label></p>
+    <ion-item class="mdm-textbox-card" lines="none">
+      <input type="text" placeholder="Tu colonia o localidad" [(ngModel)]="direccion.colonia">
+    </ion-item>
+  </div><!-- colonia -->
+
+  <!-- TODO Implementar Maps
+  <ion-button color="naranja" class="ion-text-capitalize" expand="block" fill="outline">Añadir ubicación con mapa</ion-button>
+  -->
+
+</ion-content>
+
+<ion-footer>
+  <ion-button color="naranja" class="ion-text-capitalize" expand="full" (click)="onBtnConfirmarClick()">Confirmar</ion-button>
+</ion-footer>

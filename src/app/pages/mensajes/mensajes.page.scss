@@ -1,0 +1,56 @@
+.mensaje-item {
+    display: flex;
+    margin-bottom: 10px;
+
+    .fecha-expandida {
+        font-size: 13px !important;
+        transition: all 0.2s ease;
+    }
+
+    .fecha-no-expandida {
+        font-size: 0px !important;
+        transition: all 0.2s ease;
+    }
+
+    p {
+        font-size: 13px;
+        margin: -6px 0px 0px 0px;
+    }
+}
+
+.mensaje-item-receptor {
+    flex-direction: row-reverse;
+    margin-right: auto;
+
+    ion-card {
+        // TODO Cambiar el color del card a negro
+        //--background: #222428;
+        color: #222428 !important;
+    }
+}
+
+.mensaje-item-emisor {
+    margin-left: auto;
+
+    ion-card {
+        --background: var(--ion-color-naranja);
+        color: #222428 !important;
+    }
+
+    p {
+        text-align: right;
+    }
+}
+
+.enviar-mensaje {
+    padding: 0px 5px;
+
+    .mdm-textbox-card {
+        width: 85%;
+    }
+
+    .btn-enviar {
+        margin-left: 5px;
+        width: 15%;
+    }
+}

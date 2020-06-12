@@ -1,0 +1,34 @@
+ion-footer{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+ion-button{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.direccion-item {
+  ion-icon {
+      margin-right: 15px;
+  }
+
+  .titulo {
+      margin-bottom: 4px;
+      font-size: 15px;
+  }
+
+  .subtitulo {
+      font-size: 13px;
+      color: gray;
+  }
+}
+
+.item-total {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    color: black;
+  }
+}
