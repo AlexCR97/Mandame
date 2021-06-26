@@ -18,6 +18,9 @@ import { ModalController } from '@ionic/angular';
 import { PrePedidoPage } from 'src/app/modals/pre-pedido/pre-pedido.page';
 import { ModalAlertPage } from 'src/app/modals/modal-alert/modal-alert.page';
 import { AlertController } from '@ionic/angular';
+import arrays from 'src/app/utils/arrays';
+import timers from 'src/app/utils/time';
+import time from 'src/app/utils/time';
 
 @Component({
     selector: 'app-inicio',
@@ -29,12 +32,17 @@ export class InicioPage implements OnInit {
     anchorToolbar = false;
     showTitle = false;
 
-    usuario = CacheUsuario.usuario;
-    //usuario = getPlantilla(DocsPlantillas.usuario) as Usuario;
+    usuario = <Usuario> {
+        apellido: "Castillo",
+        email: "ale@live.com",
+        nombre: "Alejandro",
+        posicion: "cliente",
+        telefono: "8311146563",
+    };
 
-    segmentSuperior = '';
-    segmentCentral = '';
-    segmentInferior = '';
+    segmentSuperior = ''; 
+    segmentCentral = '';  // Restaurantes por categoria
+    segmentInferior = ''; // Productos por categoria
 
     menuPrincipal;
     menuOpciones;
@@ -43,10 +51,12 @@ export class InicioPage implements OnInit {
     productosPorCategoria: ProductosPorCategoria[];
     restsPorCategoria: RestaurantesPorCategoria[];
 
+    ofertasItems: { imgSrc: string }[];
+    masVendidosItems: { imgSrc: string }[];
+    proximamenteItems: { imgSrc: string }[];
+
     constructor(
         private cacheService: CacheService,
-        private productosService: ProductosService,
-        private restaurantService: RestaurantService,
         private navController: NavController,
         private router: Router,
         private modalController: ModalController,
@@ -54,33 +64,57 @@ export class InicioPage implements OnInit {
         ) { }
 
     ngOnInit() {
-        console.log('Iniciando cache...');
-        this.cacheService.iniciarCache();
+        this.getProductosPorCategoria();
+    }
 
-        this.cacheService.setOnRestaurantesIniciado(
-            () => {
-                console.log('setOnCacheRestaurantesIniciado SUCCESS');
-                this.restsPorCategoria = CacheRestaurantes.getRestaurantesAllPorCategoria();
-                this.segmentCentral = this.restsPorCategoria[0].categoria;
-            },
-            error => {
-                console.error('setOnCacheRestaurantesIniciado FAILURE');
-                console.error(error);
-            }
-            );
+    private async getProductosPorCategoria() {
+        await time.wait(1000);
 
-        this.cacheService.setOnProductosIniciado(
-            () => {
-                console.log('setOnProductosIniciado SUCCESS');
-                this.productosPorCategoria = CacheProductos.getAllProductosPorCategoria();
-                console.log('this.productosPorCategoria: ', this.productosPorCategoria);
-                this.segmentInferior = this.productosPorCategoria[0].categoria;
-            },
-            error => {
-                console.error('setOnProductosIniciado FAILURE');
-                console.error(error);
-            }
-            );
+        this.ofertasItems = arrays.fromRange(1, 4).map(_ => ({
+            imgSrc: "https://via.placeholder.com/350x150",
+        }));
+
+        this.masVendidosItems = arrays.fromRange(1, 4).map(_ => ({
+            imgSrc: "https://via.placeholder.com/350x150",
+        }));
+
+        this.proximamenteItems = arrays.fromRange(1, 4).map(_ => ({
+            imgSrc: "https://via.placeholder.com/350x150",
+        }));
+
+        this.productosPorCategoria = arrays.fromRange(1, 5).map(indexCategoria => <ProductosPorCategoria> ({
+            categoria: `Categoria ${indexCategoria}`,
+            productos: arrays.fromRange(1, 7).map(indexProducto => ({
+                categoria: `Categoria ${indexCategoria}`,
+                contenido: indexProducto,
+                ingredientes: arrays.fromRange(1, 5).map(indexIngrediente => `Ingrediente ${indexIngrediente}`),
+                foto: "https://via.placeholder.com/150/DDDDDD/000000",
+                nombre: `Producto ${indexProducto}`,
+                precio: indexProducto * 10,
+                restaurante: `Restaurant ${indexProducto}`,
+                nombreRestaurant: `Restaurant ${indexProducto}`,
+            })),
+        }));
+
+        this.restsPorCategoria = arrays.fromRange(1, 6).map(indexCategoria => <RestaurantesPorCategoria> ({
+            categoria: `Categoria ${indexCategoria}`,
+            restaurantes: arrays.fromRange(1, 5).map(indexRestaurant => ({
+                adicionales: arrays.fromRange(1, 5).map(index => `Adicional ${index}`),
+                calificacion: indexRestaurant,
+                categoria: `Categoria ${indexCategoria}`,
+                complementos: 'Complemento',
+                estado: 'Estado',
+                foto_perfil: "https://via.placeholder.com/150/DDDDDD/000000",
+                foto_portada: "https://via.placeholder.com/150/DDDDDD/000000",
+                nombre: `Restaurant ${indexRestaurant}`,
+                productos: arrays.fromRange(1, 5).map(index => `Producto ${index}`),
+                tiempo_entrega: indexRestaurant,
+            })),
+        }));
+
+        this.segmentSuperior = 'ofertas';
+        this.segmentInferior = 'Categoria 1'; 
+        this.segmentCentral = 'Categoria 1'; 
     }
 
     async presentAlert() {
@@ -158,8 +192,6 @@ export class InicioPage implements OnInit {
     }
 
     abrirRestaurante(uidRestaurant: string) {
-        console.log('Abriendo restaurant con uid', uidRestaurant);
-
         this.router.navigate(['/restaurant'], {
             queryParams: {
                 uidRestaurant: uidRestaurant

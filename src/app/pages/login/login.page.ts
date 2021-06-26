@@ -38,6 +38,8 @@ export class LoginPage implements OnInit {
   confirmarContrasena: string;
   cargandoDialog;
 
+  loginType: "cliente" | "repartidor" | "admin" = "cliente";
+
   constructor(
     public guiUtils: GuiUtilsService,
     public loadingController: LoadingController,
@@ -48,13 +50,25 @@ export class LoginPage implements OnInit {
   ngOnInit() { }
 
   onBtnClick() {
-    switch (this.segmentId) {
-      case this.segmentLogin: {
-        this.intentarLogin();
+    switch (this.loginType) {
+
+      case 'cliente': {
+        this.router.navigateByUrl('/inicio');
         break;
       }
-      case this.segmentRegistro: {
-        this.intentarRegistro();
+
+      case 'repartidor': {
+        this.router.navigateByUrl('/inicio-repartidor/tab-pedidos-repartidor');
+        break;
+      }
+
+      case 'admin': {
+        this.router.navigateByUrl('/inicio-admin');
+        break;
+      }
+
+      default: {
+        this.guiUtils.mostrarToast('Este correo no parece estar vinculado con ninguna cuenta', 3000, 'danger');
         break;
       }
     }
@@ -86,32 +100,7 @@ export class LoginPage implements OnInit {
           console.log('Usuario obtenido:');
           console.log(usuario);
 
-          switch (usuario.posicion) {
-
-            case 'cliente': {
-              console.log('Cuenta de cliente detectada. Iniciando sesion...');
-              this.router.navigateByUrl('/inicio');
-              break;
-            }
-
-            case 'repartidor': {
-              console.log('Cuenta de repartidor detectada. Iniciando sesion...');
-              this.router.navigateByUrl('/inicio-repartidor/tab-pedidos-repartidor');
-              break;
-            }
-
-            case 'admin': {
-              console.log('Cuenta de admin detectada. Iniciando sesion...');
-              this.router.navigateByUrl('/inicio-admin');
-              break;
-            }
-
-            default: {
-              console.log('Ninguna cuenta detectada :(');
-              this.guiUtils.mostrarToast('Este correo no parece estar vinculado con ninguna cuenta', 3000, 'danger');
-              break;
-            }
-          }
+          
         },
         error => {
           console.error('Error al iniciar sesion :(');

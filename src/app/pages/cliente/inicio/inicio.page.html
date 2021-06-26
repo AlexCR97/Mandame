@@ -77,16 +77,9 @@
       <ion-title mode="ios">
           <img src="../../../assets/img/logo-blanco.png" [ngClass]="showTitle ? 'logoVisible' : 'logoInvisible'">
       </ion-title>
-      
-      <!-- TODO Agregar Push Notifications -->
-      <!--<ion-buttons slot="end">
-        <ion-button (click)="modalTest()">
-            <ion-icon color="light" name="notifications" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons>-->
 
-</ion-toolbar><!-- toolbar -->
-</div>
+      </ion-toolbar><!-- toolbar -->
+    </div>
 
 <div class="banner-description ion-padding">
   <p class="banner-text">Hola {{usuario.nombre}}</p>
@@ -146,13 +139,13 @@
 </ion-grid>
 
 </div>  <!-- Fin skeleton -->
+
 <div *ngIf="productosPorCategoria != undefined" class="toEnter">
 
   <!-- TODO Descomentar esto cuando se tengan promociones en la bd Superior-->
   <div>
 
-    <!-- segments -->
-    <!--<ion-segment scrollable [(ngModel)]="segmentSuperior" color="dark" mode="md">
+    <ion-segment scrollable [(ngModel)]="segmentSuperior" color="dark" mode="md">
       <ion-segment-button value="ofertas">
         <ion-label class="ion-text-capitalize">Ofertas</ion-label>
       </ion-segment-button>
@@ -164,8 +157,8 @@
       <ion-segment-button value="proximamente">
           <ion-label class="ion-text-capitalize">Próximamente</ion-label>
       </ion-segment-button>
-    </ion-segment>--><!-- segments -->
-
+    </ion-segment>
+    
 <!-- contenedor de segments -->
 <div [ngSwitch]="segmentSuperior">
   

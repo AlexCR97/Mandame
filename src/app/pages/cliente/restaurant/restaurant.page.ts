@@ -18,8 +18,9 @@ import { NavigationExtras } from '@angular/router';
 import { CacheCarrito } from 'src/app/cache/cache-carrito';
 import { CacheUsuario } from 'src/app/cache/cache-usuario';
 import { RestaurantesFavoritos } from 'src/app/dbdocs/restaurantesFavoritos'
-import { Observable } from 'rxjs';
 import { GuiUtilsService } from 'src/app/services/gui-utils.service';
+import arrays from 'src/app/utils/arrays';
+import time from 'src/app/utils/time';
 
 interface ProductosPorCategoria {
     categoria: string;
@@ -46,7 +47,7 @@ export class RestaurantPage implements OnInit {
     public fotoPortada: SafeStyle;
     public restaurant = getPlantilla(DocsPlantillas.restaurant) as Restaurant;
     public productosPorCategoria: ProductosPorCategoria[];
-    public uidCliente = CacheUsuario.usuario.uid;
+    public uidCliente = undefined as string;
     public restaurantesFavoritos = getPlantilla(DocsPlantillas.restaurantesFavoritos) as RestaurantesFavoritos;
     public esResturanteFavorito: boolean;
     public asignarColor = 0;
@@ -63,74 +64,43 @@ export class RestaurantPage implements OnInit {
         ) { }
 
     ngOnInit() {
-        this.uidRestaurant = this.activatedRoute.snapshot.queryParamMap.get('uidRestaurant');
+        this.init();
+    }
+    
+    private async init() {
+        await time.wait(1000);
 
-        console.log('Uid restaurant: ' + this.uidRestaurant);
+        this.productosPorCategoria = arrays.fromRange(1, 5).map(indexCategoria => <ProductosPorCategoria> ({
+            categoria: `Categoria ${indexCategoria}`,
+            productos: arrays.fromRange(1, 7).map(indexProducto => ({
+                categoria: `Categoria ${indexCategoria}`,
+                contenido: indexProducto,
+                ingredientes: arrays.fromRange(1, 5).map(indexIngrediente => `Ingrediente ${indexIngrediente}`),
+                foto: "https://via.placeholder.com/150/DDDDDD/000000",
+                nombre: `Producto ${indexProducto}`,
+                precio: indexProducto * 10,
+                restaurante: `Restaurant ${indexProducto}`,
+                nombreRestaurant: `Restaurant ${indexProducto}`,
+            })),
+        }));
 
-        // Si tiene conexion a internet
-        if (this.utils.tieneConexionInternet()) {
-            console.log('Si hay conexion a Internet');
+        this.select = 'Categoria 1';
 
-            // Si no hay restaurantes en cache, cargarlos desde la bd
-            if (CacheRestaurantes.isEmpty()) {
-                console.log('Cargando restaurantes desde la bd...');
+        this.restaurant = {
+            adicionales: arrays.fromRange(1, 5).map(index => `Adicional ${index}`),
+            calificacion: 4.2,
+            categoria: `Categoria 1`,
+            complementos: 'Complemento',
+            estado: 'Estado',
+            foto_perfil: "https://via.placeholder.com/150/DDDDDD/000000",
+            foto_portada: "https://via.placeholder.com/150/DDDDDD/000000",
+            nombre: `Restaurant 1`,
+            productos: arrays.fromRange(1, 5).map(index => `Producto ${index}`),
+            tiempo_entrega: 20,
+            uid: undefined,
+        };
 
-                this.cacheService.iniciarCacheRestaurantes();
-                this.cacheService.setOnRestaurantesIniciado(
-                    () => {
-                        this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
-                        this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
-                    },
-                    error => {
-                        console.error(error);
-                    }
-                    );
-            }
-            // Si hay cache, cargar el restaurant desde el cache
-            else {
-                console.log('Cargando restaurantes desde el cache...');
-
-                this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
-                this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
-            }
-
-            // Si no hay productos en cache, cargarlos desde la bd
-            if (CacheProductos.isEmpty()) {
-                console.log('Cargando productos desde la bd...');
-
-                this.cacheService.iniciarCacheProductos();
-                this.cacheService.setOnProductosIniciado(
-                    () => {
-                        this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
-                        this.select = this.productosPorCategoria[0].categoria;
-                    },
-                    error => {
-                        console.error('');
-                    }
-                    );
-            }
-            // Si hay cache, cargar los productos desde el cache
-            else {
-                console.log('Cargando productos desde el cache...');
-
-                this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
-                this.select = this.productosPorCategoria[0].categoria;
-            }
-        }
-        // No tiene conexion a internet, cargar datos desde el cache
-        else {
-            console.log('No hay conexion a internet. Cargando restaurantes y productos desde el cache...');
-
-            this.restaurant = CacheRestaurantes.getRestaurante(this.uidRestaurant);
-            this.productosPorCategoria = CacheProductos.getAllProductosPorCategoriaDeRestaurant(this.uidRestaurant);
-            this.select = this.productosPorCategoria[0].categoria;
-            // TODO Cambiar foto de portada por otra por defecto si no hay internet
-            //this.fotoPortada = this.domSanitizer.bypassSecurityTrustStyle(`url(${this.restaurant.foto_portada})`);
-        }
-        
-        if(this.restaurantService.verificarSiHayFavoritos(this.uidCliente)){    
-            this.cargarRestaurantesFavoritos();
-        }
+        this.fotoPortada = "https://via.placeholder.com/150/DDDDDD/000000";
     }
 
     segmentChanged(ev: any) { }
